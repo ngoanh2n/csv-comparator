@@ -1,16 +1,116 @@
-plugins {
-    id 'java'
-}
+/**
+ * @author ngoanh2n@gmail.com (Ho Huu Ngoan)
+ */
 
-group 'com.github.ngoanh2n'
-version '1.0-SNAPSHOT'
+group group
+version version
 
-sourceCompatibility = 1.8
+apply plugin: 'java'
+apply plugin: 'idea'    // Optional using for IntelliJ IDEA
+apply plugin: 'eclipse' // Optional using for Eclipse
+apply plugin: 'maven-publish'
+
+[compileJava, compileTestJava]*.sourceCompatibility = 1.8
+[compileJava, compileTestJava]*.targetCompatibility = 1.8
+[compileJava, compileTestJava]*.options.collect { options -> options.debug = true }
+[compileJava, compileTestJava]*.options.collect { options -> options.encoding = 'UTF-8' }
 
 repositories {
+    jcenter()
     mavenCentral()
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    /*
+    * CSV
+    */
+    // https://mvnrepository.com/artifact/com.univocity/univocity-parsers
+    implementation('com.univocity:univocity-parsers:2.8.4')
+
+    /*
+    * JUnit5 - Jupiter: API
+    */
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+    testImplementation('org.junit.jupiter:junit-jupiter-api:5.6.0')
+
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine
+    testImplementation('org.junit.jupiter:junit-jupiter-engine:5.6.0')
+
+    /*
+     * Logging
+     */
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    implementation('org.slf4j:slf4j-api:1.7.30')
+
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12
+    testImplementation('org.slf4j:slf4j-log4j12:1.7.30')
+
+    /*
+    * Others
+    */
+    // https://mvnrepository.com/artifact/com.google.guava/guava
+    implementation('com.google.guava:guava:28.1-jre')
+}
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+    }
+}
+
+tasks.withType(Test).all { testTask ->
+    testTask.systemProperties = [
+            'file.encoding': 'UTF-8',
+            'BUILD_URL'    : System.getenv()['BUILD_URL']
+    ]
+    testTask.testLogging.showStandardStreams = true
+    testTask.outputs.upToDateWhen { false }
+}
+
+tasks.withType(Test) {
+    /*
+    * Enable JUnit Platform (JUnit 5) support, default is JUnit
+    */
+    useJUnitPlatform() {
+        /*
+        * Filter by engines
+        */
+        includeEngines 'junit-jupiter'
+        //excludeEngines 'junit-vintage'
+
+        /*
+        * Filter by tags
+        */
+        //includeTags 'fast', 'smoke'
+        //excludeTags 'slow', 'ci'
+    }
+
+    /*
+    * Make failing tests do not fail the task
+    */
+    ignoreFailures = true
+
+    /*
+    * To show standard out and standard error of the test JVM(s) on the console
+    */
+    testLogging.showStandardStreams = true
+
+    /*
+    *  Want to display the following test events
+    */
+    testLogging { events 'passed', 'skipped', 'failed' }
+
+    /*
+    * To make the Gradle JVM system properties available to tests
+    */
+    systemProperties = System.getProperties() as Map<String, ?>
 }
