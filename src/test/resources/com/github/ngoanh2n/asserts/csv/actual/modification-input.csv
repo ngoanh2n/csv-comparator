@@ -1,0 +1,4 @@
+id,email,firstname,lastname,age,note
+1,tester01@csvassert.vn,"Tester 01",Nguyen,21,
+2,tester02@csvassert.vn,"Tester 02",Nguyen,22,
+3,tester03@csvassert.vn,"Tester 99",Nguyen,,
