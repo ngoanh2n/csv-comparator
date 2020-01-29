@@ -8,7 +8,10 @@ version version
 apply plugin: 'java'
 apply plugin: 'idea'    // Optional using for IntelliJ IDEA
 apply plugin: 'eclipse' // Optional using for Eclipse
+apply plugin: 'signing'
+apply plugin: 'java-library'
 apply plugin: 'maven-publish'
+apply plugin: 'com.bmuschko.nexus'
 
 [compileJava, compileTestJava]*.sourceCompatibility = 1.8
 [compileJava, compileTestJava]*.targetCompatibility = 1.8
@@ -47,12 +50,6 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12
     testImplementation('org.slf4j:slf4j-log4j12:1.7.30')
-
-    /*
-    * Others
-    */
-    // https://mvnrepository.com/artifact/com.google.guava/guava
-    implementation('com.google.guava:guava:28.1-jre')
 }
 
 buildscript {
@@ -64,6 +61,7 @@ buildscript {
         }
     }
     dependencies {
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
     }
 }
 
@@ -113,4 +111,53 @@ tasks.withType(Test) {
     * To make the Gradle JVM system properties available to tests
     */
     systemProperties = System.getProperties() as Map<String, ?>
+}
+
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
+
+modifyPom {
+    project {
+        name 'csv-comparator'
+        description 'Utils for comparison and assertion CSV files in Java'
+        url 'https://github.com/ngoanh2n/csv-comparator'
+        inceptionYear '2020'
+
+        scm {
+            connection 'scm:git:git://github.com/ngoanh2n/csv-comparator.git'
+            developerConnection 'scm:git:ssh://github.com/ngoanh2n/csv-comparator.git'
+            url 'http://github.com/ngoanh2n/csv-comparator/tree/master'
+        }
+
+        licenses {
+            license {
+                name 'MIT'
+                url 'https://opensource.org/licenses/MIT'
+            }
+        }
+
+        developers {
+            developer {
+                id 'ngoanh2n'
+                name 'Ho Huu Ngoan'
+                email 'ngoanh2n@gmail.com'
+                organizationUrl 'https://ngoanh2n.github.io/'
+            }
+        }
+    }
+}
+
+extraArchive {
+    sources = true
+    tests = true
+    javadoc = true
+}
+
+nexus {
+    sign = true
+    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
 }
