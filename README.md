@@ -9,8 +9,8 @@
 [![GitHub release](https://img.shields.io/github/release/ngoanh2n/csv-comparator.svg)](https://github.com/ngoanh2n/csv-comparator/releases/)
 [![badge-jdk](https://img.shields.io/badge/jdk-8-blue.svg)](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blueviolet.svg)](https://opensource.org/licenses/MIT)
+[![javadoc](https://javadoc.io/badge2/com.github.ngoanh2n/csv-comparator/javadoc.svg)](https://javadoc.io/doc/com.github.ngoanh2n/csv-comparator)
 [![GitHub contributors](https://img.shields.io/github/contributors/ngoanh2n/csv-comparator.svg)](https://github.com/ngoanh2n/csv-comparator/graphs/contributors/)
-
 [![GitHub issues](https://img.shields.io/github/issues/ngoanh2n/csv-comparator.svg)](https://github.com/ngoanh2n/csv-comparator/issues/)
 [![GitHub issues-closed](https://img.shields.io/github/issues-closed/ngoanh2n/csv-comparator.svg)](https://github.com/ngoanh2n/csv-comparator/issues?q=is%3Aissue+is%3Aclosed)
 [![GitHub pull-requests](https://img.shields.io/github/issues-pr/ngoanh2n/csv-comparator.svg)](https://github.com/ngoanh2n/csv-comparator/pulls/)
