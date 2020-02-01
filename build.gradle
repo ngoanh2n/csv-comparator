@@ -95,7 +95,7 @@ tasks.withType(Test) {
     /*
     * Make failing tests do not fail the task
     */
-    ignoreFailures = true
+    ignoreFailures = false
 
     /*
     * To show standard out and standard error of the test JVM(s) on the console

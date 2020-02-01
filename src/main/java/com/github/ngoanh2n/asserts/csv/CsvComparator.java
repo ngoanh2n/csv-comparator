@@ -10,7 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -92,7 +94,7 @@ public final class CsvComparator {
         return this;
     }
 
-    public CsvComparisonResult perform() {
+    public CsvComparisonResult perform() throws IOException {
         CsvComparisonResultImpl result = new CsvComparisonResultImpl();
         result.setDiffPath(diffPath);
 
@@ -165,6 +167,10 @@ public final class CsvComparator {
             deletionWriter.close();
         }
 
+        if (!result.hasRowAdded())
+            Files.deleteIfExists(Paths.get(diffPath, Constants.ADDITION_FILE_NAME));
+        if (!result.hasRowModified())
+            Files.deleteIfExists(Paths.get(diffPath, Constants.MODIFICATION_FILE_NAME));
         return result;
     }
 
