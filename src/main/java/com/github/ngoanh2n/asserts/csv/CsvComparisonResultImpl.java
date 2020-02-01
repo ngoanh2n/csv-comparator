@@ -1,5 +1,8 @@
 package com.github.ngoanh2n.asserts.csv;
 
+import java.io.File;
+import java.nio.file.Paths;
+
 /**
  * @author ngoanh2n@gmail.com (Ho Huu Ngoan)
  */
@@ -31,6 +34,21 @@ class CsvComparisonResultImpl implements CsvComparisonResult {
     @Override
     public boolean hasRowModified() {
         return this.hasRowModified;
+    }
+
+    @Override
+    public File getAddedRows() {
+        return new File(Paths.get(diffPath, Constants.ADDITION_FILE_NAME).toString());
+    }
+
+    @Override
+    public File getDeletedRows() {
+        return new File(Paths.get(diffPath, Constants.DELETION_FILE_NAME).toString());
+    }
+
+    @Override
+    public File getModifiedRows() {
+        return new File(Paths.get(diffPath, Constants.MODIFICATION_FILE_NAME).toString());
     }
 
     void setDiffPath(String path) {

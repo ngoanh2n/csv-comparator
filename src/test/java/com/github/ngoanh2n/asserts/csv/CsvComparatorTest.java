@@ -3,16 +3,16 @@ package com.github.ngoanh2n.asserts.csv;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 /**
  * @author ngoanh2n@gmail.com (Ho Huu Ngoan)
  */
 
 class CsvComparatorTest {
 
-    private final String diffPath = "build/csvDiff";
-
     @Test
-    void checkAddedRows() {
+    void checkAddedRows() throws IOException {
         CsvComparator comparator = CsvComparator.builder()
                 .onColumns(1, 2, 3)
                 .onCsvFiles(
@@ -21,13 +21,14 @@ class CsvComparatorTest {
                 .byIdentityColumn(0)
                 .build();
 
-        CsvComparisonResult result = comparator.saveDiffAt(diffPath).perform();
-        Assertions.assertTrue(result.hasRowAdded());
+        CsvComparisonResult result = comparator.saveDiffAt("build/csv-diff/added").perform();
         Assertions.assertTrue(result.hasDiff());
+        Assertions.assertTrue(result.hasRowAdded());
+        Assertions.assertTrue(result.getAddedRows().exists());
     }
 
     @Test
-    void checkDeletedRows() {
+    void checkDeletedRows() throws IOException {
         CsvComparator comparator = CsvComparator.builder()
                 .onColumns("email", "firstname", "lastname")
                 .onCsvFiles(
@@ -36,13 +37,14 @@ class CsvComparatorTest {
                 .byIdentityColumn("email")
                 .build();
 
-        CsvComparisonResult result = comparator.saveDiffAt(diffPath).perform();
-        Assertions.assertTrue(result.hasRowDeleted());
+        CsvComparisonResult result = comparator.saveDiffAt("build/csv-diff/deleted").perform();
         Assertions.assertTrue(result.hasDiff());
+        Assertions.assertTrue(result.hasRowDeleted());
+        Assertions.assertTrue(result.getDeletedRows().exists());
     }
 
     @Test
-    void checkModifiedRows() {
+    void checkModifiedRows() throws IOException {
         CsvComparator comparator = CsvComparator.builder()
                 .onColumns("email", "firstname", "lastname")
                 .onCsvFiles(
@@ -51,8 +53,9 @@ class CsvComparatorTest {
                 .byIdentityColumn(0)
                 .build();
 
-        CsvComparisonResult result = comparator.saveDiffAt(diffPath).perform();
-        Assertions.assertTrue(result.hasRowModified());
+        CsvComparisonResult result = comparator.saveDiffAt("build/csv-diff/modified").perform();
         Assertions.assertTrue(result.hasDiff());
+        Assertions.assertTrue(result.hasRowModified());
+        Assertions.assertTrue(result.getModifiedRows().exists());
     }
 }

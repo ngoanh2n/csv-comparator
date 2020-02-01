@@ -26,7 +26,7 @@ Add the `csv-comparator` dependency to your pom.
     <dependency>
         <groupId>com.github.ngoanh2n</groupId>
         <artifactId>csv-comparator</artifactId>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
     </dependency>
     [...]
 </dependencies>
@@ -40,7 +40,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.ngoanh2n:csv-comparator:1.0.0'
+    implementation 'com.github.ngoanh2n:csv-comparator:1.1.0'
 }
 ```
 
