@@ -33,6 +33,13 @@ public class CsvComparator {
     private final CsvComparisonVisitor visitor;
 
     public CsvComparator(@Nonnull ComparisonSource<File> source,
+                         @Nonnull CsvComparisonOptions options) {
+        this.source = checkNotNull(source, "source cannot be null");
+        this.options = checkNotNull(options, "source cannot be null");
+        this.visitor = new DefaultCsvComparisonVisitor();
+    }
+
+    public CsvComparator(@Nonnull ComparisonSource<File> source,
                          @Nonnull CsvComparisonOptions options,
                          @Nonnull CsvComparisonVisitor visitor) {
         this.source = checkNotNull(source, "source cannot be null");
