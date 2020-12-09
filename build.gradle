@@ -26,30 +26,19 @@ repositories {
     }
 }
 
+ext {
+    GUAVA_VERSION                   = '28.2-jre'
+    SLF4J_VERSION                   = '1.7.30'
+    CSV_PARSER_VERSION              = '2.8.4'
+    JUNIT5_JUPITER_VERSION          = '5.7.0'
+}
+
 dependencies {
-    /*
-    * CSV
-    */
-    // https://mvnrepository.com/artifact/com.univocity/univocity-parsers
-    implementation('com.univocity:univocity-parsers:2.8.4')
-
-    /*
-    * JUnit5 - Jupiter: API
-    */
-    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
-    testImplementation('org.junit.jupiter:junit-jupiter-api:5.6.0')
-
-    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine
-    testImplementation('org.junit.jupiter:junit-jupiter-engine:5.6.0')
-
-    /*
-     * Logging
-     */
-    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
     implementation('org.slf4j:slf4j-api:1.7.30')
-
-    // https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12
     testImplementation('org.slf4j:slf4j-log4j12:1.7.30')
+    implementation('com.univocity:univocity-parsers:2.8.4')
+    testImplementation('org.junit.jupiter:junit-jupiter-api:5.6.0')
+    testImplementation('org.junit.jupiter:junit-jupiter-engine:5.6.0')
 }
 
 buildscript {
