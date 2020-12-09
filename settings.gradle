@@ -1,2 +1,7 @@
+/**
+ * https://github.com/ngoanh2n/csv-comparator
+ * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @since 1.0.0
+ */
 rootProject.name = 'csv-comparator'
 
