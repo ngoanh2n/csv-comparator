@@ -32,12 +32,14 @@ ext {
     SLF4J_VERSION                   = '1.7.30'
     CSV_PARSER_VERSION              = '2.8.4'
     JUNIT5_JUPITER_VERSION          = '5.7.0'
+    JUNIVERSAL_CHARDET_VERSION      = '2.3.2'
 }
 
 dependencies {
     implementation("org.slf4j:slf4j-api:${SLF4J_VERSION}")
     implementation("com.google.guava:guava:${GUAVA_VERSION}")
     implementation("com.univocity:univocity-parsers:${CSV_PARSER_VERSION}")
+    implementation("com.github.albfernandez:juniversalchardet:$JUNIVERSAL_CHARDET_VERSION")
     testImplementation("org.slf4j:slf4j-log4j12:${SLF4J_VERSION}")
     testImplementation("org.junit.jupiter:junit-jupiter-api:${JUNIT5_JUPITER_VERSION}")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:${JUNIT5_JUPITER_VERSION}")
