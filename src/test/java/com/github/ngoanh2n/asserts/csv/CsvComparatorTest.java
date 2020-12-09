@@ -1,61 +1,108 @@
 package com.github.ngoanh2n.asserts.csv;
 
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
-import java.io.IOException;
+import java.io.File;
+import java.net.URL;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * @author ngoanh2n@gmail.com (Ho Huu Ngoan)
+ * <h3>csv-comparator<h3>
+ * <a href="https://github.com/ngoanh2n/csv-comparator">https://github.com/ngoanh2n/csv-comparator<a>
+ * <br>
+ *
+ * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @since 1.0.0
  */
-
-class CsvComparatorTest {
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+public class CsvComparatorTest {
 
     @Test
-    void checkAddedRows() throws IOException {
-        CsvComparator comparator = CsvComparator.builder()
-                .onColumns(1, 2, 3)
-                .onCsvFiles(
-                        "com/github/ngoanh2n/asserts/csv/actual/addition-input.csv",
-                        "com/github/ngoanh2n/asserts/csv/expected/addition-input.csv")
-                .byIdentityColumn(0)
+    @Order(1)
+    void kept() {
+        ComparisonSource<File> source = ComparisonSource.create(
+                resource("com/github/ngoanh2n/asserts/csv/exp/inserted.csv"),
+                resource("com/github/ngoanh2n/asserts/csv/exp/inserted.csv")
+        );
+        CsvComparisonOptions options = CsvComparisonOptions
+                .builder()
+                .columns(1, 2, 3)
+                .identityColumn(0)
                 .build();
+        CsvComparisonResult result = new CsvComparator(source, options).compare();
 
-        CsvComparisonResult result = comparator.saveDiffAt("build/csv-diff/added").perform();
-        Assertions.assertTrue(result.hasDiff());
-        Assertions.assertTrue(result.hasRowAdded());
-        Assertions.assertTrue(result.getAddedRows().exists());
+        assertFalse(result.hasDeleted());
+        assertFalse(result.hasInserted());
+        assertFalse(result.hasModified());
+        assertFalse(result.hasDiff());
+        assertEquals(1, result.rowsKept().size());
     }
 
     @Test
-    void checkDeletedRows() throws IOException {
-        CsvComparator comparator = CsvComparator.builder()
-                .onColumns("email", "firstname", "lastname")
-                .onCsvFiles(
-                        "com/github/ngoanh2n/asserts/csv/actual/deletion-input.csv",
-                        "com/github/ngoanh2n/asserts/csv/expected/deletion-input.csv")
-                .byIdentityColumn("email")
+    @Order(2)
+    void deleted() {
+        ComparisonSource<File> source = ComparisonSource.create(
+                resource("com/github/ngoanh2n/asserts/csv/exp/deleted.csv"),
+                resource("com/github/ngoanh2n/asserts/csv/act/deleted.csv")
+        );
+        CsvComparisonOptions options = CsvComparisonOptions
+                .builder()
+                .columns("email", "firstname", "lastname")
+                .identityColumn("email")
                 .build();
+        CsvComparisonResult result = new CsvComparator(source, options).compare();
 
-        CsvComparisonResult result = comparator.saveDiffAt("build/csv-diff/deleted").perform();
-        Assertions.assertTrue(result.hasDiff());
-        Assertions.assertTrue(result.hasRowDeleted());
-        Assertions.assertTrue(result.getDeletedRows().exists());
+        assertTrue(result.hasDeleted());
+        assertTrue(result.hasDiff());
+        assertTrue(result.rowsDeleted().size() > 0);
     }
 
     @Test
-    void checkModifiedRows() throws IOException {
-        CsvComparator comparator = CsvComparator.builder()
-                .onColumns("email", "firstname", "lastname")
-                .onCsvFiles(
-                        "com/github/ngoanh2n/asserts/csv/actual/modification-input.csv",
-                        "com/github/ngoanh2n/asserts/csv/expected/modification-input.csv")
-                .byIdentityColumn(0)
+    @Order(3)
+    void inserted() {
+        ComparisonSource<File> source = ComparisonSource.create(
+                resource("com/github/ngoanh2n/asserts/csv/exp/inserted.csv"),
+                resource("com/github/ngoanh2n/asserts/csv/act/inserted.csv")
+        );
+        CsvComparisonOptions options = CsvComparisonOptions
+                .builder()
+                .columns(1, 2, 3)
+                .identityColumn(0)
                 .build();
+        CsvComparisonResult result = new CsvComparator(source, options).compare();
 
-        CsvComparisonResult result = comparator.saveDiffAt("build/csv-diff/modified").perform();
-        Assertions.assertTrue(result.hasDiff());
-        Assertions.assertTrue(result.hasRowModified());
-        Assertions.assertTrue(result.getModifiedRows().exists());
+        assertTrue(result.hasInserted());
+        assertTrue(result.hasDiff());
+        assertEquals(2, result.rowsInserted().size());
+    }
+
+    @Test
+    @Order(4)
+    void modified() {
+        ComparisonSource<File> source = ComparisonSource.create(
+                resource("com/github/ngoanh2n/asserts/csv/exp/modified.csv"),
+                resource("com/github/ngoanh2n/asserts/csv/act/modified.csv")
+        );
+        CsvComparisonOptions options = CsvComparisonOptions
+                .builder()
+                .columns("email", "firstname", "lastname")
+                .identityColumn(0)
+                .build();
+        CsvComparisonResult result = new CsvComparator(source, options).compare();
+
+        assertTrue(result.hasModified());
+        assertTrue(result.hasDiff());
+        assertTrue(result.rowsModified().size() > 0);
+    }
+
+    static File resource(String name) {
+        ClassLoader classLoader = Utils.class.getClassLoader();
+        URL resource = classLoader.getResource(name);
+        if (resource == null) throw new IllegalArgumentException("File not found!");
+        else return new File(resource.getFile());
     }
 }
