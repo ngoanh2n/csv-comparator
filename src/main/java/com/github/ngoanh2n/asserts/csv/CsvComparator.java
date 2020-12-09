@@ -4,186 +4,209 @@ import com.univocity.parsers.common.ParsingContext;
 import com.univocity.parsers.common.processor.RowProcessor;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
-import com.univocity.parsers.csv.CsvWriter;
-import com.univocity.parsers.csv.CsvWriterSettings;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import static java.lang.invoke.MethodHandles.lookup;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * @author ngoanh2n@gmail.com (Ho Huu Ngoan)
+ * <h3>csv-comparator<h3>
+ * <a href="https://github.com/ngoanh2n/csv-comparator">https://github.com/ngoanh2n/csv-comparator<a>
+ * <br>
+ *
+ * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @since 1.0.0
  */
+public class CsvComparator {
 
-public final class CsvComparator {
+    private final ComparisonSource<File> source;
+    private final CsvComparisonOptions options;
+    private final CsvComparisonVisitor visitor;
 
-    private final static Logger logger = LoggerFactory.getLogger(lookup().lookupClass());
-
-    private Charset encoding;
-    private String diffPath;
-    private File actualCsv;
-    private File expectedCsv;
-    private int identifierColumn;
-    private CsvParserSettings parserSettings;
-
-    private CsvComparator(Builder builder) {
-        this.encoding = builder.encoding;
-        this.identifierColumn = builder.identityColumn;
-        this.buildParserSettings(
-                builder.lineSeparator,
-                builder.includedHeader,
-                builder.selectedColumnNames,
-                builder.selectedColumnIndexes
-        );
-        this.actualCsv = builder.actualCsv;
-        this.expectedCsv = builder.expectedCsv;
+    public CsvComparator(@Nonnull ComparisonSource<File> source,
+                         @Nonnull CsvComparisonOptions options,
+                         @Nonnull CsvComparisonVisitor visitor) {
+        this.source = checkNotNull(source, "source cannot be null");
+        this.options = checkNotNull(options, "source cannot be null");
+        this.visitor = checkNotNull(visitor, "source cannot be null");
     }
 
-    /*
-     * Parsing Builder
-     * */
-    public static Builder builder() {
-        return new Builder();
-    }
+    @Nonnull
+    public CsvComparisonResult compare() {
+        visitor.visitStarted(source);
+        Collector collector = new Collector();
+        CsvParserSettings settings = createParserSettings();
 
-    @SuppressWarnings({"WeakerAccess", "UnusedReturnValue"})
-    public final static class Builder extends ParsingStrategy<Builder> {
+        List<String[]> expRows = Utils.read(source.exp(), getEncoding(source.exp()), settings);
+        Map<String, String[]> expMap = expRows.stream().collect(Collectors.toMap(expRow
+                -> expRow[options.identityColumnIndex()], expRow -> expRow, (a, b) -> b));
 
-        private File actualCsv;
-        private File expectedCsv;
-
-        public Builder onCsvFiles(File actual, File expected) {
-            Utils.checkNotNull(actual, "actual == null");
-            Utils.checkNotNull(expected, "expected == null");
-
-            this.actualCsv = actual;
-            this.expectedCsv = expected;
-            return this;
-        }
-
-        public Builder onCsvFiles(String actualResourcePath, String expectedResourcePath) {
-            Utils.checkNotNull(actualResourcePath, "actualResourcePath == null");
-            Utils.checkNotNull(expectedResourcePath, "expectedResourcePath == null");
-
-            this.onCsvFiles(
-                    Utils.getFileFromResources(actualResourcePath),
-                    Utils.getFileFromResources(expectedResourcePath)
-            );
-            return this;
-        }
-
-        public CsvComparator build() {
-            return new CsvComparator(this);
-        }
-    }
-
-    public CsvComparator saveDiffAt(String path) {
-        File diffDir = new File(path);
-        if (!diffDir.exists()) diffDir.mkdirs();
-        diffPath = path;
-        return this;
-    }
-
-    public CsvComparisonResult perform() throws IOException {
-        CsvComparisonResultImpl result = new CsvComparisonResultImpl();
-        result.setDiffPath(diffPath);
-
-        List<String[]> expectedRows = new CsvParser(parserSettings).parseAll(expectedCsv, this.encoding);
-        Map<String, String[]> mapOfExpectedRecords = new HashMap<>();
-
-        for (String[] row : expectedRows) {
-            mapOfExpectedRecords.put(row[identifierColumn], row);
-        }
-
-        CsvWriterSettings writerSettings = new CsvWriterSettings();
-
-        parserSettings.setProcessor(new RowProcessor() {
-            CsvWriter additionWriter;
-            CsvWriter modificationWriter;
-
+        settings.setProcessor(new RowProcessor() {
             @Override
             public void processStarted(ParsingContext context) {
-                additionWriter = new CsvWriter(
-                        new File(Paths.get(diffPath, Constants.ADDITION_FILE_NAME).toString()),
-                        encoding, writerSettings);
-
-                modificationWriter = new CsvWriter(
-                        new File(Paths.get(diffPath, Constants.MODIFICATION_FILE_NAME).toString()),
-                        encoding, writerSettings);
             }
 
             @Override
             public void rowProcessed(String[] row, ParsingContext context) {
-                String[] expectedRow = mapOfExpectedRecords.get(row[identifierColumn]);
+                String[] expRow = expMap.get(row[options.identityColumnIndex()]);
 
-                if (expectedRow != null) {
-                    if (!Arrays.equals(row, expectedRow)) {
-                        result.setHasRowModified(true);
-                        modificationWriter.writeRow(row);
-                        logger.info("Modification row -> {}", Arrays.toString(row));
-
-                    } else {
-                        logger.info("Equality row -> {}", Arrays.toString(row));
-                    }
-
-                    mapOfExpectedRecords.remove(row[identifierColumn]);
-
+                if (expRow == null) {
+                    visitor.rowInserted(row, options);
+                    collector.rowInserted(row, options);
                 } else {
-                    result.setHasRowAdded(true);
-                    additionWriter.writeRow(row);
-                    logger.info("Addition row -> {}", Arrays.toString(row));
+                    if (Arrays.equals(row, expRow)) {
+                        visitor.rowKept(row, options);
+                        collector.rowKept(row, options);
+                    } else {
+                        visitor.rowModified(row, options);
+                        collector.rowModified(row, options);
+                    }
+                    expMap.remove(row[options.identityColumnIndex()]);
                 }
             }
 
             @Override
             public void processEnded(ParsingContext context) {
-                modificationWriter.close();
-                additionWriter.close();
             }
         });
+        new CsvParser(settings).parse(source.act(), getEncoding(source.act()));
 
-        new CsvParser(parserSettings).parse(actualCsv, encoding);
-
-        if (mapOfExpectedRecords.size() > 0) {
-            CsvWriter deletionWriter = new CsvWriter(
-                    new File(Paths.get(diffPath, Constants.DELETION_FILE_NAME).toString()),
-                    encoding, writerSettings);
-
-            for (Map.Entry<String, String[]> rowOfRemainder : mapOfExpectedRecords.entrySet()) {
-                result.setHasRowDeleted(true);
-                deletionWriter.writeRow(rowOfRemainder.getValue());
-                logger.info("Deletion row -> {}", Arrays.toString(rowOfRemainder.getValue()));
+        if (expMap.size() > 0) {
+            for (Map.Entry<String, String[]> left : expMap.entrySet()) {
+                String[] row = left.getValue();
+                visitor.rowDeleted(row, options);
+                collector.rowDeleted(row, options);
             }
-            deletionWriter.close();
         }
-
-        if (!result.hasRowAdded())
-            Files.deleteIfExists(Paths.get(diffPath, Constants.ADDITION_FILE_NAME));
-        if (!result.hasRowModified())
-            Files.deleteIfExists(Paths.get(diffPath, Constants.MODIFICATION_FILE_NAME));
-        return result;
+        visitor.visitEnded(source);
+        return new Result(collector);
     }
 
-    private void buildParserSettings(String lineSeparator, boolean includedHeader,
-                                     String[] selectedColumnNames, Integer[] selectedColumnIndexes) {
-        this.parserSettings = new CsvParserSettings();
-        this.parserSettings.getFormat().setLineSeparator(lineSeparator);
-        this.parserSettings.setHeaderExtractionEnabled(includedHeader);
+    private Charset getEncoding(File file) {
+        try {
+            return options.encoding() != null
+                    ? options.encoding()
+                    : Charset.forName(Utils.charsetOf(file));
+        } catch (IOException ignored) {
+            // Can't happen
+            return StandardCharsets.UTF_8;
+        }
+    }
 
-        if (selectedColumnNames.length > 0)
-            this.parserSettings.selectFields(selectedColumnNames);
+    private CsvParserSettings createParserSettings() {
+        CsvParserSettings settings = new CsvParserSettings();
+        settings.setHeaderExtractionEnabled(options.includedHeader());
+        settings.getFormat().setLineSeparator(options.lineSeparator());
 
-        else if (selectedColumnIndexes.length > 0)
-            this.parserSettings.selectIndexes(selectedColumnIndexes);
+        if (options.selectedColumnNames().length > 0) {
+            settings.selectFields(options.selectedColumnNames());
+        } else if (options.selectedColumnIndexes().length > 0) {
+            settings.selectIndexes(Arrays.stream(options.selectedColumnIndexes()).boxed().toArray(Integer[]::new));
+        }
+        Utils.createsDirectory(options.resultLocation());
+        return settings;
+    }
+
+    private final static class Result implements CsvComparisonResult {
+
+        private final Collector collector;
+
+        private Result(Collector collector) {
+            this.collector = collector;
+        }
+
+        @Override
+        public boolean hasDeleted() {
+            return collector.hasDeleted;
+        }
+
+        @Override
+        public boolean hasInserted() {
+            return collector.hasInserted;
+        }
+
+        @Override
+        public boolean hasModified() {
+            return collector.hasModified;
+        }
+
+        @Override
+        public List<String[]> rowsKept() {
+            return collector.rowsKept;
+        }
+
+        @Override
+        public List<String[]> rowsDeleted() {
+            return collector.rowsDeleted;
+        }
+
+        @Override
+        public List<String[]> rowsInserted() {
+            return collector.rowsInserted;
+        }
+
+        @Override
+        public List<String[]> rowsModified() {
+            return collector.rowsModified;
+        }
+
+        @Override
+        public boolean hasDiff() {
+            return hasDeleted() || hasInserted() || hasModified();
+        }
+    }
+
+    private final static class Collector implements CsvComparisonVisitor {
+
+        private boolean hasDeleted = false;
+        private boolean hasInserted = false;
+        private boolean hasModified = false;
+
+        private final List<String[]> rowsKept = new ArrayList<>();
+        private final List<String[]> rowsDeleted = new ArrayList<>();
+        private final List<String[]> rowsInserted = new ArrayList<>();
+        private final List<String[]> rowsModified = new ArrayList<>();
+
+        @Override
+        public void rowKept(String[] row, CsvComparisonOptions options) {
+            rowsKept.add(row);
+        }
+
+        @Override
+        public void rowDeleted(String[] row, CsvComparisonOptions options) {
+            hasDeleted = true;
+            rowsDeleted.add(row);
+        }
+
+        @Override
+        public void rowInserted(String[] row, CsvComparisonOptions options) {
+            hasInserted = true;
+            rowsInserted.add(row);
+        }
+
+        @Override
+        public void rowModified(String[] row, CsvComparisonOptions options) {
+            hasModified = true;
+            rowsModified.add(row);
+        }
+
+        @Override
+        public void visitStarted(ComparisonSource<?> source) {
+
+        }
+
+        @Override
+        public void visitEnded(ComparisonSource<?> source) {
+
+        }
     }
 }
