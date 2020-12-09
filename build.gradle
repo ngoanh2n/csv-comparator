@@ -1,7 +1,8 @@
 /**
- * @author ngoanh2n@gmail.com (Ho Huu Ngoan)
+ * https://github.com/ngoanh2n/csv-comparator
+ * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @since 1.0.0
  */
-
 group group
 version version
 
@@ -34,11 +35,11 @@ ext {
 }
 
 dependencies {
-    implementation('org.slf4j:slf4j-api:1.7.30')
-    testImplementation('org.slf4j:slf4j-log4j12:1.7.30')
-    implementation('com.univocity:univocity-parsers:2.8.4')
-    testImplementation('org.junit.jupiter:junit-jupiter-api:5.6.0')
-    testImplementation('org.junit.jupiter:junit-jupiter-engine:5.6.0')
+    implementation("org.slf4j:slf4j-api:${SLF4J_VERSION}")
+    testImplementation("org.slf4j:slf4j-log4j12:${SLF4J_VERSION}")
+    implementation("com.univocity:univocity-parsers:${CSV_PARSER_VERSION}")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${JUNIT5_JUPITER_VERSION}")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:${JUNIT5_JUPITER_VERSION}")
 }
 
 buildscript {
