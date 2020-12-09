@@ -31,6 +31,4 @@ public interface CsvComparisonResult {
     List<String[]> rowsDeleted();
 
     List<String[]> rowsModified();
-
-    boolean hasRowAdded();
 }
