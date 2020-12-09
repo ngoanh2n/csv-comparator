@@ -7,7 +7,6 @@ import org.mozilla.universalchardet.UniversalDetector;
 import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,13 +26,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @since 1.0.0
  */
 class Utils {
-
-    static File getFileFromResources(String relative) {
-        ClassLoader classLoader = Utils.class.getClassLoader();
-        URL resource = classLoader.getResource(relative);
-        if (resource == null) throw new IllegalArgumentException("File not found!");
-        else return new File(resource.getFile());
-    }
 
     static String timeStamp() {
         //noinspection SpellCheckingInspection
