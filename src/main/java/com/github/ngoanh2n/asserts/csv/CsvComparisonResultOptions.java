@@ -7,12 +7,12 @@ import java.nio.file.Paths;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * <h3>blur-comparator-csv<h3>
- * <a href="https://github.com/ngoanh2n/blur">https://github.com/ngoanh2n/blur<a>
+ * <h3>csv-comparator<h3>
+ * <a href="https://github.com/ngoanh2n/csv-comparator">https://github.com/ngoanh2n/csv-comparator<a>
  * <br>
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @since 1.0.0
+ * @since 1.2.0
  */
 public interface CsvComparisonResultOptions {
 
