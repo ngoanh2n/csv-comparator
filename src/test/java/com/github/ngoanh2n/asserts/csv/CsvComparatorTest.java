@@ -24,7 +24,7 @@ public class CsvComparatorTest {
     @Test
     @Order(1)
     void kept() {
-        ComparisonSource<File> source = ComparisonSource.create(
+        CsvComparisonSource<File> source = CsvComparisonSource.create(
                 resource("com/github/ngoanh2n/asserts/csv/exp/inserted.csv"),
                 resource("com/github/ngoanh2n/asserts/csv/exp/inserted.csv")
         );
@@ -45,7 +45,7 @@ public class CsvComparatorTest {
     @Test
     @Order(2)
     void deleted() {
-        ComparisonSource<File> source = ComparisonSource.create(
+        CsvComparisonSource<File> source = CsvComparisonSource.create(
                 resource("com/github/ngoanh2n/asserts/csv/exp/deleted.csv"),
                 resource("com/github/ngoanh2n/asserts/csv/act/deleted.csv")
         );
@@ -65,7 +65,7 @@ public class CsvComparatorTest {
     @Test
     @Order(3)
     void inserted() {
-        ComparisonSource<File> source = ComparisonSource.create(
+        CsvComparisonSource<File> source = CsvComparisonSource.create(
                 resource("com/github/ngoanh2n/asserts/csv/exp/inserted.csv"),
                 resource("com/github/ngoanh2n/asserts/csv/act/inserted.csv")
         );
@@ -85,7 +85,7 @@ public class CsvComparatorTest {
     @Test
     @Order(4)
     void modified() {
-        ComparisonSource<File> source = ComparisonSource.create(
+        CsvComparisonSource<File> source = CsvComparisonSource.create(
                 resource("com/github/ngoanh2n/asserts/csv/exp/modified.csv"),
                 resource("com/github/ngoanh2n/asserts/csv/act/modified.csv")
         );
