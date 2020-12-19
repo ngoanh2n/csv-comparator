@@ -60,8 +60,7 @@ buildscript {
 
 tasks.withType(Test).all { testTask ->
     testTask.systemProperties = [
-            'file.encoding': 'UTF-8',
-            'BUILD_URL'    : System.getenv()['BUILD_URL']
+            'file.encoding': 'UTF-8'
     ]
     testTask.testLogging.showStandardStreams = true
     testTask.outputs.upToDateWhen { false }
