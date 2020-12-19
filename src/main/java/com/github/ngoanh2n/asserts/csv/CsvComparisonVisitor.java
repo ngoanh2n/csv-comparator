@@ -26,11 +26,11 @@ public interface CsvComparisonVisitor {
      */
     void visitEnded(ComparisonSource<?> source);
 
-    void rowKept(String[] row, CsvComparisonOptions options);
+    void rowKept(String[] row, String[] headers, CsvComparisonOptions options);
 
-    void rowDeleted(String[] row, CsvComparisonOptions options);
+    void rowDeleted(String[] row, String[] headers, CsvComparisonOptions options);
 
-    void rowInserted(String[] row, CsvComparisonOptions options);
+    void rowInserted(String[] row, String[] headers, CsvComparisonOptions options);
 
-    void rowModified(String[] row, CsvComparisonOptions options);
+    void rowModified(String[] row, String[] headers, CsvComparisonOptions options);
 }
