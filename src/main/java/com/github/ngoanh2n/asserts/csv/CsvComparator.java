@@ -34,9 +34,7 @@ public class CsvComparator {
 
     public CsvComparator(@Nonnull ComparisonSource<File> source,
                          @Nonnull CsvComparisonOptions options) {
-        this.source = checkNotNull(source, "source cannot be null");
-        this.options = checkNotNull(options, "source cannot be null");
-        this.visitor = new DefaultCsvComparisonVisitor();
+        this(source, options, new DefaultCsvComparisonVisitor());
     }
 
     public CsvComparator(@Nonnull ComparisonSource<File> source,
@@ -51,8 +49,9 @@ public class CsvComparator {
     public CsvComparisonResult compare() {
         visitor.visitStarted(source);
         Collector collector = new Collector();
-        CsvParserSettings settings = createParserSettings();
+        CsvParserSettings settings = getSettings();
 
+        String[] headers = getHeaders(settings);
         List<String[]> expRows = Utils.read(source.exp(), getEncoding(source.exp()), settings);
         Map<String, String[]> expMap = expRows.stream().collect(Collectors.toMap(expRow
                 -> expRow[options.identityColumnIndex()], expRow -> expRow, (a, b) -> b));
@@ -63,21 +62,21 @@ public class CsvComparator {
             }
 
             @Override
-            public void rowProcessed(String[] row, ParsingContext context) {
-                String[] expRow = expMap.get(row[options.identityColumnIndex()]);
+            public void rowProcessed(String[] actRow, ParsingContext context) {
+                String[] expRow = expMap.get(actRow[options.identityColumnIndex()]);
 
                 if (expRow == null) {
-                    visitor.rowInserted(row, options);
-                    collector.rowInserted(row, options);
+                    visitor.rowInserted(actRow, headers, options);
+                    collector.rowInserted(actRow, headers, options);
                 } else {
-                    if (Arrays.equals(row, expRow)) {
-                        visitor.rowKept(row, options);
-                        collector.rowKept(row, options);
+                    if (Arrays.equals(actRow, expRow)) {
+                        visitor.rowKept(actRow, headers, options);
+                        collector.rowKept(actRow, headers, options);
                     } else {
-                        visitor.rowModified(row, options);
-                        collector.rowModified(row, options);
+                        visitor.rowModified(actRow, headers, options);
+                        collector.rowModified(actRow, headers, options);
                     }
-                    expMap.remove(row[options.identityColumnIndex()]);
+                    expMap.remove(actRow[options.identityColumnIndex()]);
                 }
             }
 
@@ -90,12 +89,17 @@ public class CsvComparator {
         if (expMap.size() > 0) {
             for (Map.Entry<String, String[]> left : expMap.entrySet()) {
                 String[] row = left.getValue();
-                visitor.rowDeleted(row, options);
-                collector.rowDeleted(row, options);
+                visitor.rowDeleted(row, headers, options);
+                collector.rowDeleted(row, headers, options);
             }
         }
         visitor.visitEnded(source);
         return new Result(collector);
+    }
+
+    private CsvParserSettings getSettings() {
+        Utils.createsDirectory(options.resultOptions().location());
+        return options.parserSettings();
     }
 
     private Charset getEncoding(File file) {
@@ -109,18 +113,16 @@ public class CsvComparator {
         }
     }
 
-    private CsvParserSettings createParserSettings() {
-        CsvParserSettings settings = new CsvParserSettings();
-        settings.setHeaderExtractionEnabled(options.includedHeader());
-        settings.getFormat().setLineSeparator(options.lineSeparator());
-
-        if (options.selectedColumnNames().length > 0) {
-            settings.selectFields(options.selectedColumnNames());
-        } else if (options.selectedColumnIndexes().length > 0) {
-            settings.selectIndexes(Arrays.stream(options.selectedColumnIndexes()).boxed().toArray(Integer[]::new));
+    private String[] getHeaders(CsvParserSettings settings) {
+        if (settings.isHeaderExtractionEnabled()) {
+            String[] headers = new String[0];
+            settings.setHeaderExtractionEnabled(false);
+            List<String[]> expRows = Utils.read(source.exp(), getEncoding(source.exp()), settings);
+            if (expRows.size() > 1) headers = expRows.get(0);
+            settings.setHeaderExtractionEnabled(true);
+            return headers;
         }
-        Utils.createsDirectory(options.resultLocation());
-        return settings;
+        return new String[0];
     }
 
     private final static class Result implements CsvComparisonResult {
@@ -184,24 +186,24 @@ public class CsvComparator {
         private final List<String[]> rowsModified = new ArrayList<>();
 
         @Override
-        public void rowKept(String[] row, CsvComparisonOptions options) {
+        public void rowKept(String[] row, String[] headers, CsvComparisonOptions options) {
             rowsKept.add(row);
         }
 
         @Override
-        public void rowDeleted(String[] row, CsvComparisonOptions options) {
+        public void rowDeleted(String[] row, String[] headers, CsvComparisonOptions options) {
             hasDeleted = true;
             rowsDeleted.add(row);
         }
 
         @Override
-        public void rowInserted(String[] row, CsvComparisonOptions options) {
+        public void rowInserted(String[] row, String[] headers, CsvComparisonOptions options) {
             hasInserted = true;
             rowsInserted.add(row);
         }
 
         @Override
-        public void rowModified(String[] row, CsvComparisonOptions options) {
+        public void rowModified(String[] row, String[] headers, CsvComparisonOptions options) {
             hasModified = true;
             rowsModified.add(row);
         }
