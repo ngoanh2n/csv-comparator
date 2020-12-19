@@ -1,5 +1,3 @@
-[![Twitter Follow](https://img.shields.io/twitter/follow/ngoanh2n.svg?style=social)](https://twitter.com/ngoanh2n)
-[![GitHub followers](https://img.shields.io/github/followers/ngoanh2n.svg?style=social&label=Follow&maxAge=2592000)](https://github.com/ngoanh2n?tab=followers)
 [![GitHub forks](https://img.shields.io/github/forks/ngoanh2n/csv-comparator.svg?style=social&label=Fork&maxAge=2592000)](https://github.com/ngoanh2n/csv-comparator/network/members/)
 [![GitHub stars](https://img.shields.io/github/stars/ngoanh2n/csv-comparator.svg?style=social&label=Star&maxAge=2592000)](https://github.com/ngoanh2n/csv-comparator/stargazers/)
 [![GitHub watchers](https://img.shields.io/github/watchers/ngoanh2n/csv-comparator.svg?style=social&label=Watch&maxAge=2592000)](https://github.com/ngoanh2n/csv-comparator/watchers/)
@@ -18,21 +16,7 @@
 
 # CSV Comparator
 
-### **Maven Project**
-Add the `csv-comparator` dependency to your pom.
-```xml
-<dependencies>
-    [...]
-    <dependency>
-        <groupId>com.github.ngoanh2n</groupId>
-        <artifactId>csv-comparator</artifactId>
-        <version>1.1.0</version>
-    </dependency>
-    [...]
-</dependencies>
-```
-
-### **Gradle Project**
+## Gradle Project
 Add the `csv-comparator` dependency to your build.gradle.
 ```gradle
 repositories {
@@ -40,57 +24,66 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.ngoanh2n:csv-comparator:1.1.0'
+    implementation('com.github.ngoanh2n:csv-comparator:1.2.0')
 }
 ```
 
-### **Examples**
+## Maven Project
+Add the `csv-comparator` dependency to your pom.
+```xml
+<dependencies>
+    [...]
+    <dependency>
+        <groupId>com.github.ngoanh2n</groupId>
+        <artifactId>csv-comparator</artifactId>
+        <version>1.2.0</version>
+    </dependency>
+    [...]
+</dependencies>
+```
+
+## How To Use
 Compare 2 CSV files formatted columns:
 ```
 id,email,firstname,lastname,age,note
 ```
 
-#### **Build CsvComparator**
+### Provide `CsvComparisonSource`
 ```java
-CsvComparator comparator = CsvComparator.builder()
-                .onColumns(1, 2, 3) // 
-                .onCsvFiles(
-                        "path/to/actual.csv",
-                        "path/to/expected.csv")
-                .byIdentityColumn(0) // position starts with 0 in array [1, 2, 3]
+CsvComparisonSource<File> source = CsvComparisonSource.create(expectedCsv, actualCsv);
+```
+
+### Build `CsvComparisonOptions`
+```java
+CsvComparisonOptions options = CsvComparisonOptions
+                .builder()
+                .setColumns(1, 2, 3)
+                .setIdentityColumn(0)   // position starts with 0 in array [1, 2, 3]
                 .build();
 ```
 
 If you want to use column names:
 ```java
-                .onColumns("email", "firstname", "lastname")
-                .byIdentityColumn("email")
+CsvComparisonOptions options = CsvComparisonOptions
+                .builder()
+                .setColumns("email", "firstname", "lastname")
+                .setIdentityColumn("email")
+                .build();
 ```
 
-#### **Recieve CsvComparisonResult**
+### Do `CsvComparator`
 ```java
-CsvComparisonResult result = comparator
-                .saveDiffAt("build/csv-results")
-                .perform();
+CsvComparisonResult result = new CsvComparator(source, options).compare();
 ```
 
-#### **Result Assertions**
-**Check diff:**
-```java
-Assertions.assertTrue(result.hasDiff());
-```
+### Asssert `CsvComparisonResult`
+- `#hasDiff()`
+- `#hasDeleted()`
+- `#hasInserted()`
+- `#hasModified()`
+- `#rowsKept()`
+- `#rowsDeleted()`
+- `#rowsInserted()`
+- `#rowsModified()`
 
-**Check addition:**
-```java
-Assertions.assertTrue(result.hasRowAdded());
-```
-
-**Check deletion:**
-```java
-Assertions.assertTrue(result.hasRowDeleted());
-```
-
-**Check modification:**
-```java
-Assertions.assertTrue(result.hasRowModified());
-```
+_By default, result files which is created after comparing is located at `build/comparator/csv/{yyyyMMdd.HHmmss.SSS}/`_

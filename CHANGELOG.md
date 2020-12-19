@@ -17,6 +17,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 ----
+## [1.2.0] - (2020-12-19)
+### Added
+- `CsvComparisonResultOptions`
+- Allow to add headers to result fies ([#2](https://github.com/ngoanh2n/csv-comparator/issues/2))
+- `CsvComparisonResult#rowsKept()`
+- `CsvComparisonResult#rowsDeleted()`
+- `CsvComparisonResult#rowsInserted()`
+- `CsvComparisonResult#rowsModified()`
+- Dependency `com.google.guava:guava`
+- Dependency `com.github.albfernandez:juniversalchardet`
+### Changed
+- Upgrade Gradle to `6.7.1`
+- Upgrade JUnit5 Jupiter to `5.7.0`
+- Change Builder method names for `CsvComparisonOptions`
+- Apply `CsvComparisonVisitor` and `CsvComparisonSource` for `CsvComparator`
+### Removed
+- `CsvComparisonResult#getAddedRows()`
+- `CsvComparisonResult#getDeletedRows()`
+- `CsvComparisonResult#getModifiedRows()`
+
 ## [1.1.0] - (2020-02-01)
 ### Added
 - Allow to get diff files from CsvComparisonResult ([#1](https://github.com/ngoanh2n/csv-comparator/issues/1))
