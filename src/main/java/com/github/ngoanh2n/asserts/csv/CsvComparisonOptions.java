@@ -1,13 +1,10 @@
 package com.github.ngoanh2n.asserts.csv;
 
-import com.univocity.parsers.common.Format;
 import com.univocity.parsers.csv.CsvParserSettings;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.nio.charset.Charset;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -25,40 +22,31 @@ public interface CsvComparisonOptions {
     @Nullable
     Charset encoding();
 
-    @Nonnull
-    Path resultLocation();
-
-    @Nonnull
-    String lineSeparator();
-
-    boolean includedHeader();
-
     int identityColumnIndex();
 
-    int[] selectedColumnIndexes();
+    @Nonnull
+    CsvParserSettings parserSettings();
 
     @Nonnull
-    String[] selectedColumnNames();
+    CsvComparisonResultOptions resultOptions();
 
     final class Builder {
 
         private Charset encoding;
-        private Path resultLocation;
-        private String lineSeparator;
-        private boolean includeHeader;
         private int selectedColumnCount;
         private int identityColumnIndex;
         private String[] selectedColumnNames;
-        private Integer[] selectedColumnIndexes;
+        private final CsvParserSettings csvParser;
+        private CsvComparisonResultOptions resultOptions;
 
         private Builder() {
             this.encoding = null;
-            this.lineSeparator = "\n";
-            this.includeHeader = true;
             this.identityColumnIndex = 0;
             this.selectedColumnNames = new String[0];
-            this.selectedColumnIndexes = new Integer[0];
-            this.resultLocation = Paths.get("build/blur/comparator/csv");
+            this.csvParser = new CsvParserSettings();
+            this.csvParser.setHeaderExtractionEnabled(true);
+            this.csvParser.getFormat().setLineSeparator("\n");
+            this.resultOptions = CsvComparisonResultOptions.defaults();
         }
 
         /**
@@ -67,46 +55,36 @@ public interface CsvComparisonOptions {
          * @return {@link CsvComparisonOptions.Builder}
          * @see java.nio.charset.StandardCharsets
          */
-        public Builder encoding(@Nonnull Charset encoding) {
+        public Builder setEncoding(@Nullable Charset encoding) {
             this.encoding = encoding;
-            return this;
-        }
-
-        /**
-         * @param path where you store the results
-         * @return {@link CsvComparisonOptions.Builder}
-         */
-        public Builder resultLocation(@Nonnull Path path) {
-            this.resultLocation = checkNotNull(path, "path cannot not be null");
             return this;
         }
 
         /**
          * Defines the line separator sequence that should be used for parsing and writing
          * <p>
-         * {@link Format#setLineSeparator(String)}
-         * {@link CsvParserSettings#getFormat()#lineSeparator(String)}
          *
          * @param lineSeparator a sequence of 1 to 2 characters that identifies the end of a line
          * @return {@link CsvComparisonOptions.Builder}
          */
-        public Builder lineSeparator(@Nonnull String lineSeparator) {
-            this.lineSeparator = checkNotNull(lineSeparator, "lineSeparator cannot not be null");
+        public Builder setLineSeparator(@Nonnull String lineSeparator) {
+            checkNotNull(lineSeparator, "lineSeparator cannot not be null");
+            this.csvParser.getFormat().setLineSeparator(lineSeparator);
             return this;
         }
 
         /**
-         * Defines whether or not the first valid record parsed from the input should be considered
-         * as the row containing the names of each column
+         * Defines whether or not the first valid record parsed from
+         * the input should be considered as the row containing the names of each column.<br>
+         * This means, your input files are marked first row as header if {@code extracted} is {@code true}
          * <p>
-         * {@link CsvParserSettings#setHeaderExtractionEnabled(boolean)}
          *
-         * @param wanna A flag indicating whether the first valid record parsed from the input
-         *              should be asserted or compared
+         * @param extracted A flag indicating whether the first valid record parsed from
+         *                  the input should be considered as the row containing the names of each column
          * @return {@link CsvComparisonOptions.Builder}
          */
-        public Builder includeHeader(boolean wanna) {
-            this.includeHeader = wanna;
+        public Builder extractHeader(boolean extracted) {
+            this.csvParser.setHeaderExtractionEnabled(extracted);
             return this;
         }
 
@@ -114,10 +92,10 @@ public interface CsvComparisonOptions {
          * @param name indicate which is identity column
          *             determine which field is unique in a row. <br>
          *             e.g. id | email | username
-         *             {@link #columns(String...)}
+         *             {@link #setColumns(String...)}
          * @return {@link CsvComparisonOptions.Builder}
          */
-        public Builder identityColumn(@Nonnull String name) {
+        public Builder setIdentityColumn(@Nonnull String name) {
             if (this.selectedColumnNames.length != 0) {
                 checkNotNull(name, "name cannot not be null");
                 this.identityColumnIndex = Arrays.asList(this.selectedColumnNames).indexOf(name);
@@ -132,14 +110,14 @@ public interface CsvComparisonOptions {
          *              determine which field is unique in a row.
          *              starts with 0 in range of columns by indexes
          *              <p>
-         *              {@link #columns(Integer...)}
+         *              {@link #setColumns(Integer...)}
          *              <p>
          *              e.g. columns(1, 2, 5) <=> [username, address, prefs] <br>
          *              If you want to select field username as identity column <br>
          *              then set {@code CsvComparisonOptions.Builder.identityColumn(0)}
          * @return {@link CsvComparisonOptions.Builder}
          */
-        public Builder identityColumn(int index) {
+        public Builder setIdentityColumn(int index) {
             if (index > -1 && index < this.selectedColumnCount) {
                 this.identityColumnIndex = index;
             } else {
@@ -149,33 +127,35 @@ public interface CsvComparisonOptions {
         }
 
         /**
-         * {@link CsvParserSettings#selectFields(String...)}
-         *
          * @param names the expected column names which assert or compare
          * @return {@link CsvComparisonOptions.Builder}
          */
-        public Builder columns(@Nonnull String... names) {
+        public Builder setColumns(@Nonnull String... names) {
             checkNotNull(names, "names cannot not be null");
             this.selectedColumnNames = names;
             this.selectedColumnCount = names.length;
+            this.csvParser.selectFields(names);
             return this;
         }
 
         /**
-         * {@link CsvParserSettings#selectIndexes(Integer...)}
-         *
          * @param indexes the expected column indexes which assert or compare
          * @return {@link CsvComparisonOptions.Builder}
          */
-        public Builder columns(@Nonnull Integer... indexes) {
+        public Builder setColumns(@Nonnull Integer... indexes) {
             checkNotNull(indexes, "indexes cannot not be null");
-            this.selectedColumnIndexes = indexes;
             this.selectedColumnCount = indexes.length;
+            this.csvParser.selectIndexes(indexes);
+            return this;
+        }
+
+        public Builder setResultOptions(@Nonnull CsvComparisonResultOptions options) {
+            this.resultOptions = options;
             return this;
         }
 
         /**
-         * Build CsvComparator based on CsvComparator.Builder
+         * Build CsvComparisonOptions based on CsvComparisonOptions.Builder
          *
          * @return {@link CsvComparator}
          */
@@ -187,23 +167,6 @@ public interface CsvComparisonOptions {
                     return encoding;
                 }
 
-                @Nonnull
-                @Override
-                public Path resultLocation() {
-                    return resultLocation;
-                }
-
-                @Nonnull
-                @Override
-                public String lineSeparator() {
-                    return lineSeparator;
-                }
-
-                @Override
-                public boolean includedHeader() {
-                    return includeHeader;
-                }
-
                 @Override
                 public int identityColumnIndex() {
                     return identityColumnIndex;
@@ -211,15 +174,14 @@ public interface CsvComparisonOptions {
 
                 @Nonnull
                 @Override
-                public String[] selectedColumnNames() {
-                    return selectedColumnNames;
+                public CsvParserSettings parserSettings() {
+                    return csvParser;
                 }
 
+                @Nonnull
                 @Override
-                public int[] selectedColumnIndexes() {
-                    return Arrays
-                            .stream(selectedColumnIndexes)
-                            .mapToInt(Integer::intValue).toArray();
+                public CsvComparisonResultOptions resultOptions() {
+                    return resultOptions;
                 }
             };
         }
