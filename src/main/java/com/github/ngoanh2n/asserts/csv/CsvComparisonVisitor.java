@@ -15,16 +15,16 @@ public interface CsvComparisonVisitor {
     /**
      * This method is called before {@link CsvComparator#compare()} method
      *
-     * @param source {@link ComparisonSource} is being to compare
+     * @param source {@link CsvComparisonSource} is being to compare
      */
-    void visitStarted(ComparisonSource<?> source);
+    void visitStarted(CsvComparisonSource<?> source);
 
     /**
      * This method is called after {@link CsvComparator#compare()} method
      *
-     * @param source {@link ComparisonSource} is being to compare
+     * @param source {@link CsvComparisonSource} is being to compare
      */
-    void visitEnded(ComparisonSource<?> source);
+    void visitEnded(CsvComparisonSource<?> source);
 
     void rowKept(String[] row, String[] headers, CsvComparisonOptions options);
 
