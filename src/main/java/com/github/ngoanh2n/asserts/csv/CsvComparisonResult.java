@@ -26,9 +26,9 @@ public interface CsvComparisonResult {
 
     List<String[]> rowsKept();
 
-    List<String[]> rowsInserted();
-
     List<String[]> rowsDeleted();
+
+    List<String[]> rowsInserted();
 
     List<String[]> rowsModified();
 }
