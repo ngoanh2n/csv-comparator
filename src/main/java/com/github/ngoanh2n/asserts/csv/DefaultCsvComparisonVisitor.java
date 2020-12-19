@@ -45,7 +45,7 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
             writeHeader(headers, options, keptWriter);
         }
         keptWriter.writeRow(row);
-        LOGGER.debug("[comparator][csv] Kept -> {}", Arrays.toString(row));
+        LOGGER.debug("Kept -> {}", Arrays.toString(row));
     }
 
     @Override
@@ -56,7 +56,7 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
             writeHeader(headers, options, deletedWriter);
         }
         deletedWriter.writeRow(row);
-        LOGGER.debug("[comparator][csv] Deleted -> {}", Arrays.toString(row));
+        LOGGER.debug("Deleted -> {}", Arrays.toString(row));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
             writeHeader(headers, options, insertedWriter);
         }
         insertedWriter.writeRow(row);
-        LOGGER.debug("[comparator][csv] Inserted -> {}", Arrays.toString(row));
+        LOGGER.debug("Inserted -> {}", Arrays.toString(row));
     }
 
     @Override
@@ -78,7 +78,7 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
             writeHeader(headers, options, modifiedWriter);
         }
         modifiedWriter.writeRow(row);
-        LOGGER.debug("[comparator][csv] Modified -> {}", Arrays.toString(row));
+        LOGGER.debug("Modified -> {}", Arrays.toString(row));
     }
 
     @Override
