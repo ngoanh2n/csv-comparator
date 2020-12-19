@@ -16,20 +16,17 @@
 
 # CSV Comparator
 
-## Gradle Project
-Add the `csv-comparator` dependency to your build.gradle.
+## How To Use
+### Gradle Project
+Add the `csv-comparator` dependency to your build.gradle
 ```gradle
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    implementation('com.github.ngoanh2n:csv-comparator:1.2.0')
+    testImplementation("com.github.ngoanh2n:csv-comparator:1.2.0")
 }
 ```
 
-## Maven Project
-Add the `csv-comparator` dependency to your pom.
+### Maven Project
+Add the `csv-comparator` dependency to your pom
 ```xml
 <dependencies>
     [...]
@@ -37,12 +34,13 @@ Add the `csv-comparator` dependency to your pom.
         <groupId>com.github.ngoanh2n</groupId>
         <artifactId>csv-comparator</artifactId>
         <version>1.2.0</version>
+        <scope>test</scope>
     </dependency>
     [...]
 </dependencies>
 ```
 
-## How To Use
+## How To Apply
 Compare 2 CSV files formatted columns:
 ```
 id,email,firstname,lastname,age,note
@@ -58,7 +56,7 @@ CsvComparisonSource<File> source = CsvComparisonSource.create(expectedCsv, actua
 CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
                 .setColumns(1, 2, 3)
-                .setIdentityColumn(0)   // position starts with 0 in array [1, 2, 3]
+                .setIdentityColumn(0) // position starts with 0 in array [1, 2, 3]
                 .build();
 ```
 
@@ -77,13 +75,15 @@ CsvComparisonResult result = new CsvComparator(source, options).compare();
 ```
 
 ### Asssert `CsvComparisonResult`
-- `#hasDiff()`
-- `#hasDeleted()`
-- `#hasInserted()`
-- `#hasModified()`
-- `#rowsKept()`
-- `#rowsDeleted()`
-- `#rowsInserted()`
-- `#rowsModified()`
+```java
+CsvComparisonResult.hasDiff()
+CsvComparisonResult.hasDeleted()
+CsvComparisonResult.hasInserted()
+CsvComparisonResult.hasModified()
+CsvComparisonResult.rowsKept()
+CsvComparisonResult.rowsDeleted()
+CsvComparisonResult.rowsInserted()
+CsvComparisonResult.rowsModified()
+```
 
 _By default, result files which is created after comparing is located at `build/comparator/csv/{yyyyMMdd.HHmmss.SSS}/`_
