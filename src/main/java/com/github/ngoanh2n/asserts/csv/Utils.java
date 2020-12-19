@@ -1,5 +1,6 @@
 package com.github.ngoanh2n.asserts.csv;
 
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import org.mozilla.universalchardet.UniversalDetector;
@@ -36,7 +37,8 @@ class Utils {
         return UniversalDetector.detectCharset(file);
     }
 
-    static void createsDirectory(@Nonnull Path location) {
+    @CanIgnoreReturnValue
+    public static Path createsDirectory(@Nonnull Path location) {
         Iterator<Path> elements = location.iterator();
         Path parentElement = Paths.get("");
 
@@ -45,6 +47,7 @@ class Utils {
             //noinspection ResultOfMethodCallIgnored
             parentElement.toFile().mkdirs();
         }
+        return location;
     }
 
     static List<String[]> read(@Nonnull File csv, @Nonnull Charset encoding, @Nonnull CsvParserSettings settings) {
