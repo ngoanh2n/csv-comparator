@@ -82,12 +82,12 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     }
 
     @Override
-    public void visitStarted(ComparisonSource<?> source) {
+    public void visitStarted(CsvComparisonSource<?> source) {
         settings = new CsvWriterSettings();
     }
 
     @Override
-    public void visitEnded(ComparisonSource<?> source) {
+    public void visitEnded(CsvComparisonSource<?> source) {
         if (keptWriter != null) keptWriter.close();
         if (deletedWriter != null) deletedWriter.close();
         if (insertedWriter != null) insertedWriter.close();

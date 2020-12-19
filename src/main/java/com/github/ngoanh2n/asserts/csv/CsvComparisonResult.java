@@ -14,7 +14,7 @@ public interface CsvComparisonResult {
 
     /**
      * @return Whether has different or not between
-     * {@link ComparisonSource#exp()} and {@link ComparisonSource#act()}
+     * {@link CsvComparisonSource#exp()} and {@link CsvComparisonSource#act()}
      */
     boolean hasDiff();
 

@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  * @since 1.0.0
  */
-public interface ComparisonSource<T> {
+public interface CsvComparisonSource<T> {
 
     @Nonnull
     T exp();
@@ -30,8 +30,8 @@ public interface ComparisonSource<T> {
      * @param <T> type of source
      * @return comparison source
      */
-    static <T> ComparisonSource<T> create(@Nonnull T exp, @Nonnull T act) {
-        return new ComparisonSource<T>() {
+    static <T> CsvComparisonSource<T> create(@Nonnull T exp, @Nonnull T act) {
+        return new CsvComparisonSource<T>() {
             @Nonnull
             @Override
             public T exp() {

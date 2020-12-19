@@ -28,16 +28,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class CsvComparator {
 
-    private final ComparisonSource<File> source;
+    private final CsvComparisonSource<File> source;
     private final CsvComparisonOptions options;
     private final CsvComparisonVisitor visitor;
 
-    public CsvComparator(@Nonnull ComparisonSource<File> source,
+    public CsvComparator(@Nonnull CsvComparisonSource<File> source,
                          @Nonnull CsvComparisonOptions options) {
         this(source, options, new DefaultCsvComparisonVisitor());
     }
 
-    public CsvComparator(@Nonnull ComparisonSource<File> source,
+    public CsvComparator(@Nonnull CsvComparisonSource<File> source,
                          @Nonnull CsvComparisonOptions options,
                          @Nonnull CsvComparisonVisitor visitor) {
         this.source = checkNotNull(source, "source cannot be null");
@@ -209,12 +209,12 @@ public class CsvComparator {
         }
 
         @Override
-        public void visitStarted(ComparisonSource<?> source) {
+        public void visitStarted(CsvComparisonSource<?> source) {
 
         }
 
         @Override
-        public void visitEnded(ComparisonSource<?> source) {
+        public void visitEnded(CsvComparisonSource<?> source) {
 
         }
     }
