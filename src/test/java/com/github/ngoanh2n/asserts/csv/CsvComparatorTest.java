@@ -30,8 +30,8 @@ public class CsvComparatorTest {
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
-                .columns(1, 2, 3)
-                .identityColumn(0)
+                .setColumns(1, 2, 3)
+                .setIdentityColumn(0)
                 .build();
         CsvComparisonResult result = new CsvComparator(source, options).compare();
 
@@ -51,14 +51,15 @@ public class CsvComparatorTest {
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
-                .columns("email", "firstname", "lastname")
-                .identityColumn("email")
+                .setColumns("email", "firstname", "lastname")
+                .setIdentityColumn("email")
                 .build();
         CsvComparisonResult result = new CsvComparator(source, options).compare();
 
         assertTrue(result.hasDeleted());
         assertTrue(result.hasDiff());
-        assertTrue(result.rowsDeleted().size() > 0);
+        assertEquals(1, result.rowsKept().size());
+        assertEquals(1, result.rowsDeleted().size());
     }
 
     @Test
@@ -70,13 +71,14 @@ public class CsvComparatorTest {
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
-                .columns(1, 2, 3)
-                .identityColumn(0)
+                .setColumns(1, 2, 3)
+                .setIdentityColumn(0)
                 .build();
         CsvComparisonResult result = new CsvComparator(source, options).compare();
 
         assertTrue(result.hasInserted());
         assertTrue(result.hasDiff());
+        assertEquals(1, result.rowsKept().size());
         assertEquals(2, result.rowsInserted().size());
     }
 
@@ -89,14 +91,15 @@ public class CsvComparatorTest {
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
-                .columns("email", "firstname", "lastname")
-                .identityColumn(0)
+                .setColumns("email", "firstname", "lastname")
+                .setIdentityColumn(0)
                 .build();
         CsvComparisonResult result = new CsvComparator(source, options).compare();
 
         assertTrue(result.hasModified());
         assertTrue(result.hasDiff());
-        assertTrue(result.rowsModified().size() > 0);
+        assertEquals(2, result.rowsKept().size());
+        assertEquals(1, result.rowsModified().size());
     }
 
     static File resource(String name) {
