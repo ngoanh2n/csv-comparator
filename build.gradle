@@ -138,6 +138,10 @@ modifyPom {
                 name "Ho Huu Ngoan"
                 email "ngoanh2n@gmail.com"
                 organizationUrl "https://ngoanh2n.github.io"
+                roles {
+                    role "Owner"
+                    role "Developer"
+                }
             }
         }
     }
