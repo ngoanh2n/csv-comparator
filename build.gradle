@@ -1,3 +1,5 @@
+import org.omg.IOP.ENCODING_CDR_ENCAPS
+
 /**
  * https://github.com/ngoanh2n/csv-comparator
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
@@ -6,33 +8,32 @@
 group group
 version version
 
-apply plugin: 'java'
-apply plugin: 'idea'    // Optional using for IntelliJ IDEA
-apply plugin: 'eclipse' // Optional using for Eclipse
-apply plugin: 'signing'
-apply plugin: 'java-library'
-apply plugin: 'maven-publish'
-apply plugin: 'com.bmuschko.nexus'
+apply plugin: "java"
+apply plugin: "idea"
+apply plugin: "eclipse"
+apply plugin: "signing"
+apply plugin: "java-library"
+apply plugin: "maven-publish"
+apply plugin: "com.bmuschko.nexus"
+
+ext {
+    ENCODING                        = "UTF-8"
+    GUAVA_VERSION                   = "28.2-jre"
+    SLF4J_VERSION                   = "1.7.30"
+    CSV_PARSER_VERSION              = "2.8.4"
+    JUNIT5_JUPITER_VERSION          = "5.7.0"
+    JUNIVERSAL_CHARDET_VERSION      = "2.3.2"
+}
 
 [compileJava, compileTestJava]*.sourceCompatibility = 1.8
 [compileJava, compileTestJava]*.targetCompatibility = 1.8
 [compileJava, compileTestJava]*.options.collect { options -> options.debug = true }
-[compileJava, compileTestJava]*.options.collect { options -> options.encoding = 'UTF-8' }
+[compileJava, compileTestJava]*.options.collect { options -> options.encoding = ENCODING }
 
 repositories {
     jcenter()
     mavenCentral()
-    maven {
-        url "https://plugins.gradle.org/m2/"
-    }
-}
-
-ext {
-    GUAVA_VERSION                   = '28.2-jre'
-    SLF4J_VERSION                   = '1.7.30'
-    CSV_PARSER_VERSION              = '2.8.4'
-    JUNIT5_JUPITER_VERSION          = '5.7.0'
-    JUNIVERSAL_CHARDET_VERSION      = '2.3.2'
+    maven { url "https://plugins.gradle.org/m2/" }
 }
 
 dependencies {
@@ -54,13 +55,13 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+        classpath "com.bmuschko:gradle-nexus-plugin:2.3.1"
     }
 }
 
 tasks.withType(Test).all { testTask ->
     testTask.systemProperties = [
-            'file.encoding': 'UTF-8'
+            "file.encoding": ENCODING
     ]
     testTask.testLogging.showStandardStreams = true
     testTask.outputs.upToDateWhen { false }
@@ -74,7 +75,7 @@ tasks.withType(Test) {
         /*
         * Filter by engines
         */
-        includeEngines 'junit-jupiter'
+        includeEngines "junit-jupiter"
         //excludeEngines 'junit-vintage'
 
         /*
@@ -97,7 +98,7 @@ tasks.withType(Test) {
     /*
     *  Want to display the following test events
     */
-    testLogging { events 'passed', 'skipped', 'failed' }
+    testLogging { events "passed", "skipped", "failed" }
 
     /*
     * To make the Gradle JVM system properties available to tests
@@ -106,50 +107,50 @@ tasks.withType(Test) {
 }
 
 tasks.withType(Javadoc) {
-    options.addStringOption('Xdoclint:none', '-quiet')
-    options.addStringOption('encoding', 'UTF-8')
-    options.addStringOption('charSet', 'UTF-8')
+    options.addStringOption("Xdoclint:none", "-quiet")
+    options.addStringOption("encoding", ENCODING)
+    options.addStringOption("charSet", ENCODING)
 }
 
 modifyPom {
     project {
-        name 'csv-comparator'
-        description 'Utils for comparison and assertion CSV files in Java'
-        url 'https://github.com/ngoanh2n/csv-comparator'
-        inceptionYear '2020'
+        inceptionYear "2019"
+        name "csv-comparator"
+        url "https://github.com/ngoanh2n/csv-comparator"
+        description "Utility for comparing and asserting CSV files in Java"
 
         scm {
-            connection 'scm:git:git://github.com/ngoanh2n/csv-comparator.git'
-            developerConnection 'scm:git:ssh://github.com/ngoanh2n/csv-comparator.git'
-            url 'http://github.com/ngoanh2n/csv-comparator/tree/master'
+            url "http://github.com/ngoanh2n/csv-comparator/tree/master"
+            connection "scm:git:git://github.com/ngoanh2n/csv-comparator.git"
+            developerConnection "scm:git:ssh://github.com/ngoanh2n/csv-comparator.git"
         }
 
         licenses {
             license {
-                name 'MIT'
-                url 'https://opensource.org/licenses/MIT'
+                name "MIT"
+                url "https://opensource.org/licenses/MIT"
             }
         }
 
         developers {
             developer {
-                id 'ngoanh2n'
-                name 'Ho Huu Ngoan'
-                email 'ngoanh2n@gmail.com'
-                organizationUrl 'https://ngoanh2n.github.io/'
+                id "ngoanh2n"
+                name "Ho Huu Ngoan"
+                email "ngoanh2n@gmail.com"
+                organizationUrl "https://ngoanh2n.github.io"
             }
         }
     }
 }
 
 extraArchive {
-    sources = true
     tests = true
+    sources = true
     javadoc = true
 }
 
 nexus {
     sign = true
-    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
-    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
+    repositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+    snapshotRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
 }
