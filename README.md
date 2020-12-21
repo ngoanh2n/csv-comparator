@@ -28,7 +28,7 @@
   - [Build *CsvComparisonOptions*](#build-csvcomparisonoptions)
   - [Do *CsvComparator*](#do-csvcomparator)
   - [Asssert *CsvComparisonResult*](#asssert-csvcomparisonresult)
-  - [Use *CsvComparisonVisitor* Walk Through *CsvComparator*](#use-csvcomparisonvisitor-walk-through-csvcomparator)
+  - [Use *CsvComparisonVisitor* To Walk Through *CsvComparator*](#use-csvcomparisonvisitor-to-walk-through-csvcomparator)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -104,7 +104,7 @@ CsvComparisonResult.rowsModified()
 
 _By default, result files which is created after comparing is located at `build/comparator/csv/{yyyyMMdd.HHmmss.SSS}/`_
 
-### Use *CsvComparisonVisitor* Walk Through *CsvComparator*
+### Use *CsvComparisonVisitor* To Walk Through *CsvComparator*
 ```java
 CsvComparisonVisitor.visitStarted(CsvComparisonSource<?> source)
 CsvComparisonVisitor.visitEnded(CsvComparisonSource<?> source)
@@ -112,4 +112,8 @@ CsvComparisonVisitor.rowKept(String[] row, String[] headers, CsvComparisonOption
 CsvComparisonVisitor.rowDeleted(String[] row, String[] headers, CsvComparisonOptions options)
 CsvComparisonVisitor.rowInserted(String[] row, String[] headers, CsvComparisonOptions options)
 CsvComparisonVisitor.rowModified(String[] row, String[] headers, CsvComparisonOptions options)
+```
+
+```java
+CsvComparisonResult result = new CsvComparator(source, options, visitor).compare();
 ```
