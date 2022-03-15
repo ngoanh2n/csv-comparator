@@ -1,0 +1,17 @@
+/**
+ * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @since 2020-01-27
+ */
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+compileJava {
+    options.debug = true
+    options.encoding = "UTF-8"
+    options.incremental = true
+}
+
+compileTestJava {
+    options.debug = true
+    options.encoding = "UTF-8"
+}

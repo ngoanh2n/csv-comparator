@@ -8,11 +8,12 @@ version version
 
 apply plugin: "java"
 apply plugin: "idea"
-apply plugin: "eclipse"
 apply plugin: "signing"
 apply plugin: "java-library"
 apply plugin: "maven-publish"
 apply plugin: "com.bmuschko.nexus"
+
+apply from: "gradle/compiling.gradle"
 
 ext {
     ENCODING                        = "UTF-8"
@@ -22,11 +23,6 @@ ext {
     JUNIT5_JUPITER_VERSION          = "5.7.0"
     JUNIVERSAL_CHARDET_VERSION      = "2.3.2"
 }
-
-[compileJava, compileTestJava]*.sourceCompatibility = 1.8
-[compileJava, compileTestJava]*.targetCompatibility = 1.8
-[compileJava, compileTestJava]*.options.collect { options -> options.debug = true }
-[compileJava, compileTestJava]*.options.collect { options -> options.encoding = ENCODING }
 
 repositories {
     jcenter()
