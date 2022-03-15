@@ -1,16 +1,17 @@
 /**
- * https://github.com/ngoanh2n/csv-comparator
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @since 1.0.0
+ * @since 2020-01-27
  */
-group group
-version version
+group(property("prj.groupId"))
+version(property("prj.version"))
+description(property("prj.desc") as String)
 
 apply plugin: "java"
 apply plugin: "idea"
 
 apply from: "gradle/testing.gradle"
 apply from: "gradle/compiling.gradle"
+apply from: "gradle/publishing.gradle"
 apply from: "gradle/dependencies.gradle"
 
 repositories {
@@ -25,9 +26,7 @@ buildscript {
     repositories {
         jcenter()
         mavenCentral()
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
+        maven { url "https://plugins.gradle.org/m2/" }
     }
 
     dependencies {}
