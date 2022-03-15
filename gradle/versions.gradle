@@ -1,0 +1,11 @@
+/**
+ * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @since 2020-01-27
+ */
+ext {
+    SLF4J_VER                   =   "1.7.30"
+    GUAVA_VER                   =   "31.1-jre"
+    CSV_PARSER_VER              =   "2.8.4"
+    CHARDET_VER                 =   "2.3.2"
+    JUPITER_VER                 =   "5.8.2"
+}
