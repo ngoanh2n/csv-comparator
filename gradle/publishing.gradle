@@ -22,8 +22,8 @@ if (project.hasProperty("signing.keyId")) {
                 artifact javadocJar
 
                 pom {
-                    name = project.name
-                    description = project.description
+                    name = property("prj.name")
+                    description = property("prj.desc")
                     url = "https://github.com/ngoanh2n/csv-comparator"
                     licenses {
                         license {
