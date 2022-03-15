@@ -13,6 +13,7 @@ apply plugin: "java-library"
 apply plugin: "maven-publish"
 apply plugin: "com.bmuschko.nexus"
 
+apply from: "gradle/testing.gradle"
 apply from: "gradle/compiling.gradle"
 
 repositories {
@@ -44,59 +45,6 @@ buildscript {
     dependencies {
         classpath "com.bmuschko:gradle-nexus-plugin:2.3.1"
     }
-}
-
-tasks.withType(Test).all { testTask ->
-    testTask.systemProperties = [
-            "file.encoding": "UTF-8"
-    ]
-    testTask.testLogging.showStandardStreams = true
-    testTask.outputs.upToDateWhen { false }
-}
-
-tasks.withType(Test) {
-    /*
-    * Enable JUnit Platform (JUnit 5) support, default is JUnit
-    */
-    useJUnitPlatform() {
-        /*
-        * Filter by engines
-        */
-        includeEngines "junit-jupiter"
-        //excludeEngines 'junit-vintage'
-
-        /*
-        * Filter by tags
-        */
-        //includeTags 'fast', 'smoke'
-        //excludeTags 'slow', 'ci'
-    }
-
-    /*
-    * Make failing tests do not fail the task
-    */
-    ignoreFailures = false
-
-    /*
-    * To show standard out and standard error of the test JVM(s) on the console
-    */
-    testLogging.showStandardStreams = true
-
-    /*
-    *  Want to display the following test events
-    */
-    testLogging { events "passed", "skipped", "failed" }
-
-    /*
-    * To make the Gradle JVM system properties available to tests
-    */
-    systemProperties = System.getProperties() as Map<String, ?>
-}
-
-tasks.withType(Javadoc) {
-    options.addStringOption("Xdoclint:none", "-quiet")
-    options.addStringOption("encoding", "UTF-8")
-    options.addStringOption("charSet", "UTF-8")
 }
 
 modifyPom {
