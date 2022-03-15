@@ -15,20 +15,12 @@ apply plugin: "com.bmuschko.nexus"
 
 apply from: "gradle/testing.gradle"
 apply from: "gradle/compiling.gradle"
+apply from: "gradle/dependencies.gradle"
 
 repositories {
     jcenter()
     mavenCentral()
     maven { url "https://plugins.gradle.org/m2/" }
-}
-
-dependencies {
-    implementation("org.slf4j:slf4j-api:${SLF4J_VER}")
-    implementation("com.google.guava:guava:${GUAVA_VER}")
-    implementation("com.univocity:univocity-parsers:${CSV_PARSER_VER}")
-    implementation("com.github.albfernandez:juniversalchardet:${CHARDET_VER}")
-    testImplementation("org.slf4j:slf4j-log4j12:${SLF4J_VER}")
-    testImplementation("org.junit.jupiter:junit-jupiter:${JUPITER_VER}")
 }
 
 buildscript {
