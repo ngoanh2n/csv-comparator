@@ -8,10 +8,6 @@ version version
 
 apply plugin: "java"
 apply plugin: "idea"
-apply plugin: "signing"
-apply plugin: "java-library"
-apply plugin: "maven-publish"
-apply plugin: "com.bmuschko.nexus"
 
 apply from: "gradle/testing.gradle"
 apply from: "gradle/compiling.gradle"
@@ -34,54 +30,5 @@ buildscript {
         }
     }
 
-    dependencies {
-        classpath "com.bmuschko:gradle-nexus-plugin:2.3.1"
-    }
-}
-
-modifyPom {
-    project {
-        inceptionYear "2019"
-        name "csv-comparator"
-        url "https://github.com/ngoanh2n/csv-comparator"
-        description "Utility for comparing and asserting CSV files in Java"
-
-        scm {
-            url "http://github.com/ngoanh2n/csv-comparator/tree/master"
-            connection "scm:git:git://github.com/ngoanh2n/csv-comparator.git"
-            developerConnection "scm:git:ssh://github.com/ngoanh2n/csv-comparator.git"
-        }
-
-        licenses {
-            license {
-                name "MIT"
-                url "https://opensource.org/licenses/MIT"
-            }
-        }
-
-        developers {
-            developer {
-                id "ngoanh2n"
-                name "Ho Huu Ngoan"
-                email "ngoanh2n@gmail.com"
-                organizationUrl "https://ngoanh2n.github.io"
-                roles {
-                    role "Owner"
-                    role "Developer"
-                }
-            }
-        }
-    }
-}
-
-extraArchive {
-    tests = true
-    sources = true
-    javadoc = true
-}
-
-nexus {
-    sign = true
-    repositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-    snapshotRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+    dependencies {}
 }

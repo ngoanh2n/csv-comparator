@@ -1,0 +1,74 @@
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    archiveClassifier = "sources"
+}
+
+task javadocJar(type: Jar) {
+    from javadoc
+    archiveClassifier = "javadoc"
+}
+
+if (project.hasProperty("signing.keyId")) {
+    apply plugin: "signing"
+    apply plugin: "java-library"
+    apply plugin: "maven-publish"
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                artifactId = project.name
+                from components.java
+                artifact sourcesJar
+                artifact javadocJar
+
+                pom {
+                    name = project.name
+                    description = project.description
+                    url = "https://github.com/ngoanh2n/csv-comparator"
+                    licenses {
+                        license {
+                            name = "MIT"
+                            url = "https://opensource.org/licenses/MIT"
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = "ngoanh2n"
+                            name = "Ho Huu Ngoan"
+                            email = "ngoanh2n@gmail.com"
+                            organizationUrl = "https://github.com/ngoanh2n"
+                        }
+                    }
+                    scm {
+                        url = "https://github.com/ngoanh2n/csv-comparator"
+                        connection = "scm:git:git://github.com/ngoanh2n/csv-comparator.git"
+                        developerConnection = "scm:git:ssh://github.com/ngoanh2n/csv-comparator.git"
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+                def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                url project.version.endsWith("SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
+
+                credentials {
+                    username = "${sonatypeUsername}"
+                    password = "${sonatypePassword}"
+                }
+            }
+        }
+    }
+
+    signing {
+        sign publishing.publications.mavenJava
+    }
+
+
+    javadoc {
+        if (JavaVersion.current().isJava9Compatible()) {
+            options.addBooleanOption("html5", true)
+        }
+    }
+}
