@@ -28,7 +28,7 @@
 ### **Gradle**
 _Add dependency to `build.gradle`_
 ```gradle
-implementation("com.github.ngoanh2n:csv-comparator:1.2.0")
+implementation("com.github.ngoanh2n:csv-comparator:1.3.0")
 ```
 
 ### **Maven**
@@ -37,7 +37,7 @@ _Add dependency to `pom.xml`_
 <dependency>
     <groupId>com.github.ngoanh2n</groupId>
     <artifactId>csv-comparator</artifactId>
-    <version>1.2.0</version>
+    <version>1.3.0</version>
 </dependency>
 ```
 
@@ -80,9 +80,9 @@ _By default, result files which are created after comparing is located at `build
 ### **Walk Through**
 ```java
 CsvComparisonVisitor.comparisonStarted(CsvComparisonSource source)
-CsvComparisonVisitor.rowKept(String[] row, String[] headers, CsvComparisonOptions options)
-CsvComparisonVisitor.rowDeleted(String[] row, String[] headers, CsvComparisonOptions options)
-CsvComparisonVisitor.rowInserted(String[] row, String[] headers, CsvComparisonOptions options)
-CsvComparisonVisitor.rowModified(String[] row, String[] headers, CsvComparisonOptions options)
+CsvComparisonVisitor.rowKept(String[] row, String[] header, CsvComparisonOptions options)
+CsvComparisonVisitor.rowDeleted(String[] row, String[] header, CsvComparisonOptions options)
+CsvComparisonVisitor.rowInserted(String[] row, String[] header, CsvComparisonOptions options)
+CsvComparisonVisitor.rowModified(String[] row, String[] header, CsvComparisonOptions options)
 CsvComparisonVisitor.comparisonFinished(CsvComparisonSource source)
 ```
