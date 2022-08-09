@@ -92,7 +92,7 @@ public interface CsvComparisonOptions {
          *                  the input should be considered as the row containing the names of each column
          * @return {@linkplain CsvComparisonOptions.Builder}
          */
-        public Builder extractHeaders(boolean extracted) {
+        public Builder extractHeader(boolean extracted) {
             this.csvParser.setHeaderExtractionEnabled(extracted);
             return this;
         }
