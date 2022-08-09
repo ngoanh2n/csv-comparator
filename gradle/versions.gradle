@@ -3,7 +3,7 @@
  * @since 2020-01-27
  */
 ext {
-    VERSION_SLF4J                   =   "1.7.30"
+    VERSION_SLF4J                   =   "1.7.36"
     VERSION_GUAVA                   =   "31.1-jre"
     VERSION_CSV_PARSER              =   "2.8.4"
     VERSION_JUNIVERSAL_CHARDET      =   "2.4.0"
