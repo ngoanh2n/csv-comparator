@@ -147,7 +147,7 @@ public interface CsvComparisonOptions {
          *
          * @param index for indicating which is identity column index which data field is unique in a row. <br>
          *              Starts with 0 in range of columns by indexes (0-based indexing) <br>
-         *              e.g. #setColumns(1, 2, 5) <=> [username, address, prefs] <br>
+         *              e.g. CsvComparisonOptions.Builder.setColumns(1, 2, 5) = [username, address, prefs] <br>
          *              If you want to select field username as identity column <br>
          *              then set {@code #setIdentityColumn(0)}
          * @return {@link CsvComparisonOptions.Builder}
