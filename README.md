@@ -50,7 +50,7 @@ id,email,firstname,lastname,age,note
 ### **Compare**
 ```java
 // Create comparison source from actual and expected file
-CsvComparisonSource<File> source = CsvComparisonSource.create(expectedCsv, actualCsv);
+CsvComparisonSource source = CsvComparisonSource.create(expectedCsv, actualCsv);
 
 // Build comparison options to navigate behaviors of comparison process
 CsvComparisonOptions options = CsvComparisonOptions
@@ -65,10 +65,10 @@ CsvComparisonResult result = new CsvComparator(source, options).compare();
 
 ### **Asssert**
 ```java
-CsvComparisonResult.hasDiff()
-CsvComparisonResult.hasDeleted()
-CsvComparisonResult.hasInserted()
-CsvComparisonResult.hasModified()
+CsvComparisonResult.isDeleted()
+CsvComparisonResult.isInserted()
+CsvComparisonResult.isModified()
+CsvComparisonResult.isDifferent()
 CsvComparisonResult.rowsKept()
 CsvComparisonResult.rowsDeleted()
 CsvComparisonResult.rowsInserted()
@@ -79,10 +79,10 @@ _By default, result files which are created after comparing is located at `build
 
 ### **Walk Through**
 ```java
-CsvComparisonVisitor.visitStarted(CsvComparisonSource<?> source)
+CsvComparisonVisitor.comparisonStarted(CsvComparisonSource source)
 CsvComparisonVisitor.rowKept(String[] row, String[] headers, CsvComparisonOptions options)
 CsvComparisonVisitor.rowDeleted(String[] row, String[] headers, CsvComparisonOptions options)
 CsvComparisonVisitor.rowInserted(String[] row, String[] headers, CsvComparisonOptions options)
 CsvComparisonVisitor.rowModified(String[] row, String[] headers, CsvComparisonOptions options)
-CsvComparisonVisitor.visitEnded(CsvComparisonSource<?> source)
+CsvComparisonVisitor.comparisonFinished(CsvComparisonSource source)
 ```
