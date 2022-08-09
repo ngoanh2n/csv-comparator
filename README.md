@@ -18,11 +18,9 @@
   - [**Gradle**](#gradle)
   - [**Maven**](#maven)
 - [**Usages**](#usages)
-  - [**Provide `CsvComparisonSource`**](#provide-csvcomparisonsource)
-  - [**Build `CsvComparisonOptions`**](#build-csvcomparisonoptions)
-  - [**Do `CsvComparator`**](#do-csvcomparator)
-  - [**Asssert `CsvComparisonResult`**](#asssert-csvcomparisonresult)
-  - [**Use `CsvComparisonVisitor` to walk through `CsvComparator`**](#use-csvcomparisonvisitor-to-walk-through-csvcomparator)
+  - [**Compare**](#compare)
+  - [**Asssert**](#asssert)
+  - [**Walk Through**](#walk-through)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -49,35 +47,23 @@ Compare 2 CSV files formatted columns:
 id,email,firstname,lastname,age,note
 ```
 
-### **Provide `CsvComparisonSource`**
+### **Compare**
 ```java
+// Create comparison source from actual and expected file
 CsvComparisonSource<File> source = CsvComparisonSource.create(expectedCsv, actualCsv);
-```
 
-### **Build `CsvComparisonOptions`**
-```java
+// Build comparison options to navigate behaviors of comparison process
 CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
                 .setColumns(1, 2, 3)
                 .setIdentityColumn(0) // position starts with 0 in array [1, 2, 3]
                 .build();
-```
 
-If you want to use column names:
-```java
-CsvComparisonOptions options = CsvComparisonOptions
-                .builder()
-                .setColumns("email", "firstname", "lastname")
-                .setIdentityColumn("email")
-                .build();
-```
-
-### **Do `CsvComparator`**
-```java
+// Do comparison
 CsvComparisonResult result = new CsvComparator(source, options).compare();
 ```
 
-### **Asssert `CsvComparisonResult`**
+### **Asssert**
 ```java
 CsvComparisonResult.hasDiff()
 CsvComparisonResult.hasDeleted()
@@ -89,9 +75,9 @@ CsvComparisonResult.rowsInserted()
 CsvComparisonResult.rowsModified()
 ```
 
-_By default, result files which is created after comparing is located at `build/comparator/csv/{yyyyMMdd.HHmmss.SSS}/`_
+_By default, result files which are created after comparing is located at `build/comparator/csv/{yyyyMMdd.HHmmss.SSS}/`_
 
-### **Use `CsvComparisonVisitor` to walk through `CsvComparator`**
+### **Walk Through**
 ```java
 CsvComparisonVisitor.visitStarted(CsvComparisonSource<?> source)
 CsvComparisonVisitor.rowKept(String[] row, String[] headers, CsvComparisonOptions options)
@@ -99,8 +85,4 @@ CsvComparisonVisitor.rowDeleted(String[] row, String[] headers, CsvComparisonOpt
 CsvComparisonVisitor.rowInserted(String[] row, String[] headers, CsvComparisonOptions options)
 CsvComparisonVisitor.rowModified(String[] row, String[] headers, CsvComparisonOptions options)
 CsvComparisonVisitor.visitEnded(CsvComparisonSource<?> source)
-```
-
-```java
-CsvComparisonResult result = new CsvComparator(source, options, visitor).compare();
 ```
