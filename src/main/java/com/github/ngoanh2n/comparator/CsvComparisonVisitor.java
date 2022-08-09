@@ -1,36 +1,64 @@
 package com.github.ngoanh2n.comparator;
 
 /**
- * This interface should be used to walk through {@link CsvComparator}
- * <br>
- * <h3>csv-comparator<h3>
- * <a href="https://github.com/ngoanh2n/csv-comparator">https://github.com/ngoanh2n/csv-comparator<a>
- * <br>
+ * This interface should be used to walk through {@linkplain CsvComparator}.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @since 1.0.0
+ * @version 1.0.0
+ * @since 2020-01-06
  */
 public interface CsvComparisonVisitor {
+    /**
+     * Callback before {@linkplain CsvComparator#compare()}
+     *
+     * @param source is {@linkplain CsvComparisonSource} is being to compare
+     */
+    void comparisonStarted(CsvComparisonSource source);
 
     /**
-     * This method is called before {@link CsvComparator#compare()} method
+     * Callback for when {@linkplain CsvComparator} detected a row kept
      *
-     * @param source {@link CsvComparisonSource} is being to compare
+     * @param row     is the row kept
+     * @param headers is extracted from {@linkplain CsvComparisonSource} you have provided <br>
+     *                Headers are existed or not depends on {@linkplain CsvComparisonOptions.Builder#extractHeaders(boolean)}
+     * @param options is {@linkplain CsvComparisonOptions} you have provided
      */
-    void visitStarted(CsvComparisonSource<?> source);
-
-    /**
-     * This method is called after {@link CsvComparator#compare()} method
-     *
-     * @param source {@link CsvComparisonSource} is being to compare
-     */
-    void visitEnded(CsvComparisonSource<?> source);
-
     void rowKept(String[] row, String[] headers, CsvComparisonOptions options);
 
+    /**
+     * Callback for when {@linkplain CsvComparator} detected a row deleted
+     *
+     * @param row     is the row deleted
+     * @param headers is extracted from {@linkplain CsvComparisonSource} you have provided <br>
+     *                Headers are existed or not depends on {@linkplain CsvComparisonOptions.Builder#extractHeaders(boolean)}
+     * @param options is {@linkplain CsvComparisonOptions} you have provided
+     */
     void rowDeleted(String[] row, String[] headers, CsvComparisonOptions options);
 
+    /**
+     * Callback for when {@linkplain CsvComparator} detected a row inserted
+     *
+     * @param row     is the row inserted
+     * @param headers is extracted from {@linkplain CsvComparisonSource} you have provided <br>
+     *                Headers are existed or not depends on {@linkplain CsvComparisonOptions.Builder#extractHeaders(boolean)}
+     * @param options is {@linkplain CsvComparisonOptions} you have provided
+     */
     void rowInserted(String[] row, String[] headers, CsvComparisonOptions options);
 
+    /**
+     * Callback for when {@linkplain CsvComparator} detected a row modified
+     *
+     * @param row     is the row modified
+     * @param headers is extracted from {@linkplain CsvComparisonSource} you have provided <br>
+     *                Headers are existed or not depends on {@linkplain CsvComparisonOptions.Builder#extractHeaders(boolean)}
+     * @param options is {@linkplain CsvComparisonOptions} you have provided
+     */
     void rowModified(String[] row, String[] headers, CsvComparisonOptions options);
+
+    /**
+     * Callback after {@linkplain CsvComparator#compare()}
+     *
+     * @param source is {@linkplain CsvComparisonSource} is being to compare
+     */
+    void comparisonFinished(CsvComparisonSource source);
 }

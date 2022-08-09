@@ -3,32 +3,83 @@ package com.github.ngoanh2n.comparator;
 import java.util.List;
 
 /**
- * <h3>csv-comparator<h3>
- * <a href="https://github.com/ngoanh2n/csv-comparator">https://github.com/ngoanh2n/csv-comparator<a>
- * <br>
+ * The result of {@linkplain CsvComparator}.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @since 1.0.0
+ * @version 1.0.0
+ * @since 2020-01-06
  */
 public interface CsvComparisonResult {
+    /**
+     * Whether there is any row deleted in
+     * the {@linkplain CsvComparisonSource#act()} CSV file against
+     * to {@linkplain CsvComparisonSource#exp()} CSV file
+     *
+     * @return Indicate {@linkplain CsvComparisonSource#act()} CSV file is deleted any row or not
+     */
+    boolean isDeleted();
 
     /**
-     * @return Whether has different or not between
-     * {@link CsvComparisonSource#exp()} and {@link CsvComparisonSource#act()}
+     * Whether there is any row inserted in
+     * the {@linkplain CsvComparisonSource#act()} CSV file against
+     * to {@linkplain CsvComparisonSource#exp()} CSV file
+     *
+     * @return Indicate {@linkplain CsvComparisonSource#act()} CSV file is inserted any row or not
      */
-    boolean hasDiff();
+    boolean isInserted();
 
-    boolean hasDeleted();
+    /**
+     * Whether there is any row modified in
+     * the {@linkplain CsvComparisonSource#act()} CSV file against
+     * to {@linkplain CsvComparisonSource#exp()} CSV file
+     *
+     * @return Indicate {@linkplain CsvComparisonSource#act()} CSV file is modified any row or not
+     */
+    boolean isModified();
 
-    boolean hasInserted();
+    /**
+     * Whether there is any difference between
+     * {@linkplain CsvComparisonSource#act()} file and
+     * {@linkplain CsvComparisonSource#exp()} file
+     *
+     * @return Indicate {@linkplain CsvComparisonSource#act()} file is different
+     * against to {@linkplain CsvComparisonSource#exp()}
+     */
+    boolean isDifferent();
 
-    boolean hasModified();
-
+    /**
+     * Get all kept rows in
+     * the {@linkplain CsvComparisonSource#act()} CSV file against
+     * to {@linkplain CsvComparisonSource#exp()} CSV file
+     *
+     * @return Rows were kept
+     */
     List<String[]> rowsKept();
 
+    /**
+     * Get all deleted rows in
+     * the {@linkplain CsvComparisonSource#act()} CSV file against
+     * to {@linkplain CsvComparisonSource#exp()} CSV file
+     *
+     * @return Rows were deleted
+     */
     List<String[]> rowsDeleted();
 
+    /**
+     * Get all inserted rows in
+     * the {@linkplain CsvComparisonSource#act()} CSV file against
+     * to {@linkplain CsvComparisonSource#exp()} CSV file
+     *
+     * @return Rows were inserted
+     */
     List<String[]> rowsInserted();
 
+    /**
+     * Get all modified rows in
+     * the {@linkplain CsvComparisonSource#act()} CSV file against
+     * to {@linkplain CsvComparisonSource#exp()} CSV file
+     *
+     * @return Rows were modified
+     */
     List<String[]> rowsModified();
 }
