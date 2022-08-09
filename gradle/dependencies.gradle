@@ -7,7 +7,7 @@ dependencies {
     implementation("com.google.guava:guava:${VERSION_GUAVA}")
     implementation("com.univocity:univocity-parsers:${VERSION_CSV_PARSER}")
     implementation("com.github.ngoanh2n:utilities:${VERSION_NGOANH2N_UTILITIES}")
-    implementation("com.github.albfernandez:juniversalchardet:${VERSION_CHARDET}")
+    implementation("com.github.albfernandez:juniversalchardet:${VERSION_JUNIVERSAL_CHARDET}")
 
     testImplementation("org.slf4j:slf4j-log4j12:${VERSION_SLF4J}")
     testImplementation("org.junit.jupiter:junit-jupiter:${VERSION_JUPITER}")
