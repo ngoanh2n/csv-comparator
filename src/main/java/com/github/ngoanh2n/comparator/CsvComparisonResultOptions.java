@@ -28,7 +28,7 @@ public interface CsvComparisonResultOptions {
 
         private Builder() {
             this.includesHeader = true;
-            this.location = Paths.get("build/comparator/csv");
+            this.location = Paths.get("build/ngoanh2n/csv");
         }
 
         /**
