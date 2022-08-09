@@ -40,28 +40,28 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     public void rowKept(String[] row, String[] header, CsvComparisonOptions options) {
         keptWriter = writeHeaders(header, options, keptWriter, KEPT);
         keptWriter.writeRow(row);
-        LOGGER.debug("[comparator][csv] Kept -> {}", Arrays.toString(row));
+        LOGGER.debug("Kept -> {}", Arrays.toString(row));
     }
 
     @Override
     public void rowDeleted(String[] row, String[] header, CsvComparisonOptions options) {
         deletedWriter = writeHeaders(header, options, deletedWriter, DELETED);
         deletedWriter.writeRow(row);
-        LOGGER.debug("[comparator][csv] Deleted -> {}", Arrays.toString(row));
+        LOGGER.debug("Deleted -> {}", Arrays.toString(row));
     }
 
     @Override
     public void rowInserted(String[] row, String[] header, CsvComparisonOptions options) {
         insertedWriter = writeHeaders(header, options, insertedWriter, INSERTED);
         insertedWriter.writeRow(row);
-        LOGGER.debug("[comparator][csv] Inserted -> {}", Arrays.toString(row));
+        LOGGER.debug("Inserted -> {}", Arrays.toString(row));
     }
 
     @Override
     public void rowModified(String[] row, String[] header, CsvComparisonOptions options) {
         modifiedWriter = writeHeaders(header, options, modifiedWriter, MODIFIED);
         modifiedWriter.writeRow(row);
-        LOGGER.debug("[comparator][csv] Modified -> {}", Arrays.toString(row));
+        LOGGER.debug("Modified -> {}", Arrays.toString(row));
     }
 
     @Override
