@@ -8,5 +8,5 @@ ext {
     VERSION_CSV_PARSER              =   "2.9.1"
     VERSION_JUNIVERSAL_CHARDET      =   "2.4.0"
     VERSION_NGOANH2N_UTILITIES      =   "2.3.0"
-    VERSION_JUPITER                 =   "5.8.2"
+    VERSION_JUPITER                 =   "5.9.0"
 }
