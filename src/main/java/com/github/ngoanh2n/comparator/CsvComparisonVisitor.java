@@ -1,4 +1,4 @@
-package com.github.ngoanh2n.asserts.csv;
+package com.github.ngoanh2n.comparator;
 
 /**
  * This interface should be used to walk through {@link CsvComparator}
