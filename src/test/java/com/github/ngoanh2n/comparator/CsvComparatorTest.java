@@ -1,4 +1,4 @@
-package com.github.ngoanh2n.asserts.csv;
+package com.github.ngoanh2n.comparator;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -25,8 +25,8 @@ public class CsvComparatorTest {
     @Order(1)
     void kept() {
         CsvComparisonSource<File> source = CsvComparisonSource.create(
-                resource("com/github/ngoanh2n/asserts/csv/exp/inserted.csv"),
-                resource("com/github/ngoanh2n/asserts/csv/exp/inserted.csv")
+                resource("com/github/ngoanh2n/comparator/exp/inserted.csv"),
+                resource("com/github/ngoanh2n/comparator/exp/inserted.csv")
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
@@ -46,8 +46,8 @@ public class CsvComparatorTest {
     @Order(2)
     void deleted() {
         CsvComparisonSource<File> source = CsvComparisonSource.create(
-                resource("com/github/ngoanh2n/asserts/csv/exp/deleted.csv"),
-                resource("com/github/ngoanh2n/asserts/csv/act/deleted.csv")
+                resource("com/github/ngoanh2n/comparator/exp/deleted.csv"),
+                resource("com/github/ngoanh2n/comparator/act/deleted.csv")
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
@@ -66,8 +66,8 @@ public class CsvComparatorTest {
     @Order(3)
     void inserted() {
         CsvComparisonSource<File> source = CsvComparisonSource.create(
-                resource("com/github/ngoanh2n/asserts/csv/exp/inserted.csv"),
-                resource("com/github/ngoanh2n/asserts/csv/act/inserted.csv")
+                resource("com/github/ngoanh2n/comparator/exp/inserted.csv"),
+                resource("com/github/ngoanh2n/comparator/act/inserted.csv")
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
@@ -86,8 +86,8 @@ public class CsvComparatorTest {
     @Order(4)
     void modified() {
         CsvComparisonSource<File> source = CsvComparisonSource.create(
-                resource("com/github/ngoanh2n/asserts/csv/exp/modified.csv"),
-                resource("com/github/ngoanh2n/asserts/csv/act/modified.csv")
+                resource("com/github/ngoanh2n/comparator/exp/modified.csv"),
+                resource("com/github/ngoanh2n/comparator/act/modified.csv")
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()

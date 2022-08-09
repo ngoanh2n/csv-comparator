@@ -1,4 +1,4 @@
-package com.github.ngoanh2n.asserts.csv;
+package com.github.ngoanh2n.comparator;
 
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
 import com.univocity.parsers.csv.CsvParser;

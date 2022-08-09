@@ -1,4 +1,4 @@
-package com.github.ngoanh2n.asserts.csv;
+package com.github.ngoanh2n.comparator;
 
 import com.univocity.parsers.csv.CsvWriter;
 import com.univocity.parsers.csv.CsvWriterSettings;

@@ -1,4 +1,4 @@
-package com.github.ngoanh2n.asserts.csv;
+package com.github.ngoanh2n.comparator;
 
 import javax.annotation.Nonnull;
 import java.nio.file.Path;
