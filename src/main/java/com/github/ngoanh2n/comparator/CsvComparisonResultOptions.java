@@ -38,10 +38,10 @@ public interface CsvComparisonResultOptions {
     final class Builder {
 
         private Path location;
-        private boolean includesHeader;
+        private boolean includeHeader;
 
         private Builder() {
-            this.includesHeader = true;
+            this.includeHeader = true;
             this.location = Paths.get("build/ngoanh2n/csv");
         }
 
@@ -57,13 +57,13 @@ public interface CsvComparisonResultOptions {
         }
 
         /**
-         * Indicate which includes headers to comparison result output files
+         * Indicate which includes header row to comparison result output files
          *
          * @param included is a flag whether that includes or not
          * @return {@linkplain CsvComparisonResultOptions.Builder}
          */
-        public CsvComparisonResultOptions.Builder includeHeaders(boolean included) {
-            this.includesHeader = included;
+        public CsvComparisonResultOptions.Builder includeHeader(boolean included) {
+            this.includeHeader = included;
             return this;
         }
 
@@ -81,8 +81,8 @@ public interface CsvComparisonResultOptions {
                 }
 
                 @Override
-                public boolean includeHeaders() {
-                    return includesHeader;
+                public boolean includeHeader() {
+                    return includeHeader;
                 }
             };
         }
@@ -97,9 +97,9 @@ public interface CsvComparisonResultOptions {
     Path location();
 
     /**
-     * Whether included headers to comparison result output files
+     * Whether included header row to comparison result output files
      *
-     * @return Indicate to add headers to result from output files
+     * @return Indicate to add header row to result from output files
      */
-    boolean includeHeaders();
+    boolean includeHeader();
 }
