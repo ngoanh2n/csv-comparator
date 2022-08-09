@@ -1,9 +1,11 @@
 package com.github.ngoanh2n.comparator;
 
+import com.github.ngoanh2n.Commons;
 import com.univocity.parsers.common.ParsingContext;
 import com.univocity.parsers.common.processor.RowProcessor;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
+import org.mozilla.universalchardet.UniversalDetector;
 
 import javax.annotation.Nonnull;
 import java.io.File;
@@ -52,7 +54,7 @@ public class CsvComparator {
         CsvParserSettings settings = getSettings();
 
         String[] headers = getHeaders(settings);
-        List<String[]> expRows = Utils.read(source.exp(), getEncoding(source.exp()), settings);
+        List<String[]> expRows = read(source.exp(), getEncoding(source.exp()), settings);
         Map<String, String[]> expMap = expRows.stream().collect(Collectors.toMap(expRow
                 -> expRow[options.identityColumnIndex()], expRow -> expRow, (a, b) -> b));
 
@@ -98,7 +100,7 @@ public class CsvComparator {
     }
 
     private CsvParserSettings getSettings() {
-        Utils.createsDirectory(options.resultOptions().location());
+        Commons.createDirectory(options.resultOptions().location());
         return options.parserSettings();
     }
 
@@ -106,7 +108,7 @@ public class CsvComparator {
         try {
             return options.encoding() != null
                     ? options.encoding()
-                    : Charset.forName(Utils.charsetOf(file));
+                    : Charset.forName(UniversalDetector.detectCharset(file));
         } catch (IOException ignored) {
             // Can't happen
             return StandardCharsets.UTF_8;
@@ -117,7 +119,7 @@ public class CsvComparator {
         if (settings.isHeaderExtractionEnabled()) {
             String[] headers = new String[0];
             settings.setHeaderExtractionEnabled(false);
-            List<String[]> expRows = Utils.read(source.exp(), getEncoding(source.exp()), settings);
+            List<String[]> expRows = read(source.exp(), getEncoding(source.exp()), settings);
             if (expRows.size() > 1) headers = expRows.get(0);
             settings.setHeaderExtractionEnabled(true);
             return headers;
@@ -217,5 +219,9 @@ public class CsvComparator {
         public void visitEnded(CsvComparisonSource<?> source) {
 
         }
+    }
+
+    static List<String[]> read(@Nonnull File csv, @Nonnull Charset encoding, @Nonnull CsvParserSettings settings) {
+        return new CsvParser(settings).parseAll(csv, encoding);
     }
 }
