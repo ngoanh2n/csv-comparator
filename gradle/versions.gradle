@@ -5,7 +5,7 @@
 ext {
     VERSION_SLF4J                   =   "1.7.36"
     VERSION_GUAVA                   =   "31.1-jre"
-    VERSION_CSV_PARSER              =   "2.8.4"
+    VERSION_CSV_PARSER              =   "2.9.1"
     VERSION_JUNIVERSAL_CHARDET      =   "2.4.0"
     VERSION_NGOANH2N_UTILITIES      =   "2.3.0"
     VERSION_JUPITER                 =   "5.8.2"
