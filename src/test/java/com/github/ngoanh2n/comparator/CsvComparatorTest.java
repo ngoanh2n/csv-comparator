@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import java.io.File;
-import java.net.URL;
 
+import static com.github.ngoanh2n.Resource.getFile;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -25,8 +25,8 @@ public class CsvComparatorTest {
     @Order(1)
     void kept() {
         CsvComparisonSource<File> source = CsvComparisonSource.create(
-                resource("com/github/ngoanh2n/comparator/exp/inserted.csv"),
-                resource("com/github/ngoanh2n/comparator/exp/inserted.csv")
+                getFile("com/github/ngoanh2n/comparator/exp/inserted.csv"),
+                getFile("com/github/ngoanh2n/comparator/exp/inserted.csv")
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
@@ -46,8 +46,8 @@ public class CsvComparatorTest {
     @Order(2)
     void deleted() {
         CsvComparisonSource<File> source = CsvComparisonSource.create(
-                resource("com/github/ngoanh2n/comparator/exp/deleted.csv"),
-                resource("com/github/ngoanh2n/comparator/act/deleted.csv")
+                getFile("com/github/ngoanh2n/comparator/exp/deleted.csv"),
+                getFile("com/github/ngoanh2n/comparator/act/deleted.csv")
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
@@ -66,8 +66,8 @@ public class CsvComparatorTest {
     @Order(3)
     void inserted() {
         CsvComparisonSource<File> source = CsvComparisonSource.create(
-                resource("com/github/ngoanh2n/comparator/exp/inserted.csv"),
-                resource("com/github/ngoanh2n/comparator/act/inserted.csv")
+                getFile("com/github/ngoanh2n/comparator/exp/inserted.csv"),
+                getFile("com/github/ngoanh2n/comparator/act/inserted.csv")
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
@@ -86,8 +86,8 @@ public class CsvComparatorTest {
     @Order(4)
     void modified() {
         CsvComparisonSource<File> source = CsvComparisonSource.create(
-                resource("com/github/ngoanh2n/comparator/exp/modified.csv"),
-                resource("com/github/ngoanh2n/comparator/act/modified.csv")
+                getFile("com/github/ngoanh2n/comparator/exp/modified.csv"),
+                getFile("com/github/ngoanh2n/comparator/act/modified.csv")
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
@@ -100,12 +100,5 @@ public class CsvComparatorTest {
         assertTrue(result.hasDiff());
         assertEquals(2, result.rowsKept().size());
         assertEquals(1, result.rowsModified().size());
-    }
-
-    static File resource(String name) {
-        ClassLoader classLoader = Utils.class.getClassLoader();
-        URL resource = classLoader.getResource(name);
-        if (resource == null) throw new IllegalArgumentException("File not found!");
-        else return new File(resource.getFile());
     }
 }
