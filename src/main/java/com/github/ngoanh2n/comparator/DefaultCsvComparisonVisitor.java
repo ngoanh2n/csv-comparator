@@ -1,5 +1,6 @@
 package com.github.ngoanh2n.comparator;
 
+import com.github.ngoanh2n.Commons;
 import com.univocity.parsers.csv.CsvWriter;
 import com.univocity.parsers.csv.CsvWriterSettings;
 import org.slf4j.Logger;
@@ -34,7 +35,7 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     private CsvWriterSettings settings;
 
     public DefaultCsvComparisonVisitor() {
-        dir = Utils.timeStamp();
+        dir = Commons.timeStamp();
     }
 
     @Override
@@ -102,6 +103,6 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
 
     private Path output(CsvComparisonOptions options, String diffType) {
         Path location = options.resultOptions().location().resolve(dir);
-        return Utils.createsDirectory(location).resolve(diffType);
+        return Commons.createDirectory(location).resolve(diffType);
     }
 }
