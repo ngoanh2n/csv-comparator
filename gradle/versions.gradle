@@ -3,9 +3,10 @@
  * @since 2020-01-27
  */
 ext {
-    SLF4J_VER                   =   "1.7.30"
-    GUAVA_VER                   =   "31.1-jre"
-    CSV_PARSER_VER              =   "2.8.4"
-    CHARDET_VER                 =   "2.3.2"
-    JUPITER_VER                 =   "5.8.2"
+    VERSION_SLF4J                   =   "1.7.30"
+    VERSION_GUAVA                   =   "31.1-jre"
+    VERSION_CSV_PARSER              =   "2.8.4"
+    VERSION_CHARDET                 =   "2.3.2"
+    VERSION_JUPITER                 =   "5.8.2"
+    VERSION_NGOANH2N_UTILITIES      =   "2.3.0"
 }
