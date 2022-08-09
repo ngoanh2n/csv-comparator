@@ -75,7 +75,7 @@ CsvComparisonResult.rowsInserted()
 CsvComparisonResult.rowsModified()
 ```
 
-_By default, result files which are created after comparing is located at `build/comparator/csv/{yyyyMMdd.HHmmss.SSS}/`_
+_By default, result files which are created after comparing is located at `build/ngoanh2n/csv/{yyyyMMdd.HHmmss.SSS}/`_
 
 ### **Walk Through**
 ```java
