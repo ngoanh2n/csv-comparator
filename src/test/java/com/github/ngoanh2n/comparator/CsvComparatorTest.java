@@ -5,26 +5,20 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import java.io.File;
-
 import static com.github.ngoanh2n.Resource.getFile;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * <h3>csv-comparator<h3>
- * <a href="https://github.com/ngoanh2n/csv-comparator">https://github.com/ngoanh2n/csv-comparator<a>
- * <br>
- *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @since 1.0.0
+ * @version 1.0.0
+ * @since 2020-01-06
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CsvComparatorTest {
-
     @Test
     @Order(1)
     void kept() {
-        CsvComparisonSource<File> source = CsvComparisonSource.create(
+        CsvComparisonSource source = CsvComparisonSource.create(
                 getFile("com/github/ngoanh2n/comparator/exp/inserted.csv"),
                 getFile("com/github/ngoanh2n/comparator/exp/inserted.csv")
         );
@@ -35,17 +29,17 @@ public class CsvComparatorTest {
                 .build();
         CsvComparisonResult result = new CsvComparator(source, options).compare();
 
-        assertFalse(result.hasDeleted());
-        assertFalse(result.hasInserted());
-        assertFalse(result.hasModified());
-        assertFalse(result.hasDiff());
+        assertFalse(result.isDeleted());
+        assertFalse(result.isInserted());
+        assertFalse(result.isModified());
+        assertFalse(result.isDifferent());
         assertEquals(1, result.rowsKept().size());
     }
 
     @Test
     @Order(2)
     void deleted() {
-        CsvComparisonSource<File> source = CsvComparisonSource.create(
+        CsvComparisonSource source = CsvComparisonSource.create(
                 getFile("com/github/ngoanh2n/comparator/exp/deleted.csv"),
                 getFile("com/github/ngoanh2n/comparator/act/deleted.csv")
         );
@@ -56,8 +50,8 @@ public class CsvComparatorTest {
                 .build();
         CsvComparisonResult result = new CsvComparator(source, options).compare();
 
-        assertTrue(result.hasDeleted());
-        assertTrue(result.hasDiff());
+        assertTrue(result.isDeleted());
+        assertTrue(result.isDifferent());
         assertEquals(1, result.rowsKept().size());
         assertEquals(1, result.rowsDeleted().size());
     }
@@ -65,7 +59,7 @@ public class CsvComparatorTest {
     @Test
     @Order(3)
     void inserted() {
-        CsvComparisonSource<File> source = CsvComparisonSource.create(
+        CsvComparisonSource source = CsvComparisonSource.create(
                 getFile("com/github/ngoanh2n/comparator/exp/inserted.csv"),
                 getFile("com/github/ngoanh2n/comparator/act/inserted.csv")
         );
@@ -76,8 +70,8 @@ public class CsvComparatorTest {
                 .build();
         CsvComparisonResult result = new CsvComparator(source, options).compare();
 
-        assertTrue(result.hasInserted());
-        assertTrue(result.hasDiff());
+        assertTrue(result.isInserted());
+        assertTrue(result.isDifferent());
         assertEquals(1, result.rowsKept().size());
         assertEquals(2, result.rowsInserted().size());
     }
@@ -85,7 +79,7 @@ public class CsvComparatorTest {
     @Test
     @Order(4)
     void modified() {
-        CsvComparisonSource<File> source = CsvComparisonSource.create(
+        CsvComparisonSource source = CsvComparisonSource.create(
                 getFile("com/github/ngoanh2n/comparator/exp/modified.csv"),
                 getFile("com/github/ngoanh2n/comparator/act/modified.csv")
         );
@@ -96,8 +90,8 @@ public class CsvComparatorTest {
                 .build();
         CsvComparisonResult result = new CsvComparator(source, options).compare();
 
-        assertTrue(result.hasModified());
-        assertTrue(result.hasDiff());
+        assertTrue(result.isModified());
+        assertTrue(result.isDifferent());
         assertEquals(2, result.rowsKept().size());
         assertEquals(1, result.rowsModified().size());
     }

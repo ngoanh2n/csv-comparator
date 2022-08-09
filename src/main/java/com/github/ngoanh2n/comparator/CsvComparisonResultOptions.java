@@ -7,20 +7,34 @@ import java.nio.file.Paths;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * <h3>csv-comparator<h3>
- * <a href="https://github.com/ngoanh2n/csv-comparator">https://github.com/ngoanh2n/csv-comparator<a>
- * <br>
+ * This class allows to adjust {@linkplain CsvComparisonResult} output by your expectation.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @since 1.2.0
+ * @version 1.0.0
+ * @since 2020-01-06
  */
 public interface CsvComparisonResultOptions {
+    /**
+     * Get {@linkplain CsvComparisonResultOptions.Builder} class where allows to build your {@linkplain CsvComparisonResultOptions}
+     *
+     * @return {@linkplain CsvComparisonResultOptions.Builder}
+     */
+    static Builder builder() {
+        return new Builder();
+    }
 
-    @Nonnull
-    Path location();
+    /**
+     * Get {@linkplain CsvComparisonResultOptions} with default options
+     *
+     * @return {@linkplain CsvComparisonResultOptions}
+     */
+    static CsvComparisonResultOptions defaults() {
+        return builder().build();
+    }
 
-    boolean includeHeaders();
-
+    /**
+     * This class allows to build {@linkplain CsvComparisonResultOptions}
+     */
     final class Builder {
 
         private Path location;
@@ -32,8 +46,10 @@ public interface CsvComparisonResultOptions {
         }
 
         /**
-         * @param path where you store the results
-         * @return {@link CsvComparisonOptions.Builder}
+         * Set location where you want to store comparison result output files
+         *
+         * @param path to location
+         * @return {@linkplain CsvComparisonOptions.Builder}
          */
         public CsvComparisonResultOptions.Builder location(@Nonnull Path path) {
             this.location = checkNotNull(path, "path cannot not be null");
@@ -41,8 +57,10 @@ public interface CsvComparisonResultOptions {
         }
 
         /**
-         * @param included A flag indicating whether or not the header is included in result file
-         * @return {@link CsvComparisonResultOptions.Builder}
+         * Indicate which includes headers to comparison result output files
+         *
+         * @param included is a flag whether that includes or not
+         * @return {@linkplain CsvComparisonResultOptions.Builder}
          */
         public CsvComparisonResultOptions.Builder includeHeaders(boolean included) {
             this.includesHeader = included;
@@ -50,13 +68,12 @@ public interface CsvComparisonResultOptions {
         }
 
         /**
-         * Build CsvComparisonResultOptions based on CsvComparisonResultOptions.Builder
+         * Build {@linkplain CsvComparisonResultOptions} based on {@linkplain CsvComparisonResultOptions.Builder}
          *
-         * @return {@link CsvComparisonResultOptions}
+         * @return {@linkplain CsvComparisonResultOptions}
          */
         public CsvComparisonResultOptions build() {
             return new CsvComparisonResultOptions() {
-
                 @Nonnull
                 @Override
                 public Path location() {
@@ -71,11 +88,18 @@ public interface CsvComparisonResultOptions {
         }
     }
 
-    static CsvComparisonResultOptions.Builder builder() {
-        return new CsvComparisonResultOptions.Builder();
-    }
+    /**
+     * Where you want to store comparison result output files
+     *
+     * @return path to location
+     */
+    @Nonnull
+    Path location();
 
-    static CsvComparisonResultOptions defaults() {
-        return builder().build();
-    }
+    /**
+     * Whether included headers to comparison result output files
+     *
+     * @return Indicate to add headers to result from output files
+     */
+    boolean includeHeaders();
 }

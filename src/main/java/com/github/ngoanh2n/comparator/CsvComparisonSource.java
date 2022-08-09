@@ -3,44 +3,50 @@ package com.github.ngoanh2n.comparator;
 import com.google.common.base.Preconditions;
 
 import javax.annotation.Nonnull;
+import java.io.File;
 
 /**
- * Provide comparison source for {@link CsvComparator}
- * <br>
- * <h3>csv-comparator<h3>
- * <a href="https://github.com/ngoanh2n/csv-comparator">https://github.com/ngoanh2n/csv-comparator<a>
- * <br>
+ * This interface should be used to provide comparison source for {@linkplain CsvComparator}.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @since 1.0.0
+ * @version 1.0.0
+ * @since 2020-01-06
  */
-public interface CsvComparisonSource<T> {
-
+public interface CsvComparisonSource {
+    /**
+     * Provide expected {@code T} source
+     *
+     * @return Expected source with {@code T} type
+     */
     @Nonnull
-    T exp();
+    File exp();
 
+    /**
+     * Provide actual {@code T} source needs to compare
+     *
+     * @return Actual source with {@code T} type
+     */
     @Nonnull
-    T act();
+    File act();
 
     /**
      * Create a comparison source and make sure it is not null
      *
      * @param exp the expected source
      * @param act the actual source needs to compare
-     * @param <T> type of source
-     * @return comparison source
+     * @return {@linkplain CsvComparisonSource}
      */
-    static <T> CsvComparisonSource<T> create(@Nonnull T exp, @Nonnull T act) {
-        return new CsvComparisonSource<T>() {
+    static CsvComparisonSource create(@Nonnull File exp, @Nonnull File act) {
+        return new CsvComparisonSource() {
             @Nonnull
             @Override
-            public T exp() {
+            public File exp() {
                 return Preconditions.checkNotNull(exp, "Expected source cannot be null");
             }
 
             @Nonnull
             @Override
-            public T act() {
+            public File act() {
                 return Preconditions.checkNotNull(act, "Actual source cannot be null");
             }
         };

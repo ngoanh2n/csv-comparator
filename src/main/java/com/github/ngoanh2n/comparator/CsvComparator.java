@@ -21,25 +21,23 @@ import java.util.stream.Collectors;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * <h3>csv-comparator<h3>
- * <a href="https://github.com/ngoanh2n/csv-comparator">https://github.com/ngoanh2n/csv-comparator<a>
- * <br>
+ * This class handles to compare {@linkplain CsvComparisonSource#exp()} and {@linkplain CsvComparisonSource#act()}.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @since 1.0.0
+ * @version 1.0.0
+ * @since 2020-01-06
  */
 public class CsvComparator {
-
-    private final CsvComparisonSource<File> source;
+    private final CsvComparisonSource source;
     private final CsvComparisonOptions options;
     private final CsvComparisonVisitor visitor;
 
-    public CsvComparator(@Nonnull CsvComparisonSource<File> source,
+    public CsvComparator(@Nonnull CsvComparisonSource source,
                          @Nonnull CsvComparisonOptions options) {
         this(source, options, new DefaultCsvComparisonVisitor());
     }
 
-    public CsvComparator(@Nonnull CsvComparisonSource<File> source,
+    public CsvComparator(@Nonnull CsvComparisonSource source,
                          @Nonnull CsvComparisonOptions options,
                          @Nonnull CsvComparisonVisitor visitor) {
         this.source = checkNotNull(source, "source cannot be null");
@@ -49,7 +47,7 @@ public class CsvComparator {
 
     @Nonnull
     public CsvComparisonResult compare() {
-        visitor.visitStarted(source);
+        visitor.comparisonStarted(source);
         Collector collector = new Collector();
         CsvParserSettings settings = getSettings();
 
@@ -95,7 +93,7 @@ public class CsvComparator {
                 collector.rowDeleted(row, headers, options);
             }
         }
-        visitor.visitEnded(source);
+        visitor.comparisonFinished(source);
         return new Result(collector);
     }
 
@@ -136,18 +134,18 @@ public class CsvComparator {
         }
 
         @Override
-        public boolean hasDeleted() {
-            return collector.hasDeleted;
+        public boolean isDeleted() {
+            return collector.isDeleted;
         }
 
         @Override
-        public boolean hasInserted() {
-            return collector.hasInserted;
+        public boolean isInserted() {
+            return collector.isInserted;
         }
 
         @Override
-        public boolean hasModified() {
-            return collector.hasModified;
+        public boolean isModified() {
+            return collector.isModified;
         }
 
         @Override
@@ -171,21 +169,24 @@ public class CsvComparator {
         }
 
         @Override
-        public boolean hasDiff() {
-            return hasDeleted() || hasInserted() || hasModified();
+        public boolean isDifferent() {
+            return isDeleted() || isInserted() || isModified();
         }
     }
 
     private final static class Collector implements CsvComparisonVisitor {
 
-        private boolean hasDeleted = false;
-        private boolean hasInserted = false;
-        private boolean hasModified = false;
+        private boolean isDeleted = false;
+        private boolean isInserted = false;
+        private boolean isModified = false;
 
         private final List<String[]> rowsKept = new ArrayList<>();
         private final List<String[]> rowsDeleted = new ArrayList<>();
         private final List<String[]> rowsInserted = new ArrayList<>();
         private final List<String[]> rowsModified = new ArrayList<>();
+
+        @Override
+        public void comparisonStarted(CsvComparisonSource source) { /* No implementation necessary */ }
 
         @Override
         public void rowKept(String[] row, String[] headers, CsvComparisonOptions options) {
@@ -194,31 +195,24 @@ public class CsvComparator {
 
         @Override
         public void rowDeleted(String[] row, String[] headers, CsvComparisonOptions options) {
-            hasDeleted = true;
+            isDeleted = true;
             rowsDeleted.add(row);
         }
 
         @Override
         public void rowInserted(String[] row, String[] headers, CsvComparisonOptions options) {
-            hasInserted = true;
+            isInserted = true;
             rowsInserted.add(row);
         }
 
         @Override
         public void rowModified(String[] row, String[] headers, CsvComparisonOptions options) {
-            hasModified = true;
+            isModified = true;
             rowsModified.add(row);
         }
 
         @Override
-        public void visitStarted(CsvComparisonSource<?> source) {
-
-        }
-
-        @Override
-        public void visitEnded(CsvComparisonSource<?> source) {
-
-        }
+        public void comparisonFinished(CsvComparisonSource source) { /* No implementation necessary */ }
     }
 
     static List<String[]> read(@Nonnull File csv, @Nonnull Charset encoding, @Nonnull CsvParserSettings settings) {
