@@ -14,17 +14,17 @@ import java.io.File;
  */
 public interface CsvComparisonSource {
     /**
-     * Provide expected {@code T} source
+     * Provide expected CSV file
      *
-     * @return Expected source with {@code T} type
+     * @return Expected CSV file
      */
     @Nonnull
     File exp();
 
     /**
-     * Provide actual {@code T} source needs to compare
+     * Provide actual CSV file needs to compare
      *
-     * @return Actual source with {@code T} type
+     * @return Actual CSV file
      */
     @Nonnull
     File act();
@@ -32,8 +32,8 @@ public interface CsvComparisonSource {
     /**
      * Create a comparison source and make sure it is not null
      *
-     * @param exp the expected source
-     * @param act the actual source needs to compare
+     * @param exp the expected CSV
+     * @param act the actual CSV needs to compare
      * @return {@linkplain CsvComparisonSource}
      */
     static CsvComparisonSource create(@Nonnull File exp, @Nonnull File act) {
