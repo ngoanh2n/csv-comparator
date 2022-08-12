@@ -25,6 +25,7 @@ if (project.hasProperty("signing.keyId")) {
                     name = property("prj.name")
                     description = property("prj.desc")
                     url = "https://github.com/ngoanh2n/csv-comparator"
+
                     licenses {
                         license {
                             name = "MIT"
