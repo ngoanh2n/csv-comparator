@@ -2,14 +2,20 @@
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  * @since 2020-01-27
  */
-tasks.withType(Test) {
+test {
     useJUnitPlatform() {
         includeEngines("junit-jupiter")
     }
-    ignoreFailures = true
-    outputs.upToDateWhen { false }
-    testLogging.showStandardStreams = true
-    testLogging { events "passed", "skipped", "failed" }
+
+    testLogging {
+        showStandardStreams = true
+        events "passed", "skipped", "failed"
+    }
+
     systemProperty("file.encoding", "UTF-8")
     systemProperty("junit.jupiter.extensions.autodetection.enabled", "true")
+
+    ignoreFailures = true
+    outputs.upToDateWhen { false }
+    systemProperties = System.getProperties() as Map<String, ?>
 }
