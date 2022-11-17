@@ -51,46 +51,44 @@ public class CsvComparator {
         Collector collector = new Collector();
         CsvParserSettings settings = getSettings();
 
-        String[] header = getHeader(settings);
+        String[] headers = getHeaders(settings);
+        int index = options.identityColumnIndex();
         List<String[]> expRows = read(source.exp(), getEncoding(source.exp()), settings);
-        Map<String, String[]> expMap = expRows.stream().collect(Collectors.toMap(expRow
-                -> expRow[options.identityColumnIndex()], expRow -> expRow, (a, b) -> b));
+        Map<String, String[]> expMap = expRows.stream().collect(Collectors.toMap(r -> r[index], r -> r, (a, b) -> b));
 
         settings.setProcessor(new RowProcessor() {
             @Override
-            public void processStarted(ParsingContext context) {
-            }
+            public void processStarted(ParsingContext context) { /* No implementation necessary */ }
 
             @Override
             public void rowProcessed(String[] actRow, ParsingContext context) {
-                String[] expRow = expMap.get(actRow[options.identityColumnIndex()]);
+                String[] expRow = expMap.get(actRow[index]);
 
                 if (expRow == null) {
-                    visitor.rowInserted(actRow, header, options);
-                    collector.rowInserted(actRow, header, options);
+                    visitor.rowInserted(actRow, headers, options);
+                    collector.rowInserted(actRow, headers, options);
                 } else {
                     if (Arrays.equals(actRow, expRow)) {
-                        visitor.rowKept(actRow, header, options);
-                        collector.rowKept(actRow, header, options);
+                        visitor.rowKept(actRow, headers, options);
+                        collector.rowKept(actRow, headers, options);
                     } else {
-                        visitor.rowModified(actRow, header, options);
-                        collector.rowModified(actRow, header, options);
+                        visitor.rowModified(actRow, headers, options);
+                        collector.rowModified(actRow, headers, options);
                     }
-                    expMap.remove(actRow[options.identityColumnIndex()]);
+                    expMap.remove(actRow[index]);
                 }
             }
 
             @Override
-            public void processEnded(ParsingContext context) {
-            }
+            public void processEnded(ParsingContext context) { /* No implementation necessary */ }
         });
         new CsvParser(settings).parse(source.act(), getEncoding(source.act()));
 
         if (expMap.size() > 0) {
             for (Map.Entry<String, String[]> left : expMap.entrySet()) {
                 String[] row = left.getValue();
-                visitor.rowDeleted(row, header, options);
-                collector.rowDeleted(row, header, options);
+                visitor.rowDeleted(row, headers, options);
+                collector.rowDeleted(row, headers, options);
             }
         }
         visitor.comparisonFinished(source);
@@ -113,14 +111,14 @@ public class CsvComparator {
         }
     }
 
-    private String[] getHeader(CsvParserSettings settings) {
+    private String[] getHeaders(CsvParserSettings settings) {
         if (settings.isHeaderExtractionEnabled()) {
-            String[] header = new String[0];
+            String[] headers = new String[0];
             settings.setHeaderExtractionEnabled(false);
             List<String[]> expRows = read(source.exp(), getEncoding(source.exp()), settings);
-            if (expRows.size() > 1) header = expRows.get(0);
+            if (expRows.size() > 1) headers = expRows.get(0);
             settings.setHeaderExtractionEnabled(true);
-            return header;
+            return headers;
         }
         return new String[0];
     }
@@ -175,11 +173,9 @@ public class CsvComparator {
     }
 
     private final static class Collector implements CsvComparisonVisitor {
-
         private boolean isDeleted = false;
         private boolean isInserted = false;
         private boolean isModified = false;
-
         private final List<String[]> rowsKept = new ArrayList<>();
         private final List<String[]> rowsDeleted = new ArrayList<>();
         private final List<String[]> rowsInserted = new ArrayList<>();
@@ -189,24 +185,24 @@ public class CsvComparator {
         public void comparisonStarted(CsvComparisonSource source) { /* No implementation necessary */ }
 
         @Override
-        public void rowKept(String[] row, String[] header, CsvComparisonOptions options) {
+        public void rowKept(String[] row, String[] headers, CsvComparisonOptions options) {
             rowsKept.add(row);
         }
 
         @Override
-        public void rowDeleted(String[] row, String[] header, CsvComparisonOptions options) {
+        public void rowDeleted(String[] row, String[] headers, CsvComparisonOptions options) {
             isDeleted = true;
             rowsDeleted.add(row);
         }
 
         @Override
-        public void rowInserted(String[] row, String[] header, CsvComparisonOptions options) {
+        public void rowInserted(String[] row, String[] headers, CsvComparisonOptions options) {
             isInserted = true;
             rowsInserted.add(row);
         }
 
         @Override
-        public void rowModified(String[] row, String[] header, CsvComparisonOptions options) {
+        public void rowModified(String[] row, String[] headers, CsvComparisonOptions options) {
             isModified = true;
             rowsModified.add(row);
         }

@@ -40,7 +40,6 @@ public interface CsvComparisonOptions {
      * This class allows to build {@linkplain CsvComparisonOptions}
      */
     final class Builder {
-
         private Charset encoding;
         private int selectedColumnCount;
         private int identityColumnIndex;
@@ -49,21 +48,21 @@ public interface CsvComparisonOptions {
         private CsvComparisonResultOptions resultOptions;
 
         private Builder() {
-            this.encoding = null;
-            this.identityColumnIndex = 0;
-            this.selectedColumnNames = new String[0];
-            this.csvParser = new CsvParserSettings();
-            this.csvParser.setHeaderExtractionEnabled(true);
-            this.csvParser.getFormat().setLineSeparator("\n");
-            this.resultOptions = CsvComparisonResultOptions.defaults();
+            encoding = null;
+            identityColumnIndex = 0;
+            selectedColumnNames = new String[0];
+            csvParser = new CsvParserSettings();
+            csvParser.setHeaderExtractionEnabled(true);
+            csvParser.getFormat().setLineSeparator("\n");
+            resultOptions = CsvComparisonResultOptions.defaults();
         }
 
         /**
          * Set encoding to read and writing CSV files
          *
          * @param encoding is the {@code Charset} for reading and writing CSV files. <br>
-         *                 https://docs.oracle.com/javase/8/docs/technotes/guides/intl/encoding.doc.html
-         * @return {@link CsvComparisonOptions.Builder}
+         *                 <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/encoding.doc.html">encoding</a>
+         * @return {@link Builder}
          * @see java.nio.charset.StandardCharsets
          */
         public Builder setEncoding(@Nullable Charset encoding) {
@@ -79,7 +78,7 @@ public interface CsvComparisonOptions {
          */
         public Builder setLineSeparator(@Nonnull String lineSeparator) {
             checkNotNull(lineSeparator, "lineSeparator cannot not be null");
-            this.csvParser.getFormat().setLineSeparator(lineSeparator);
+            csvParser.getFormat().setLineSeparator(lineSeparator);
             return this;
         }
 
@@ -92,8 +91,8 @@ public interface CsvComparisonOptions {
          *                  the input should be considered as the row containing the names of each column
          * @return {@linkplain CsvComparisonOptions.Builder}
          */
-        public Builder extractHeader(boolean extracted) {
-            this.csvParser.setHeaderExtractionEnabled(extracted);
+        public Builder extractHeaders(boolean extracted) {
+            csvParser.setHeaderExtractionEnabled(extracted);
             return this;
         }
 
@@ -105,9 +104,9 @@ public interface CsvComparisonOptions {
          */
         public Builder setColumns(@Nonnull String... names) {
             checkNotNull(names, "names cannot not be null");
-            this.selectedColumnNames = names;
-            this.selectedColumnCount = names.length;
-            this.csvParser.selectFields(names);
+            selectedColumnNames = names;
+            selectedColumnCount = names.length;
+            csvParser.selectFields(names);
             return this;
         }
 
@@ -119,8 +118,8 @@ public interface CsvComparisonOptions {
          */
         public Builder setColumns(@Nonnull Integer... indexes) {
             checkNotNull(indexes, "indexes cannot not be null");
-            this.selectedColumnCount = indexes.length;
-            this.csvParser.selectIndexes(indexes);
+            selectedColumnCount = indexes.length;
+            csvParser.selectIndexes(indexes);
             return this;
         }
 
@@ -133,9 +132,9 @@ public interface CsvComparisonOptions {
          * @return {@link CsvComparisonOptions.Builder}
          */
         public Builder setIdentityColumn(@Nonnull String name) {
-            if (this.selectedColumnNames.length != 0) {
+            if (selectedColumnNames.length != 0) {
                 checkNotNull(name, "name cannot not be null");
-                this.identityColumnIndex = Arrays.asList(this.selectedColumnNames).indexOf(name);
+                identityColumnIndex = Arrays.asList(this.selectedColumnNames).indexOf(name);
             } else {
                 throw new RuntimeError("Please use #setColumns(String... names) first");
             }
@@ -154,7 +153,7 @@ public interface CsvComparisonOptions {
          */
         public Builder setIdentityColumn(int index) {
             if (index > -1 && index < this.selectedColumnCount) {
-                this.identityColumnIndex = index;
+                identityColumnIndex = index;
             } else {
                 throw new RuntimeError(String.format("index should be in range [%s, %s]", 0, selectedColumnCount));
             }
@@ -168,7 +167,7 @@ public interface CsvComparisonOptions {
          * @return {@link CsvComparisonOptions.Builder}
          */
         public Builder setResultOptions(@Nonnull CsvComparisonResultOptions options) {
-            this.resultOptions = options;
+            resultOptions = options;
             return this;
         }
 
@@ -179,7 +178,6 @@ public interface CsvComparisonOptions {
          */
         public CsvComparisonOptions build() {
             return new CsvComparisonOptions() {
-
                 @Override
                 public Charset encoding() {
                     return encoding;

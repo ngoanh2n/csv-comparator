@@ -38,11 +38,11 @@ public interface CsvComparisonResultOptions {
     final class Builder {
 
         private Path location;
-        private boolean includeHeader;
+        private boolean includeHeaders;
 
         private Builder() {
-            this.includeHeader = true;
-            this.location = Paths.get("build/ngoanh2n/csv");
+            includeHeaders = true;
+            location = Paths.get("build/ngoanh2n/csv");
         }
 
         /**
@@ -52,18 +52,18 @@ public interface CsvComparisonResultOptions {
          * @return {@linkplain CsvComparisonOptions.Builder}
          */
         public CsvComparisonResultOptions.Builder location(@Nonnull Path path) {
-            this.location = checkNotNull(path, "path cannot not be null");
+            location = checkNotNull(path, "path cannot not be null");
             return this;
         }
 
         /**
-         * Indicate which includes header row to comparison result output files
+         * Indicate which includes headers row to comparison result output files
          *
          * @param included is a flag whether that includes or not
          * @return {@linkplain CsvComparisonResultOptions.Builder}
          */
-        public CsvComparisonResultOptions.Builder includeHeader(boolean included) {
-            this.includeHeader = included;
+        public CsvComparisonResultOptions.Builder includeHeaders(boolean included) {
+            includeHeaders = included;
             return this;
         }
 
@@ -81,8 +81,8 @@ public interface CsvComparisonResultOptions {
                 }
 
                 @Override
-                public boolean includeHeader() {
-                    return includeHeader;
+                public boolean includeHeaders() {
+                    return includeHeaders;
                 }
             };
         }
@@ -101,5 +101,5 @@ public interface CsvComparisonResultOptions {
      *
      * @return Indicate to add header row to result from output files
      */
-    boolean includeHeader();
+    boolean includeHeaders();
 }
