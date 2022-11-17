@@ -77,20 +77,16 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
         if (modifiedWriter != null) modifiedWriter.close();
     }
 
-    private Path output(CsvComparisonOptions options, String diffType) {
-        Path location = options.resultOptions().location().resolve(dir);
-        return Commons.createDirectory(location).resolve(diffType);
-    }
+    private CsvWriter writeHeaders(String[] headers, CsvComparisonOptions options, CsvWriter writer, String fileName) {
+        if (writer == null) {
+            Path location = options.resultOptions().location().resolve(dir);
+            File file = Commons.createDirectory(location).resolve(fileName).toFile();
+            writer = new CsvWriter(file, options.encoding(), settings);
 
-    private CsvWriter writeHeaders(String[] header, CsvComparisonOptions options, CsvWriter csvWriter, String type) {
-        if (csvWriter == null) {
-            File file = output(options, type).toFile();
-            csvWriter = new CsvWriter(file, options.encoding(), settings);
-
-            if (header.length > 0 && options.resultOptions().includeHeaders()) {
-                csvWriter.writeRow(header);
+            if (headers.length > 0 && options.resultOptions().includeHeaders()) {
+                writer.writeRow(headers);
             }
         }
-        return csvWriter;
+        return writer;
     }
 }
