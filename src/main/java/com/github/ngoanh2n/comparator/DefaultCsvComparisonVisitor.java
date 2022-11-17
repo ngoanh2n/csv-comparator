@@ -37,29 +37,29 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     }
 
     @Override
-    public void rowKept(String[] row, String[] header, CsvComparisonOptions options) {
-        keptWriter = writeHeaders(header, options, keptWriter, KEPT);
+    public void rowKept(String[] row, String[] headers, CsvComparisonOptions options) {
+        keptWriter = writeHeaders(headers, options, keptWriter, KEPT);
         keptWriter.writeRow(row);
         LOGGER.debug("Kept -> {}", Arrays.toString(row));
     }
 
     @Override
-    public void rowDeleted(String[] row, String[] header, CsvComparisonOptions options) {
-        deletedWriter = writeHeaders(header, options, deletedWriter, DELETED);
+    public void rowDeleted(String[] row, String[] headers, CsvComparisonOptions options) {
+        deletedWriter = writeHeaders(headers, options, deletedWriter, DELETED);
         deletedWriter.writeRow(row);
         LOGGER.debug("Deleted -> {}", Arrays.toString(row));
     }
 
     @Override
-    public void rowInserted(String[] row, String[] header, CsvComparisonOptions options) {
-        insertedWriter = writeHeaders(header, options, insertedWriter, INSERTED);
+    public void rowInserted(String[] row, String[] headers, CsvComparisonOptions options) {
+        insertedWriter = writeHeaders(headers, options, insertedWriter, INSERTED);
         insertedWriter.writeRow(row);
         LOGGER.debug("Inserted -> {}", Arrays.toString(row));
     }
 
     @Override
-    public void rowModified(String[] row, String[] header, CsvComparisonOptions options) {
-        modifiedWriter = writeHeaders(header, options, modifiedWriter, MODIFIED);
+    public void rowModified(String[] row, String[] headers, CsvComparisonOptions options) {
+        modifiedWriter = writeHeaders(headers, options, modifiedWriter, MODIFIED);
         modifiedWriter.writeRow(row);
         LOGGER.debug("Modified -> {}", Arrays.toString(row));
     }
@@ -87,7 +87,7 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
             File file = output(options, type).toFile();
             csvWriter = new CsvWriter(file, options.encoding(), settings);
 
-            if (header.length > 0 && options.resultOptions().includeHeader()) {
+            if (header.length > 0 && options.resultOptions().includeHeaders()) {
                 csvWriter.writeRow(header);
             }
         }
