@@ -27,7 +27,7 @@ public class CsvComparatorTest {
                 .setColumns(1, 2, 3)
                 .setIdentityColumn(0)
                 .build();
-        CsvComparisonResult result = new CsvComparator(source, options).compare();
+        CsvComparisonResult result = CsvComparator.compare(source, options);
 
         assertFalse(result.isDeleted());
         assertFalse(result.isInserted());
@@ -48,7 +48,7 @@ public class CsvComparatorTest {
                 .setColumns("email", "firstname", "lastname")
                 .setIdentityColumn("email")
                 .build();
-        CsvComparisonResult result = new CsvComparator(source, options).compare();
+        CsvComparisonResult result = CsvComparator.compare(source, options);
 
         assertTrue(result.isDeleted());
         assertTrue(result.isDifferent());
@@ -68,7 +68,7 @@ public class CsvComparatorTest {
                 .setColumns(1, 2, 3)
                 .setIdentityColumn(0)
                 .build();
-        CsvComparisonResult result = new CsvComparator(source, options).compare();
+        CsvComparisonResult result = CsvComparator.compare(source, options);
 
         assertTrue(result.isInserted());
         assertTrue(result.isDifferent());
@@ -88,7 +88,7 @@ public class CsvComparatorTest {
                 .setColumns("email", "firstname", "lastname")
                 .setIdentityColumn(0)
                 .build();
-        CsvComparisonResult result = new CsvComparator(source, options).compare();
+        CsvComparisonResult result = CsvComparator.compare(source, options);
 
         assertTrue(result.isModified());
         assertTrue(result.isDifferent());

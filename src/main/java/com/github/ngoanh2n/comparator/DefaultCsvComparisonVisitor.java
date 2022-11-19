@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -37,6 +39,11 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     }
 
     @Override
+    public void comparisonStarted(CsvComparisonSource source, CsvComparisonOptions options) {
+        settings = new CsvWriterSettings();
+    }
+
+    @Override
     public void rowKept(String[] row, String[] headers, CsvComparisonOptions options) {
         keptWriter = writeHeaders(headers, options, keptWriter, KEPT);
         keptWriter.writeRow(row);
@@ -58,19 +65,14 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     }
 
     @Override
-    public void rowModified(String[] row, String[] headers, CsvComparisonOptions options) {
+    public void rowModified(String[] row, String[] headers, CsvComparisonOptions options, List<HashMap<String, String>> diffs) {
         modifiedWriter = writeHeaders(headers, options, modifiedWriter, MODIFIED);
         modifiedWriter.writeRow(row);
         LOGGER.debug("Modified -> {}", Arrays.toString(row));
     }
 
     @Override
-    public void comparisonStarted(CsvComparisonSource source) {
-        settings = new CsvWriterSettings();
-    }
-
-    @Override
-    public void comparisonFinished(CsvComparisonSource source) {
+    public void comparisonFinished(CsvComparisonSource source, CsvComparisonOptions options, CsvComparisonResult result) {
         if (keptWriter != null) keptWriter.close();
         if (deletedWriter != null) deletedWriter.close();
         if (insertedWriter != null) insertedWriter.close();
