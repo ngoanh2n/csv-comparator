@@ -1,5 +1,8 @@
 package com.github.ngoanh2n.comparator;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * This interface should be used to walk through {@linkplain CsvComparator}.
  *
@@ -9,11 +12,12 @@ package com.github.ngoanh2n.comparator;
  */
 public interface CsvComparisonVisitor {
     /**
-     * Callback before {@linkplain CsvComparator#compare()}
+     * Callback before {@linkplain CsvComparator#compare(CsvComparisonSource, CsvComparisonOptions)}
      *
-     * @param source is {@linkplain CsvComparisonSource} is being to compare
+     * @param source  is {@linkplain CsvComparisonSource} is being to compare
+     * @param options is {@linkplain CsvComparisonOptions} you have provided
      */
-    void comparisonStarted(CsvComparisonSource source);
+    void comparisonStarted(CsvComparisonSource source, CsvComparisonOptions options);
 
     /**
      * Callback for when {@linkplain CsvComparator} detected a row kept
@@ -52,13 +56,18 @@ public interface CsvComparisonVisitor {
      * @param headers is extracted from {@linkplain CsvComparisonSource} you have provided <br>
      *                Headers row is existed or not depends on {@linkplain CsvComparisonOptions.Builder#extractHeaders(boolean)}
      * @param options is {@linkplain CsvComparisonOptions} you have provided
+     * @param diffs   is list of difference at specific cells -> [column, expCell, actCell] <br>
+     *                - column: name of column (header) <br>
+     *                - expCell: cell value of expected CSV <br>
+     *                - actCell: cell value of actual CSV <br>
      */
-    void rowModified(String[] row, String[] headers, CsvComparisonOptions options);
+    void rowModified(String[] row, String[] headers, CsvComparisonOptions options, List<HashMap<String, String>> diffs);
 
     /**
-     * Callback after {@linkplain CsvComparator#compare()}
+     * Callback after {@linkplain CsvComparator#compare(CsvComparisonSource, CsvComparisonOptions)} )}
      *
-     * @param source is {@linkplain CsvComparisonSource} is being to compare
+     * @param source  is {@linkplain CsvComparisonSource} is being to compare
+     * @param options is {@linkplain CsvComparisonOptions} you have provided
      */
-    void comparisonFinished(CsvComparisonSource source);
+    void comparisonFinished(CsvComparisonSource source, CsvComparisonOptions options, CsvComparisonResult result);
 }

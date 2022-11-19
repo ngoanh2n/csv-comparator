@@ -12,10 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -32,23 +29,34 @@ public class CsvComparator {
     private final CsvComparisonOptions options;
     private final CsvComparisonVisitor visitor;
 
-    public CsvComparator(@Nonnull CsvComparisonSource source,
-                         @Nonnull CsvComparisonOptions options) {
+    private CsvComparator(@Nonnull CsvComparisonSource source,
+                          @Nonnull CsvComparisonOptions options) {
         this(source, options, new DefaultCsvComparisonVisitor());
     }
 
-    public CsvComparator(@Nonnull CsvComparisonSource source,
-                         @Nonnull CsvComparisonOptions options,
-                         @Nonnull CsvComparisonVisitor visitor) {
+    private CsvComparator(@Nonnull CsvComparisonSource source,
+                          @Nonnull CsvComparisonOptions options,
+                          @Nonnull CsvComparisonVisitor visitor) {
         this.source = checkNotNull(source, "source cannot be null");
         this.options = checkNotNull(options, "source cannot be null");
         this.visitor = checkNotNull(visitor, "source cannot be null");
     }
 
+    public static CsvComparisonResult compare(@Nonnull CsvComparisonSource source,
+                                              @Nonnull CsvComparisonOptions options) {
+        return new CsvComparator(source, options).compare();
+    }
+
+    public static CsvComparisonResult compare(@Nonnull CsvComparisonSource source,
+                                              @Nonnull CsvComparisonOptions options,
+                                              @Nonnull CsvComparisonVisitor visitor) {
+        return new CsvComparator(source, options, visitor).compare();
+    }
+
     @Nonnull
-    public CsvComparisonResult compare() {
-        visitor.comparisonStarted(source);
+    private CsvComparisonResult compare() {
         Collector collector = new Collector();
+        visitor.comparisonStarted(source, options);
         CsvParserSettings settings = getSettings();
 
         String[] headers = getHeaders(settings);
@@ -72,8 +80,9 @@ public class CsvComparator {
                         visitor.rowKept(actRow, headers, options);
                         collector.rowKept(actRow, headers, options);
                     } else {
-                        visitor.rowModified(actRow, headers, options);
-                        collector.rowModified(actRow, headers, options);
+                        List<HashMap<String, String>> diffs = getDiffs(headers, expRow, actRow);
+                        visitor.rowModified(actRow, headers, options, diffs);
+                        collector.rowModified(actRow, headers, options, diffs);
                     }
                     expMap.remove(actRow[index]);
                 }
@@ -91,8 +100,10 @@ public class CsvComparator {
                 collector.rowDeleted(row, headers, options);
             }
         }
-        visitor.comparisonFinished(source);
-        return new Result(collector);
+
+        Result result = new Result(collector);
+        visitor.comparisonFinished(source, options, result);
+        return result;
     }
 
     private CsvParserSettings getSettings() {
@@ -116,11 +127,33 @@ public class CsvComparator {
             String[] headers = new String[0];
             settings.setHeaderExtractionEnabled(false);
             List<String[]> expRows = read(source.exp(), getEncoding(source.exp()), settings);
-            if (expRows.size() > 1) headers = expRows.get(0);
+
+            if (expRows.size() > 1) {
+                headers = expRows.get(0);
+            }
             settings.setHeaderExtractionEnabled(true);
             return headers;
         }
         return new String[0];
+    }
+
+    private List<HashMap<String, String>> getDiffs(String[] headers, String[] expRow, String[] actRow) {
+        List<HashMap<String, String>> diffs = new ArrayList<>();
+
+        for (int index = 0; index < headers.length; index++) {
+            String header = headers[index];
+            String expCell = expRow[index];
+            String actCell = actRow[index];
+
+            if (!expCell.equals(actCell)) {
+                diffs.add(new HashMap<String, String>() {{
+                    put("column", header);
+                    put("expCell", expCell);
+                    put("actCell", actCell);
+                }});
+            }
+        }
+        return diffs;
     }
 
     private final static class Result implements CsvComparisonResult {
@@ -182,7 +215,7 @@ public class CsvComparator {
         private final List<String[]> rowsModified = new ArrayList<>();
 
         @Override
-        public void comparisonStarted(CsvComparisonSource source) { /* No implementation necessary */ }
+        public void comparisonStarted(CsvComparisonSource source, CsvComparisonOptions options) { /* No implementation necessary */ }
 
         @Override
         public void rowKept(String[] row, String[] headers, CsvComparisonOptions options) {
@@ -202,13 +235,13 @@ public class CsvComparator {
         }
 
         @Override
-        public void rowModified(String[] row, String[] headers, CsvComparisonOptions options) {
+        public void rowModified(String[] row, String[] headers, CsvComparisonOptions options, List<HashMap<String, String>> diffs) {
             isModified = true;
             rowsModified.add(row);
         }
 
         @Override
-        public void comparisonFinished(CsvComparisonSource source) { /* No implementation necessary */ }
+        public void comparisonFinished(CsvComparisonSource source, CsvComparisonOptions options, CsvComparisonResult result) { /* No implementation necessary */ }
     }
 
     static List<String[]> read(@Nonnull File csv, @Nonnull Charset encoding, @Nonnull CsvParserSettings settings) {
