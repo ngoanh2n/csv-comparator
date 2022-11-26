@@ -82,7 +82,7 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     private CsvWriter writeHeaders(String[] headers, CsvComparisonOptions options, CsvWriter writer, String fileName) {
         if (writer == null) {
             Path location = options.resultOptions().location().resolve(dir);
-            File file = Commons.createDirectory(location).resolve(fileName).toFile();
+            File file = Commons.createDir(location).resolve(fileName).toFile();
             writer = new CsvWriter(file, options.encoding(), settings);
 
             if (headers.length > 0 && options.resultOptions().includeHeaders()) {
