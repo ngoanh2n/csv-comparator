@@ -107,7 +107,7 @@ public class CsvComparator {
     }
 
     private CsvParserSettings getSettings() {
-        Commons.createDirectory(options.resultOptions().location());
+        Commons.createDir(options.resultOptions().location());
         return options.parserSettings();
     }
 
