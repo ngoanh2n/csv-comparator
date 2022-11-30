@@ -24,7 +24,7 @@ public interface CsvComparisonVisitor {
      *
      * @param row     is the row kept
      * @param headers is extracted from {@linkplain CsvComparisonSource} you have provided <br>
-     *                Headers row is existed or not depends on {@linkplain CsvComparisonOptions.Builder#extractHeaders(boolean)}
+     *                Headers row is existed or not depends on {@linkplain CsvComparisonOptions.Builder#withoutHeaders(boolean)}
      * @param options is {@linkplain CsvComparisonOptions} you have provided
      */
     void rowKept(String[] row, String[] headers, CsvComparisonOptions options);
@@ -34,7 +34,7 @@ public interface CsvComparisonVisitor {
      *
      * @param row     is the row deleted
      * @param headers is extracted from {@linkplain CsvComparisonSource} you have provided <br>
-     *                Headers row is existed or not depends on {@linkplain CsvComparisonOptions.Builder#extractHeaders(boolean)}
+     *                Headers row is existed or not depends on {@linkplain CsvComparisonOptions.Builder#withoutHeaders(boolean)}
      * @param options is {@linkplain CsvComparisonOptions} you have provided
      */
     void rowDeleted(String[] row, String[] headers, CsvComparisonOptions options);
@@ -44,7 +44,7 @@ public interface CsvComparisonVisitor {
      *
      * @param row     is the row inserted
      * @param headers is extracted from {@linkplain CsvComparisonSource} you have provided <br>
-     *                Headers row is existed or not depends on {@linkplain CsvComparisonOptions.Builder#extractHeaders(boolean)}
+     *                Headers row is existed or not depends on {@linkplain CsvComparisonOptions.Builder#withoutHeaders(boolean)}
      * @param options is {@linkplain CsvComparisonOptions} you have provided
      */
     void rowInserted(String[] row, String[] headers, CsvComparisonOptions options);
@@ -54,7 +54,7 @@ public interface CsvComparisonVisitor {
      *
      * @param row     is the row modified
      * @param headers is extracted from {@linkplain CsvComparisonSource} you have provided <br>
-     *                Headers row is existed or not depends on {@linkplain CsvComparisonOptions.Builder#extractHeaders(boolean)}
+     *                Headers row is existed or not depends on {@linkplain CsvComparisonOptions.Builder#withoutHeaders(boolean)}
      * @param options is {@linkplain CsvComparisonOptions} you have provided
      * @param diffs   is list of difference at specific cells -> [column, expCell, actCell] <br>
      *                - column: name of column (header) <br>
