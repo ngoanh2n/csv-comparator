@@ -33,10 +33,24 @@ public interface CsvComparisonResultOptions {
     }
 
     /**
+     * Where you want to store comparison result output files
+     *
+     * @return path to location
+     */
+    @Nonnull
+    Path location();
+
+    /**
+     * Whether included header row to comparison result output files
+     *
+     * @return Indicate to add header row to result from output files
+     */
+    boolean includeHeaders();
+
+    /**
      * This class allows to build {@linkplain CsvComparisonResultOptions}
      */
     final class Builder {
-
         private Path location;
         private boolean includeHeaders;
 
@@ -87,19 +101,4 @@ public interface CsvComparisonResultOptions {
             };
         }
     }
-
-    /**
-     * Where you want to store comparison result output files
-     *
-     * @return path to location
-     */
-    @Nonnull
-    Path location();
-
-    /**
-     * Whether included header row to comparison result output files
-     *
-     * @return Indicate to add header row to result from output files
-     */
-    boolean includeHeaders();
 }

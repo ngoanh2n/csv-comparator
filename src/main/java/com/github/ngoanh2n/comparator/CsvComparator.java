@@ -13,9 +13,9 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.stream.Collectors.toMap;
 
 /**
  * This class handles to compare {@linkplain CsvComparisonSource#exp()} and {@linkplain CsvComparisonSource#act()}.
@@ -42,6 +42,8 @@ public class CsvComparator {
         this.visitor = checkNotNull(visitor, "source cannot be null");
     }
 
+    // ------------------------------------------------
+
     public static CsvComparisonResult compare(@Nonnull CsvComparisonSource source,
                                               @Nonnull CsvComparisonOptions options) {
         return new CsvComparator(source, options).compare();
@@ -53,24 +55,24 @@ public class CsvComparator {
         return new CsvComparator(source, options, visitor).compare();
     }
 
+    // ------------------------------------------------
+
     @Nonnull
     private CsvComparisonResult compare() {
-        Collector collector = new Collector();
         visitor.comparisonStarted(source, options);
+        Collector collector = new Collector();
         CsvParserSettings settings = getSettings();
+        CsvSource cs = CsvSource.parse(options, source.exp());
 
-        String[] headers = getHeaders(settings);
-        int index = options.identityColumnIndex();
-        List<String[]> expRows = read(source.exp(), getEncoding(source.exp()), settings);
-        Map<String, String[]> expMap = expRows.stream().collect(Collectors.toMap(r -> r[index], r -> r, (a, b) -> b));
+        int columnId = cs.getColumnId();
+        String[] headers = cs.getHeaders();
+        Map<String, String[]> expMap = cs.getRows().stream()
+                .collect(toMap(rk -> rk[columnId], rv -> rv, (rk, rv) -> rv));
 
         settings.setProcessor(new RowProcessor() {
             @Override
-            public void processStarted(ParsingContext context) { /* No implementation necessary */ }
-
-            @Override
             public void rowProcessed(String[] actRow, ParsingContext context) {
-                String[] expRow = expMap.get(actRow[index]);
+                String[] expRow = expMap.get(actRow[columnId]);
 
                 if (expRow == null) {
                     visitor.rowInserted(actRow, headers, options);
@@ -84,14 +86,17 @@ public class CsvComparator {
                         visitor.rowModified(actRow, headers, options, diffs);
                         collector.rowModified(actRow, headers, options, diffs);
                     }
-                    expMap.remove(actRow[index]);
+                    expMap.remove(actRow[columnId]);
                 }
             }
 
             @Override
+            public void processStarted(ParsingContext context) { /* No implementation necessary */ }
+
+            @Override
             public void processEnded(ParsingContext context) { /* No implementation necessary */ }
         });
-        new CsvParser(settings).parse(source.act(), getEncoding(source.act()));
+        new CsvParser(settings).parse(source.act(), getEncoding(options, source.act()));
 
         if (expMap.size() > 0) {
             for (Map.Entry<String, String[]> left : expMap.entrySet()) {
@@ -109,32 +114,6 @@ public class CsvComparator {
     private CsvParserSettings getSettings() {
         Commons.createDir(options.resultOptions().location());
         return options.parserSettings();
-    }
-
-    private Charset getEncoding(File file) {
-        try {
-            return options.encoding() != null
-                    ? options.encoding()
-                    : Charset.forName(UniversalDetector.detectCharset(file));
-        } catch (IOException ignored) {
-            // Can't happen
-            return StandardCharsets.UTF_8;
-        }
-    }
-
-    private String[] getHeaders(CsvParserSettings settings) {
-        if (settings.isHeaderExtractionEnabled()) {
-            String[] headers = new String[0];
-            settings.setHeaderExtractionEnabled(false);
-            List<String[]> expRows = read(source.exp(), getEncoding(source.exp()), settings);
-
-            if (expRows.size() > 1) {
-                headers = expRows.get(0);
-            }
-            settings.setHeaderExtractionEnabled(true);
-            return headers;
-        }
-        return new String[0];
     }
 
     private List<HashMap<String, String>> getDiffs(String[] headers, String[] expRow, String[] actRow) {
@@ -155,6 +134,19 @@ public class CsvComparator {
         }
         return diffs;
     }
+
+    static Charset getEncoding(CsvComparisonOptions options, File file) {
+        try {
+            return options.encoding() != null
+                    ? options.encoding()
+                    : Charset.forName(UniversalDetector.detectCharset(file));
+        } catch (IOException ignored) {
+            // Can't happen
+            return StandardCharsets.UTF_8;
+        }
+    }
+
+    // ------------------------------------------------
 
     private final static class Result implements CsvComparisonResult {
 
@@ -206,13 +198,13 @@ public class CsvComparator {
     }
 
     private final static class Collector implements CsvComparisonVisitor {
-        private boolean isDeleted = false;
-        private boolean isInserted = false;
-        private boolean isModified = false;
         private final List<String[]> rowsKept = new ArrayList<>();
         private final List<String[]> rowsDeleted = new ArrayList<>();
         private final List<String[]> rowsInserted = new ArrayList<>();
         private final List<String[]> rowsModified = new ArrayList<>();
+        private boolean isDeleted = false;
+        private boolean isInserted = false;
+        private boolean isModified = false;
 
         @Override
         public void comparisonStarted(CsvComparisonSource source, CsvComparisonOptions options) { /* No implementation necessary */ }
@@ -242,9 +234,5 @@ public class CsvComparator {
 
         @Override
         public void comparisonFinished(CsvComparisonSource source, CsvComparisonOptions options, CsvComparisonResult result) { /* No implementation necessary */ }
-    }
-
-    static List<String[]> read(@Nonnull File csv, @Nonnull Charset encoding, @Nonnull CsvParserSettings settings) {
-        return new CsvParser(settings).parseAll(csv, encoding);
     }
 }

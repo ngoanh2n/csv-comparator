@@ -1,11 +1,11 @@
 package com.github.ngoanh2n.comparator;
 
+import com.github.ngoanh2n.Resource;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import static com.github.ngoanh2n.Resource.getFile;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -14,18 +14,18 @@ import static org.junit.jupiter.api.Assertions.*;
  * @since 2020-01-06
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class CsvComparatorTest {
+public class RowDifferenceTest {
     @Test
     @Order(1)
     void kept() {
         CsvComparisonSource source = CsvComparisonSource.create(
-                getFile("com/github/ngoanh2n/comparator/exp/inserted.csv"),
-                getFile("com/github/ngoanh2n/comparator/exp/inserted.csv")
+                Resource.getFile("com/github/ngoanh2n/comparator/exp/inserted.csv"),
+                Resource.getFile("com/github/ngoanh2n/comparator/exp/inserted.csv")
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
-                .setColumns(1, 2, 3)
-                .setIdentityColumn(0)
+                .selectColumns(1, 2, 3)
+                .selectColumnId(1)
                 .build();
         CsvComparisonResult result = CsvComparator.compare(source, options);
 
@@ -40,13 +40,13 @@ public class CsvComparatorTest {
     @Order(2)
     void deleted() {
         CsvComparisonSource source = CsvComparisonSource.create(
-                getFile("com/github/ngoanh2n/comparator/exp/deleted.csv"),
-                getFile("com/github/ngoanh2n/comparator/act/deleted.csv")
+                Resource.getFile("com/github/ngoanh2n/comparator/exp/deleted.csv"),
+                Resource.getFile("com/github/ngoanh2n/comparator/act/deleted.csv")
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
-                .setColumns("email", "firstname", "lastname")
-                .setIdentityColumn("email")
+                .selectColumns("email", "firstname", "lastname")
+                .selectColumnId("email")
                 .build();
         CsvComparisonResult result = CsvComparator.compare(source, options);
 
@@ -60,13 +60,13 @@ public class CsvComparatorTest {
     @Order(3)
     void inserted() {
         CsvComparisonSource source = CsvComparisonSource.create(
-                getFile("com/github/ngoanh2n/comparator/exp/inserted.csv"),
-                getFile("com/github/ngoanh2n/comparator/act/inserted.csv")
+                Resource.getFile("com/github/ngoanh2n/comparator/exp/inserted.csv"),
+                Resource.getFile("com/github/ngoanh2n/comparator/act/inserted.csv")
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
-                .setColumns(1, 2, 3)
-                .setIdentityColumn(0)
+                .selectColumns(1, 2, 3)
+                .selectColumnId(1)
                 .build();
         CsvComparisonResult result = CsvComparator.compare(source, options);
 
@@ -80,13 +80,13 @@ public class CsvComparatorTest {
     @Order(4)
     void modified() {
         CsvComparisonSource source = CsvComparisonSource.create(
-                getFile("com/github/ngoanh2n/comparator/exp/modified.csv"),
-                getFile("com/github/ngoanh2n/comparator/act/modified.csv")
+                Resource.getFile("com/github/ngoanh2n/comparator/exp/modified.csv"),
+                Resource.getFile("com/github/ngoanh2n/comparator/act/modified.csv")
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
-                .setColumns("email", "firstname", "lastname")
-                .setIdentityColumn(0)
+                .selectColumns("email", "firstname", "lastname")
+                .selectColumnId("email")
                 .build();
         CsvComparisonResult result = CsvComparator.compare(source, options);
 
