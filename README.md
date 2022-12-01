@@ -18,9 +18,9 @@
   - [**Gradle**](#gradle)
   - [**Maven**](#maven)
 - [**Usages**](#usages)
-  - [**Compare**](#compare)
-  - [**Asssert**](#asssert)
-  - [**Walk Through**](#walk-through)
+  - [**Comparison**](#comparison)
+  - [**Asssertion**](#asssertion)
+  - [**Walking Through**](#walking-through)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -28,7 +28,7 @@
 ### **Gradle**
 _Add dependency to `build.gradle`_
 ```gradle
-implementation("com.github.ngoanh2n:csv-comparator:1.3.0")
+implementation("com.github.ngoanh2n:csv-comparator:1.4.0")
 ```
 
 ### **Maven**
@@ -37,7 +37,7 @@ _Add dependency to `pom.xml`_
 <dependency>
     <groupId>com.github.ngoanh2n</groupId>
     <artifactId>csv-comparator</artifactId>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
 </dependency>
 ```
 
@@ -47,7 +47,7 @@ Compare 2 CSV files formatted columns:
 id,email,firstname,lastname,age,note
 ```
 
-### **Compare**
+### **Comparison**
 ```java
 // Create comparison source from actual and expected file
 CsvComparisonSource source = CsvComparisonSource.create(expectedCsv, actualCsv);
@@ -55,15 +55,17 @@ CsvComparisonSource source = CsvComparisonSource.create(expectedCsv, actualCsv);
 // Build comparison options to navigate behaviors of comparison process
 CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
-                .setColumns(1, 2, 3)
-                .setIdentityColumn(0) // position starts with 0 in array [1, 2, 3]
+                .selectColumns("email", "firstname", "lastname")
+                .selectColumnId("email")
+                //.selectColumns(1, 2, 3)
+                //.selectColumnId(1)
                 .build();
 
 // Do comparison
-CsvComparisonResult result = new CsvComparator(source, options).compare();
+CsvComparisonResult result = CsvComparator.compare(source, options);
 ```
 
-### **Asssert**
+### **Asssertion**
 ```java
 CsvComparisonResult.isDeleted()
 CsvComparisonResult.isInserted()
@@ -77,12 +79,12 @@ CsvComparisonResult.rowsModified()
 
 _By default, result files which are created after comparing is located at `build/ngoanh2n/csv/{yyyyMMdd.HHmmss.SSS}/`_
 
-### **Walk Through**
+### **Walking Through**
 ```java
-CsvComparisonVisitor.comparisonStarted(CsvComparisonSource source)
-CsvComparisonVisitor.rowKept(String[] row, String[] header, CsvComparisonOptions options)
-CsvComparisonVisitor.rowDeleted(String[] row, String[] header, CsvComparisonOptions options)
-CsvComparisonVisitor.rowInserted(String[] row, String[] header, CsvComparisonOptions options)
-CsvComparisonVisitor.rowModified(String[] row, String[] header, CsvComparisonOptions options)
-CsvComparisonVisitor.comparisonFinished(CsvComparisonSource source)
+CsvComparisonVisitor.comparisonStarted(CsvComparisonSource source CsvComparisonOptions options)
+CsvComparisonVisitor.rowKept(String[] row, String[] headers, CsvComparisonOptions options)
+CsvComparisonVisitor.rowDeleted(String[] row, String[] headers, CsvComparisonOptions options)
+CsvComparisonVisitor.rowInserted(String[] row, String[] headers, CsvComparisonOptions options)
+CsvComparisonVisitor.rowModified(String[] row, String[] headers, CsvComparisonOptions options, List<HashMap<String, String>> diffs)
+CsvComparisonVisitor.comparisonFinished(CsvComparisonSource source, CsvComparisonOptions options, CsvComparisonResult result)
 ```
