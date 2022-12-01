@@ -41,33 +41,43 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     @Override
     public void comparisonStarted(CsvComparisonSource source, CsvComparisonOptions options) {
         settings = new CsvWriterSettings();
+        LOGGER.debug("Exp: {}", source.exp());
+        LOGGER.debug("Act: {}", source.act());
     }
 
     @Override
     public void rowKept(String[] row, String[] headers, CsvComparisonOptions options) {
-        keptWriter = writeHeaders(headers, options, keptWriter, KEPT);
-        keptWriter.writeRow(row);
+        if (options.resultOptions().writesOutputs()) {
+            keptWriter = writeHeaders(headers, options, keptWriter, KEPT);
+            keptWriter.writeRow(row);
+        }
         LOGGER.debug("K -> {}", Arrays.toString(row));
     }
 
     @Override
     public void rowDeleted(String[] row, String[] headers, CsvComparisonOptions options) {
-        deletedWriter = writeHeaders(headers, options, deletedWriter, DELETED);
-        deletedWriter.writeRow(row);
+        if (options.resultOptions().writesOutputs()) {
+            deletedWriter = writeHeaders(headers, options, deletedWriter, DELETED);
+            deletedWriter.writeRow(row);
+        }
         LOGGER.debug("D -> {}", Arrays.toString(row));
     }
 
     @Override
     public void rowInserted(String[] row, String[] headers, CsvComparisonOptions options) {
-        insertedWriter = writeHeaders(headers, options, insertedWriter, INSERTED);
-        insertedWriter.writeRow(row);
+        if (options.resultOptions().writesOutputs()) {
+            insertedWriter = writeHeaders(headers, options, insertedWriter, INSERTED);
+            insertedWriter.writeRow(row);
+        }
         LOGGER.debug("I -> {}", Arrays.toString(row));
     }
 
     @Override
     public void rowModified(String[] row, String[] headers, CsvComparisonOptions options, List<HashMap<String, String>> diffs) {
-        modifiedWriter = writeHeaders(headers, options, modifiedWriter, MODIFIED);
-        modifiedWriter.writeRow(row);
+        if (options.resultOptions().writesOutputs()) {
+            modifiedWriter = writeHeaders(headers, options, modifiedWriter, MODIFIED);
+            modifiedWriter.writeRow(row);
+        }
         LOGGER.debug("M -> {}", Arrays.toString(row));
     }
 
@@ -85,7 +95,7 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
             File file = Commons.createDir(location).resolve(fileName).toFile();
             writer = new CsvWriter(file, options.encoding(), settings);
 
-            if (headers.length > 0 && options.resultOptions().includeHeaders()) {
+            if (headers.length > 0 && options.resultOptions().includesHeaders()) {
                 writer.writeRow(headers);
             }
         }

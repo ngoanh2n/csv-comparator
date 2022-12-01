@@ -41,20 +41,29 @@ public interface CsvComparisonResultOptions {
     Path location();
 
     /**
-     * Whether included header row to comparison result output files
+     * Whether wrote output files
      *
-     * @return Indicate to add header row to result from output files
+     * @return Indicate to write output files
      */
-    boolean includeHeaders();
+    boolean writesOutputs();
+
+    /**
+     * Whether included headers row in output files
+     *
+     * @return Indicate to add headers row to results in output files
+     */
+    boolean includesHeaders();
 
     /**
      * This class allows to build {@linkplain CsvComparisonResultOptions}
      */
     final class Builder {
         private Path location;
+        private boolean writesOutputs;
         private boolean includeHeaders;
 
         private Builder() {
+            writesOutputs = true;
             includeHeaders = true;
             location = Paths.get("build/ngoanh2n/csv");
         }
@@ -71,13 +80,24 @@ public interface CsvComparisonResultOptions {
         }
 
         /**
-         * Indicate which includes headers row to comparison result output files
+         * Indicate which writes output files
          *
-         * @param included is a flag whether that includes or not
+         * @param enabled is a flag whether that includes or not
          * @return {@linkplain CsvComparisonResultOptions.Builder}
          */
-        public CsvComparisonResultOptions.Builder includeHeaders(boolean included) {
-            includeHeaders = included;
+        public CsvComparisonResultOptions.Builder writesOutputs(boolean enabled) {
+            writesOutputs = enabled;
+            return this;
+        }
+
+        /**
+         * Indicate which includes headers row to comparison result output files
+         *
+         * @param enabled is a flag whether that includes or not
+         * @return {@linkplain CsvComparisonResultOptions.Builder}
+         */
+        public CsvComparisonResultOptions.Builder includesHeaders(boolean enabled) {
+            includeHeaders = enabled;
             return this;
         }
 
@@ -95,8 +115,13 @@ public interface CsvComparisonResultOptions {
                 }
 
                 @Override
-                public boolean includeHeaders() {
+                public boolean includesHeaders() {
                     return includeHeaders;
+                }
+
+                @Override
+                public boolean writesOutputs() {
+                    return writesOutputs;
                 }
             };
         }
