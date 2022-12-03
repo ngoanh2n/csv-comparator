@@ -39,14 +39,14 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     }
 
     @Override
-    public void comparisonStarted(CsvComparisonSource source, CsvComparisonOptions options) {
+    public void comparisonStarted(CsvComparisonOptions options, CsvComparisonSource source) {
         settings = new CsvWriterSettings();
         LOGGER.debug("Exp: {}", source.exp());
         LOGGER.debug("Act: {}", source.act());
     }
 
     @Override
-    public void rowKept(String[] row, String[] headers, CsvComparisonOptions options) {
+    public void rowKept(CsvComparisonOptions options, String[] headers, String[] row) {
         if (options.resultOptions().writesOutputs()) {
             keptWriter = writeHeaders(headers, options, keptWriter, KEPT);
             keptWriter.writeRow(row);
@@ -55,7 +55,7 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     }
 
     @Override
-    public void rowDeleted(String[] row, String[] headers, CsvComparisonOptions options) {
+    public void rowDeleted(CsvComparisonOptions options, String[] headers, String[] row) {
         if (options.resultOptions().writesOutputs()) {
             deletedWriter = writeHeaders(headers, options, deletedWriter, DELETED);
             deletedWriter.writeRow(row);
@@ -64,7 +64,7 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     }
 
     @Override
-    public void rowInserted(String[] row, String[] headers, CsvComparisonOptions options) {
+    public void rowInserted(CsvComparisonOptions options, String[] headers, String[] row) {
         if (options.resultOptions().writesOutputs()) {
             insertedWriter = writeHeaders(headers, options, insertedWriter, INSERTED);
             insertedWriter.writeRow(row);
@@ -73,7 +73,7 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     }
 
     @Override
-    public void rowModified(String[] row, String[] headers, CsvComparisonOptions options, List<HashMap<String, String>> diffs) {
+    public void rowModified(CsvComparisonOptions options, String[] headers, String[] row, List<HashMap<String, String>> diffs) {
         if (options.resultOptions().writesOutputs()) {
             modifiedWriter = writeHeaders(headers, options, modifiedWriter, MODIFIED);
             modifiedWriter.writeRow(row);
@@ -82,7 +82,7 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     }
 
     @Override
-    public void comparisonFinished(CsvComparisonSource source, CsvComparisonOptions options, CsvComparisonResult result) {
+    public void comparisonFinished(CsvComparisonOptions options, CsvComparisonSource source, CsvComparisonResult result) {
         if (keptWriter != null) keptWriter.close();
         if (deletedWriter != null) deletedWriter.close();
         if (insertedWriter != null) insertedWriter.close();
