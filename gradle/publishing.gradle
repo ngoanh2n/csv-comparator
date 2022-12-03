@@ -66,7 +66,6 @@ if (project.hasProperty("signing.keyId")) {
         sign publishing.publications.mavenJava
     }
 
-
     javadoc {
         if (JavaVersion.current().isJava9Compatible()) {
             options.addBooleanOption("html5", true)
