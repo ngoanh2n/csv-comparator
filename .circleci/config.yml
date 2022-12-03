@@ -9,13 +9,6 @@ parameters:
   os_linux: { type: string, default: linux }
 
 executors:
-  executor_windows:
-    machine:
-      image: windows-server-2022-gui:current
-    shell: bash.exe
-    resource_class: windows.medium
-    environment:
-      OS: <<pipeline.parameters.os_windows>>
   executor_macos:
     macos:
       xcode: 13.4.1
@@ -30,6 +23,13 @@ executors:
     resource_class: medium
     environment:
       OS: <<pipeline.parameters.os_linux>>
+  executor_windows:
+    machine:
+      image: windows-server-2022-gui:current
+    shell: bash.exe
+    resource_class: windows.medium
+    environment:
+      OS: <<pipeline.parameters.os_windows>>
 
 commands:
   env_prepare:
@@ -39,46 +39,6 @@ commands:
           name: Prepare environment
           command: |
             chmod +x gradlew
-
-            case $OS in
-              <<pipeline.parameters.os_windows>>)
-                choco feature enable -n allowGlobalConfirmation
-                choco install zip
-              ;;
-              <<pipeline.parameters.os_macos>>)
-                brew update
-                brew install zip
-              ;;
-              <<pipeline.parameters.os_linux>>)
-                sudo apt update
-                sudo apt install zip
-              ;;
-            esac
-  cache_store:
-    steps:
-      - save_cache:
-          name: Store Gradle cache
-          paths:
-            - ~/.gradle
-          key: gradle-{{checksum "build.gradle"}}
-  cache_restore:
-    steps:
-      - restore_cache:
-          name: Restore Gradle cache
-          key: gradle-{{checksum "build.gradle"}}
-  artifact_compress:
-    steps:
-      - run:
-          name: Compress JUnit report
-          command: |
-            cd build/reports
-            zip -r junit-report.zip tests/test/*
-  artifact_store:
-    steps:
-      - store_artifacts:
-          name: Store JUnit report
-          path: build/reports/junit-report.zip
-          destination: junit-report
   test_execute:
     steps:
       - run:
@@ -93,11 +53,7 @@ jobs:
     executor: <<parameters.os>>
     steps:
       - env_prepare
-      - cache_restore
       - test_execute
-      - artifact_compress
-      - artifact_store
-      - cache_store
 
 workflows:
   test_execution:
@@ -110,6 +66,6 @@ workflows:
           matrix:
             parameters:
               os:
-                - executor_windows
                 - executor_macos
                 - executor_linux
+                - executor_windows
