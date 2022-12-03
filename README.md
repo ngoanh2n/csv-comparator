@@ -81,10 +81,10 @@ _By default, result files which are created after comparing is located at `build
 
 ### **Walking Through**
 ```java
-CsvComparisonVisitor.comparisonStarted(CsvComparisonSource source CsvComparisonOptions options)
-CsvComparisonVisitor.rowKept(String[] row, String[] headers, CsvComparisonOptions options)
-CsvComparisonVisitor.rowDeleted(String[] row, String[] headers, CsvComparisonOptions options)
-CsvComparisonVisitor.rowInserted(String[] row, String[] headers, CsvComparisonOptions options)
-CsvComparisonVisitor.rowModified(String[] row, String[] headers, CsvComparisonOptions options, List<HashMap<String, String>> diffs)
-CsvComparisonVisitor.comparisonFinished(CsvComparisonSource source, CsvComparisonOptions options, CsvComparisonResult result)
+CsvComparisonVisitor.comparisonStarted(CsvComparisonOptions options, CsvComparisonSource source)
+CsvComparisonVisitor.rowKept(CsvComparisonOptions options, String[] headers, String[] row)
+CsvComparisonVisitor.rowDeleted(CsvComparisonOptions options, String[] headers, String[] row)
+CsvComparisonVisitor.rowInserted(CsvComparisonOptions options, String[] headers, String[] row)
+CsvComparisonVisitor.rowModified(CsvComparisonOptions options, String[] headers, String[] row, List<HashMap<String, String>> diffs)
+CsvComparisonVisitor.comparisonFinished(CsvComparisonOptions options, CsvComparisonSource source, CsvComparisonResult result)
 ```
