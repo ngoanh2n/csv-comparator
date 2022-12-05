@@ -8,30 +8,28 @@
 [![badge-jdk](https://img.shields.io/badge/jdk-8-blue.svg)](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blueviolet.svg)](https://opensource.org/licenses/MIT)
 
-# **CSV Comparator**
+# CSV Comparator
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [**Dependency**](#dependency)
-  - [**Gradle**](#gradle)
-  - [**Maven**](#maven)
-- [**Usages**](#usages)
-  - [**Comparison**](#comparison)
-  - [**Asssertion**](#asssertion)
-  - [**Walking Through**](#walking-through)
+  - [Gradle Project](#gradle-project)
+  - [Maven Project](#maven-project)
+- [Usages](#usages)
+  - [Comparison](#comparison)
+  - [Asssertion](#asssertion)
+  - [Walking Through](#walking-through)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## **Dependency**
-### **Gradle**
+## Gradle Project
 _Add dependency to `build.gradle`_
 ```gradle
 implementation("com.github.ngoanh2n:csv-comparator:1.4.0")
 ```
 
-### **Maven**
+## Maven Project
 _Add dependency to `pom.xml`_
 ```xml
 <dependency>
@@ -41,13 +39,13 @@ _Add dependency to `pom.xml`_
 </dependency>
 ```
 
-## **Usages**
+# Usages
 Compare 2 CSV files formatted columns:
 ```
 id,email,firstname,lastname,age,note
 ```
 
-### **Comparison**
+## Comparison
 ```java
 // Create comparison source from actual and expected file
 CsvComparisonSource source = CsvComparisonSource.create(expectedCsv, actualCsv);
@@ -65,7 +63,7 @@ CsvComparisonOptions options = CsvComparisonOptions
 CsvComparisonResult result = CsvComparator.compare(source, options);
 ```
 
-### **Asssertion**
+## Asssertion
 ```java
 CsvComparisonResult.isDeleted()
 CsvComparisonResult.isInserted()
@@ -79,7 +77,7 @@ CsvComparisonResult.rowsModified()
 
 _By default, result files which are created after comparing is located at `build/ngoanh2n/csv/{yyyyMMdd.HHmmss.SSS}/`_
 
-### **Walking Through**
+## Walking Through
 ```java
 CsvComparisonVisitor.comparisonStarted(CsvComparisonOptions options, CsvComparisonSource source)
 CsvComparisonVisitor.rowKept(CsvComparisonOptions options, String[] headers, String[] row)
