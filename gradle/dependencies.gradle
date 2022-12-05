@@ -3,12 +3,12 @@
  * @since 2020-01-27
  */
 dependencies {
-    implementation("org.slf4j:slf4j-api:${VERSION_SLF4J}")
-    implementation("com.google.guava:guava:${VERSION_GUAVA}")
-    implementation("com.univocity:univocity-parsers:${VERSION_CSV_PARSER}")
-    implementation("com.github.ngoanh2n:utilities:${VERSION_NGOANH2N_UTILITIES}")
-    implementation("com.github.albfernandez:juniversalchardet:${VERSION_JUNIVERSAL_CHARDET}")
+    implementation("org.slf4j:slf4j-api:2.0.5")
+    implementation("com.google.guava:guava:31.1-jre")
+    implementation("com.github.ngoanh2n:utilities:2.3.1")
+    implementation("com.univocity:univocity-parsers:2.9.1")
+    implementation("com.github.albfernandez:juniversalchardet:2.4.0")
 
-    testImplementation("org.slf4j:slf4j-log4j12:${VERSION_SLF4J}")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${VERSION_JUPITER}")
+    testImplementation("org.slf4j:slf4j-log4j12:2.0.5")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
 }
