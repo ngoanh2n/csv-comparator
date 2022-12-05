@@ -104,7 +104,7 @@ class CsvSource {
     }
 
     private FieldSelector getColumnSelector(CsvParserSettings settings) {
-        return Commons.getPrivateField(CommonSettings.class, "fieldSelector", settings);
+        return Commons.getPrivateValue(CommonSettings.class, settings, "fieldSelector");
     }
 
     private int getColumnIdByName(CsvComparisonOptions options, List<String> names) {
