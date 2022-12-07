@@ -68,6 +68,7 @@ public interface CsvComparisonVisitor {
      *
      * @param source  is {@linkplain CsvComparisonSource} is being to compare
      * @param options is {@linkplain CsvComparisonOptions} you have provided
+     * @param result  is {@linkplain CsvComparisonResult} after comparison process ended
      */
     void comparisonFinished(CsvComparisonOptions options, CsvComparisonSource source, CsvComparisonResult result);
 }
