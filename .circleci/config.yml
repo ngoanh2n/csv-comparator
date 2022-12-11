@@ -3,33 +3,22 @@
 ###
 version: 2.1
 
-parameters:
-  os_windows: { type: string, default: windows }
-  os_macos: { type: string, default: macos }
-  os_linux: { type: string, default: linux }
-
 executors:
   executor_macos:
     macos:
       xcode: 13.4.1
     shell: /bin/bash
     resource_class: medium
-    environment:
-      OS: <<pipeline.parameters.os_macos>>
   executor_linux:
     machine:
       image: ubuntu-2004:2022.07.1
     shell: /bin/bash
     resource_class: medium
-    environment:
-      OS: <<pipeline.parameters.os_linux>>
   executor_windows:
     machine:
       image: windows-server-2022-gui:current
     shell: bash.exe
     resource_class: windows.medium
-    environment:
-      OS: <<pipeline.parameters.os_windows>>
 
 commands:
   env_prepare:
