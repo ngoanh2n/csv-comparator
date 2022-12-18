@@ -3,8 +3,6 @@
  * @since 2020-01-27
  */
 dependencies {
-    implementation("org.slf4j:slf4j-api:2.0.5")
-    implementation("com.google.guava:guava:31.1-jre")
     implementation("com.github.ngoanh2n:utilities:2.3.4")
     implementation("com.univocity:univocity-parsers:2.9.1")
     implementation("com.github.albfernandez:juniversalchardet:2.4.0")
