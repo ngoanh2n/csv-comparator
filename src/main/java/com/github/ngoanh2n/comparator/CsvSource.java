@@ -2,7 +2,6 @@ package com.github.ngoanh2n.comparator;
 
 import com.github.ngoanh2n.Commons;
 import com.github.ngoanh2n.RuntimeError;
-import com.univocity.parsers.common.CommonSettings;
 import com.univocity.parsers.common.fields.FieldIndexSelector;
 import com.univocity.parsers.common.fields.FieldNameSelector;
 import com.univocity.parsers.common.fields.FieldSelector;
@@ -104,7 +103,7 @@ class CsvSource {
     }
 
     private FieldSelector getColumnSelector(CsvParserSettings settings) {
-        return Commons.getPrivateValue(CommonSettings.class, settings, "fieldSelector");
+        return Commons.readField(settings, "fieldSelector");
     }
 
     private int getColumnIdByName(CsvComparisonOptions options, List<String> names) {
