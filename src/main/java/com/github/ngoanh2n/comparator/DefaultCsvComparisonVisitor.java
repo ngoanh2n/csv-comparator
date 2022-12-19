@@ -35,7 +35,7 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     private CsvWriterSettings settings;
 
     public DefaultCsvComparisonVisitor() {
-        dir = Commons.timeStamp();
+        dir = Commons.timestamp();
     }
 
     @Override
