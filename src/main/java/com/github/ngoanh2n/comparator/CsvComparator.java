@@ -5,7 +5,6 @@ import com.univocity.parsers.common.ParsingContext;
 import com.univocity.parsers.common.processor.RowProcessor;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
-import org.mozilla.universalchardet.UniversalDetector;
 
 import javax.annotation.Nonnull;
 import java.io.File;
@@ -61,7 +60,7 @@ public class CsvComparator {
         try {
             return options.encoding() != null
                     ? options.encoding()
-                    : Charset.forName(UniversalDetector.detectCharset(file));
+                    : Charset.forName(Commons.detectCharset(file));
         } catch (IOException ignored) {
             // Can't happen
             return StandardCharsets.UTF_8;
