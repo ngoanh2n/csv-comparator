@@ -3,9 +3,8 @@
  * @since 2020-01-27
  */
 dependencies {
-    implementation("com.github.ngoanh2n:utilities:2.3.9")
+    implementation("com.github.ngoanh2n:utilities:2.3.11")
     implementation("com.univocity:univocity-parsers:2.9.1")
-    implementation("com.github.albfernandez:juniversalchardet:2.4.0")
 
     testImplementation("org.slf4j:slf4j-log4j12:2.0.6")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
