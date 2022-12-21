@@ -14,8 +14,9 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-  - [Gradle Project](#gradle-project)
-  - [Maven Project](#maven-project)
+- [Delarations](#delarations)
+  - [Gradle](#gradle)
+  - [Maven](#maven)
 - [Usages](#usages)
   - [Comparison](#comparison)
   - [Asssertion](#asssertion)
@@ -23,19 +24,20 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Gradle Project
+# Delarations
+## Gradle
 _Add dependency to `build.gradle`_
 ```gradle
-implementation("com.github.ngoanh2n:csv-comparator:1.4.0")
+implementation("com.github.ngoanh2n:csv-comparator:1.4.1")
 ```
 
-## Maven Project
+## Maven
 _Add dependency to `pom.xml`_
 ```xml
 <dependency>
     <groupId>com.github.ngoanh2n</groupId>
     <artifactId>csv-comparator</artifactId>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
 </dependency>
 ```
 
