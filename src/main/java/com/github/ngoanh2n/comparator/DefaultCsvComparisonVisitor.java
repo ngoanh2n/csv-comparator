@@ -41,8 +41,6 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     @Override
     public void comparisonStarted(CsvComparisonOptions options, CsvComparisonSource source) {
         settings = new CsvWriterSettings();
-        LOGGER.debug("Exp: {}", Commons.getRelative(source.exp()));
-        LOGGER.debug("Act: {}", Commons.getRelative(source.act()));
     }
 
     @Override
