@@ -56,7 +56,7 @@ public interface CsvComparisonVisitor {
      * @param headers is extracted from {@linkplain CsvComparisonSource} you have provided <br>
      *                Headers row is existed or not depends on {@linkplain CsvComparisonOptions.Builder#withoutHeaders()} (boolean)}
      * @param options is {@linkplain CsvComparisonOptions} you have provided
-     * @param diffs   is list of difference at specific cells -> [column, expCell, actCell] <br>
+     * @param diffs   is list of difference at specific cells: [column, expCell, actCell] <br>
      *                - column: name of column (header) <br>
      *                - expCell: cell value of expected CSV <br>
      *                - actCell: cell value of actual CSV <br>
