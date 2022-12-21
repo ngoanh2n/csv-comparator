@@ -21,10 +21,6 @@ import static org.slf4j.LoggerFactory.getLogger;
  * @since 2020-01-06
  */
 public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
-    private final static String KEPT = "kept.csv";
-    private final static String DELETED = "deleted.csv";
-    private final static String INSERTED = "inserted.csv";
-    private final static String MODIFIED = "modified.csv";
     private final static Logger LOGGER = getLogger(DefaultCsvComparisonVisitor.class);
 
     private final String dir;
@@ -46,7 +42,7 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     @Override
     public void rowKept(CsvComparisonOptions options, String[] headers, String[] row) {
         if (options.resultOptions().writesOutputs()) {
-            keptWriter = writeHeaders(headers, options, keptWriter, KEPT);
+            keptWriter = writeHeaders(headers, options, keptWriter, "kept.csv");
             keptWriter.writeRow(row);
         }
         LOGGER.debug("K -> {}", Arrays.toString(row));
@@ -55,7 +51,7 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     @Override
     public void rowDeleted(CsvComparisonOptions options, String[] headers, String[] row) {
         if (options.resultOptions().writesOutputs()) {
-            deletedWriter = writeHeaders(headers, options, deletedWriter, DELETED);
+            deletedWriter = writeHeaders(headers, options, deletedWriter, "deleted.csv");
             deletedWriter.writeRow(row);
         }
         LOGGER.debug("D -> {}", Arrays.toString(row));
@@ -64,7 +60,7 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     @Override
     public void rowInserted(CsvComparisonOptions options, String[] headers, String[] row) {
         if (options.resultOptions().writesOutputs()) {
-            insertedWriter = writeHeaders(headers, options, insertedWriter, INSERTED);
+            insertedWriter = writeHeaders(headers, options, insertedWriter, "inserted.csv");
             insertedWriter.writeRow(row);
         }
         LOGGER.debug("I -> {}", Arrays.toString(row));
@@ -73,7 +69,7 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
     @Override
     public void rowModified(CsvComparisonOptions options, String[] headers, String[] row, List<HashMap<String, String>> diffs) {
         if (options.resultOptions().writesOutputs()) {
-            modifiedWriter = writeHeaders(headers, options, modifiedWriter, MODIFIED);
+            modifiedWriter = writeHeaders(headers, options, modifiedWriter, "modified.csv");
             modifiedWriter.writeRow(row);
         }
         LOGGER.debug("M -> {}", Arrays.toString(row));
