@@ -2,39 +2,36 @@
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  * @since 2020-01-27
  */
-group("com.github.ngoanh2n")
-version("1.4.1")
+allprojects {
+    group("com.github.ngoanh2n")
+    version("1.4.1")
 
-apply plugin: "java"
-apply plugin: "idea"
-apply plugin: "signing"
-apply plugin: "java-library"
-apply plugin: "maven-publish"
-
-apply from: "gradle/testing.gradle"
-apply from: "gradle/compiling.gradle"
-apply from: "gradle/publishing.gradle"
-apply from: "gradle/dependencies.gradle"
-
-repositories {
-    mavenCentral()
-    maven { url "https://plugins.gradle.org/m2/" }
-}
-
-buildscript {
     repositories {
         mavenCentral()
-        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url("https://plugins.gradle.org/m2/") }
     }
-    dependencies {}
 }
 
-clean.doFirst {
-    delete project.file("out")
-}
+subprojects {
+    apply plugin: "idea"
+    apply plugin: "java"
+    apply plugin: "signing"
+    apply plugin: "java-library"
+    apply plugin: "maven-publish"
 
-tasks.build.configure {
-    dependsOn.removeIf { task -> (task == "check") }
-    assemble.dependsOn("clean")
-    dependsOn("publishToMavenLocal")
+    apply from: rootProject.file("gradle/testing.gradle")
+    apply from: rootProject.file("gradle/compiling.gradle")
+    apply from: rootProject.file("gradle/publishing.gradle")
+    apply from: rootProject.file("gradle/dependencies.gradle")
+
+    clean.doFirst {
+        delete project.file("out")
+        delete rootProject.files("build")
+    }
+
+    tasks.build.configure {
+        dependsOn.removeIf { task -> (task == "check") }
+        assemble.dependsOn("clean")
+        dependsOn("publishToMavenLocal")
+    }
 }
