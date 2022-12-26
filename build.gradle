@@ -8,6 +8,9 @@ description(property("prj.desc") as String)
 
 apply plugin: "java"
 apply plugin: "idea"
+apply plugin: "signing"
+apply plugin: "java-library"
+apply plugin: "maven-publish"
 
 apply from: "gradle/testing.gradle"
 apply from: "gradle/compiling.gradle"
@@ -30,3 +33,4 @@ buildscript {
 clean.doFirst {
     delete project.file("out")
 }
+
