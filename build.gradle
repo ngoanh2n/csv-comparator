@@ -34,3 +34,8 @@ clean.doFirst {
     delete project.file("out")
 }
 
+tasks.build.configure {
+    dependsOn.removeIf { task -> (task == "check") }
+    assemble.dependsOn("clean")
+    dependsOn("publishToMavenLocal")
+}
