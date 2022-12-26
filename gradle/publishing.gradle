@@ -17,8 +17,8 @@ publishing {
             artifact javadocJar
 
             pom {
-                name = property("prj.name")
-                description = property("prj.desc")
+                name = property("artifact.name")
+                description = property("artifact.desc")
                 url = "https://github.com/ngoanh2n/csv-comparator"
 
                 licenses {
