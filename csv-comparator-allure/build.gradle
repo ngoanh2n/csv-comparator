@@ -1,0 +1,7 @@
+/**
+ * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @since 2022-12-26
+ */
+dependencies {
+    api(project(":csv-comparator"))
+}

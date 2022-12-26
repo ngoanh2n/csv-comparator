@@ -5,3 +5,4 @@
 rootProject.setName("csvc")
 
 include("csv-comparator")
+include("csv-comparator-allure")
