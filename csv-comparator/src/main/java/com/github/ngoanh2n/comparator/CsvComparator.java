@@ -10,10 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -27,11 +23,6 @@ import static java.util.stream.Collectors.toMap;
  * @since 2020-01-06
  */
 public class CsvComparator {
-    private final static Logger LOGGER = LoggerFactory.getLogger(CsvComparator.class);
-
-
-    //-------------------------------------------------------------------------------//
-
     private final CsvComparisonSource source;
     private final CsvComparisonOptions options;
     private final List<CsvComparisonVisitor> visitors;
@@ -61,17 +52,6 @@ public class CsvComparator {
     }
 
     //-------------------------------------------------------------------------------//
-
-    static Charset getEncoding(CsvComparisonOptions options, File file) {
-        try {
-            return options.encoding() != null
-                    ? options.encoding()
-                    : Charset.forName(Commons.detectCharset(file));
-        } catch (IOException ignored) {
-            // Can't happen
-            return StandardCharsets.UTF_8;
-        }
-    }
 
     @Nonnull
     private CsvComparisonResult compare() {
@@ -112,7 +92,7 @@ public class CsvComparator {
             @Override
             public void processEnded(ParsingContext context) { /* No implementation necessary */ }
         });
-        new CsvParser(settings).parse(source.act(), getEncoding(options, source.act()));
+        new CsvParser(settings).parse(source.act(), CsvSource.getEncoding(options, source.act()));
 
         if (expMap.size() > 0) {
             for (Map.Entry<String, String[]> left : expMap.entrySet()) {
@@ -127,16 +107,16 @@ public class CsvComparator {
         return result;
     }
 
+    private CsvParserSettings getSettings() {
+        Commons.createDir(options.resultOptions().location());
+        return options.parserSettings();
+    }
+
     private List<CsvComparisonVisitor> getVisitors() {
         ServiceLoader<CsvComparisonVisitor> serviceLoader = ServiceLoader.load(CsvComparisonVisitor.class);
         List<CsvComparisonVisitor> visitors = ImmutableList.copyOf(serviceLoader.iterator());
         visitors.forEach(visitor -> LOGGER.debug("{}", visitor.getClass().getName()));
         return visitors;
-    }
-
-    private CsvParserSettings getSettings() {
-        Commons.createDir(options.resultOptions().location());
-        return options.parserSettings();
     }
 
     private List<HashMap<String, String>> getDiffs(String[] headers, String[] expRow, String[] actRow) {
@@ -247,4 +227,8 @@ public class CsvComparator {
         @Override
         public void comparisonFinished(CsvComparisonOptions options, CsvComparisonSource source, CsvComparisonResult result) { /* No implementation necessary */ }
     }
+
+    //-------------------------------------------------------------------------------//
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(CsvComparator.class);
 }

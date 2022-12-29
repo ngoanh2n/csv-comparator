@@ -18,60 +18,60 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public interface CsvComparisonOptions {
     /**
-     * Get {@linkplain Builder} class where allows to build your {@linkplain CsvComparisonOptions}
+     * Gets {@linkplain Builder} class where allows to build your {@linkplain CsvComparisonOptions}.
      *
-     * @return {@linkplain CsvComparisonOptions.Builder}
+     * @return {@linkplain CsvComparisonOptions.Builder}.
      */
     static Builder builder() {
         return new Builder();
     }
 
     /**
-     * Get {@linkplain CsvComparisonOptions} with default options
+     * Gets {@linkplain CsvComparisonOptions} with default options.
      *
-     * @return {@linkplain CsvComparisonOptions}
+     * @return {@linkplain CsvComparisonOptions}.
      */
     static CsvComparisonOptions defaults() {
         return builder().build();
     }
 
-    // ------------------------------------------------
+    //-------------------------------------------------------------------------------//
 
     /**
-     * {@linkplain Charset} for reading and writing CSV files
+     * {@linkplain Charset} for reading and writing CSV files.
      *
-     * @return {@link Charset}
+     * @return {@link Charset}.
      */
     @Nullable
     Charset encoding();
 
     /**
-     * Which column index or name where has a data field unique
+     * Which column index or name where has a data field unique.
      *
-     * @return column id
+     * @return column id.
      */
     Object columnId();
 
     /**
-     * The configuration class used by the CSV parser
+     * The configuration class used by the CSV parser.
      *
-     * @return {@linkplain CsvParserSettings}
+     * @return {@linkplain CsvParserSettings}.
      */
     @Nonnull
     CsvParserSettings parserSettings();
 
     /**
-     * The comparison result options to adjust your {@linkplain CsvComparisonResult} output
+     * The comparison result options to adjust your {@linkplain CsvComparisonResult} output.
      *
-     * @return {@linkplain CsvComparisonResultOptions}
+     * @return {@linkplain CsvComparisonResultOptions}.
      */
     @Nonnull
     CsvComparisonResultOptions resultOptions();
 
-    // ------------------------------------------------
+    //===============================================================================//
 
     /**
-     * This class allows to build {@linkplain CsvComparisonOptions}
+     * This class allows to build {@linkplain CsvComparisonOptions}.
      */
     final class Builder {
         private final CsvParserSettings parserSettings;

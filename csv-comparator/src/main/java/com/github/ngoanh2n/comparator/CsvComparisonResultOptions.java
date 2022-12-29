@@ -15,7 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public interface CsvComparisonResultOptions {
     /**
-     * Get {@linkplain CsvComparisonResultOptions.Builder} class where allows to build your {@linkplain CsvComparisonResultOptions}
+     * Gets {@linkplain CsvComparisonResultOptions.Builder} class where allows to build your {@linkplain CsvComparisonResultOptions}
      *
      * @return {@linkplain CsvComparisonResultOptions.Builder}
      */
@@ -24,13 +24,15 @@ public interface CsvComparisonResultOptions {
     }
 
     /**
-     * Get {@linkplain CsvComparisonResultOptions} with default options
+     * Gets {@linkplain CsvComparisonResultOptions} with default options
      *
      * @return {@linkplain CsvComparisonResultOptions}
      */
     static CsvComparisonResultOptions defaults() {
         return builder().build();
     }
+
+    //-------------------------------------------------------------------------------//
 
     /**
      * Where you want to store comparison result output files
@@ -54,8 +56,10 @@ public interface CsvComparisonResultOptions {
      */
     boolean includesHeaders();
 
+    //===============================================================================//
+
     /**
-     * This class allows to build {@linkplain CsvComparisonResultOptions}
+     * This class allows to build {@linkplain CsvComparisonResultOptions}.
      */
     final class Builder {
         private Path location;

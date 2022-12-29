@@ -9,12 +9,14 @@ import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.github.ngoanh2n.comparator.CsvComparator.getEncoding;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -28,6 +30,8 @@ class CsvSource {
     private final int columnId;
     private final String[] headers;
     private final List<String[]> rows;
+
+    //-------------------------------------------------------------------------------//
 
     private CsvSource(CsvComparisonOptions options, File file) {
         String[] tmpHeaders = new String[]{};
@@ -49,9 +53,24 @@ class CsvSource {
         columnId = getColumnId(options);
     }
 
+    //-------------------------------------------------------------------------------//
+
     static CsvSource parse(CsvComparisonOptions options, File file) {
         return new CsvSource(options, file);
     }
+
+    static Charset getEncoding(CsvComparisonOptions options, File file) {
+        try {
+            return options.encoding() != null
+                    ? options.encoding()
+                    : Charset.forName(Commons.detectCharset(file));
+        } catch (IOException ignored) {
+            // Can't happen
+            return StandardCharsets.UTF_8;
+        }
+    }
+
+    //-------------------------------------------------------------------------------//
 
     int getColumnId() {
         return columnId;
@@ -64,6 +83,8 @@ class CsvSource {
     List<String[]> getRows() {
         return rows;
     }
+
+    //-------------------------------------------------------------------------------//
 
     private int getColumnId(CsvComparisonOptions options) {
         CsvParserSettings settings = options.parserSettings();

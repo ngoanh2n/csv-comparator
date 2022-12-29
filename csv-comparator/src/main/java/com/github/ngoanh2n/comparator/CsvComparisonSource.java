@@ -16,13 +16,11 @@ import java.io.File;
  * @since 2020-01-06
  */
 public interface CsvComparisonSource {
-    Logger LOGGER = LoggerFactory.getLogger(CsvComparisonSource.class);
-
     /**
-     * Create a comparison source and make sure it is not null
+     * Creates a comparison source and make sure it is not null.
      *
-     * @param exp the expected CSV
-     * @param act the actual CSV needs to compare
+     * @param exp the expected CSV.
+     * @param act the actual CSV needs to compare.
      * @return {@linkplain CsvComparisonSource}
      */
     static CsvComparisonSource create(@Nonnull File exp, @Nonnull File act) {
@@ -45,19 +43,25 @@ public interface CsvComparisonSource {
         return source;
     }
 
+    //-------------------------------------------------------------------------------//
+
     /**
-     * Provide expected CSV file
+     * Provides expected CSV file.
      *
-     * @return Expected CSV file
+     * @return Expected CSV file.
      */
     @Nonnull
     File exp();
 
     /**
-     * Provide actual CSV file needs to compare
+     * Provides actual CSV file needs to compare.
      *
-     * @return Actual CSV file
+     * @return Actual CSV file.
      */
     @Nonnull
     File act();
+
+    //-------------------------------------------------------------------------------//
+
+    Logger LOGGER = LoggerFactory.getLogger(CsvComparisonSource.class);
 }
