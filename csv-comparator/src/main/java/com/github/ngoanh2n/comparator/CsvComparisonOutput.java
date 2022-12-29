@@ -20,10 +20,6 @@ import java.util.List;
  * @since 2020-01-06
  */
 public class CsvComparisonOutput implements CsvComparisonVisitor {
-    private final static Logger LOGGER = LoggerFactory.getLogger(CsvComparisonOutput.class);
-
-    //-------------------------------------------------------------------------------//
-
     private String dir;
     private CsvWriter keptWriter;
     private CsvWriter deletedWriter;
@@ -33,48 +29,66 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
 
     //-------------------------------------------------------------------------------//
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void comparisonStarted(CsvComparisonOptions options, CsvComparisonSource source) {
         dir = Commons.timestamp();
         settings = new CsvWriterSettings();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void rowKept(CsvComparisonOptions options, String[] headers, String[] row) {
         if (options.resultOptions().writesOutputs()) {
             keptWriter = writeHeaders(headers, options, keptWriter, "kept.csv");
             keptWriter.writeRow(row);
         }
-        LOGGER.debug("K -> {}", Arrays.toString(row));
+        LOGGER.debug("{}", Arrays.toString(row));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void rowDeleted(CsvComparisonOptions options, String[] headers, String[] row) {
         if (options.resultOptions().writesOutputs()) {
             deletedWriter = writeHeaders(headers, options, deletedWriter, "deleted.csv");
             deletedWriter.writeRow(row);
         }
-        LOGGER.debug("D -> {}", Arrays.toString(row));
+        LOGGER.debug("{}", Arrays.toString(row));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void rowInserted(CsvComparisonOptions options, String[] headers, String[] row) {
         if (options.resultOptions().writesOutputs()) {
             insertedWriter = writeHeaders(headers, options, insertedWriter, "inserted.csv");
             insertedWriter.writeRow(row);
         }
-        LOGGER.debug("I -> {}", Arrays.toString(row));
+        LOGGER.debug("{}", Arrays.toString(row));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void rowModified(CsvComparisonOptions options, String[] headers, String[] row, List<HashMap<String, String>> diffs) {
         if (options.resultOptions().writesOutputs()) {
             modifiedWriter = writeHeaders(headers, options, modifiedWriter, "modified.csv");
             modifiedWriter.writeRow(row);
         }
-        LOGGER.debug("M -> {}", Arrays.toString(row));
+        LOGGER.debug("{}", Arrays.toString(row));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void comparisonFinished(CsvComparisonOptions options, CsvComparisonSource source, CsvComparisonResult result) {
         if (keptWriter != null) keptWriter.close();
@@ -97,4 +111,8 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
         }
         return writer;
     }
+
+    //-------------------------------------------------------------------------------//
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(CsvComparisonOutput.class);
 }
