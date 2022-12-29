@@ -4,7 +4,28 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * This interface should be used to walk through {@linkplain CsvComparator}.
+ * This interface should be used to walk through {@linkplain CsvComparator}. <br>
+ * How to build the service provider:<br>
+ * <ul>
+ *      <li>1. Create a class that implements SPI {@linkplain CsvComparisonVisitor}
+ *      <pre>{@code
+ *      package com.company.project.impl;
+ *
+ *      import com.github.ngoanh2n.comparator.CsvComparisonVisitor;
+ *
+ *      public class MyComparisonVisitor implements CsvComparisonVisitor {
+ *          //
+ *          // IMPLEMENTED METHODS
+ *          //
+ *      }
+ *      }</pre>
+ *      <li>2. Create a provider configuration file:
+ *      <ul>
+ *          <li>Location: {@code resources/META-INF/services}
+ *          <li>Name: {@code com.github.ngoanh2n.comparator.CsvComparisonVisitor}
+ *          <li>Content: {@code com.company.project.impl.MyComparisonVisitor}
+ *      </ul>
+ * </ul>
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  * @version 1.0.0

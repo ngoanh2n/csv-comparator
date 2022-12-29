@@ -4,6 +4,7 @@ import com.github.ngoanh2n.Commons;
 import com.univocity.parsers.csv.CsvWriter;
 import com.univocity.parsers.csv.CsvWriterSettings;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -11,31 +12,30 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.slf4j.LoggerFactory.getLogger;
-
 /**
- * Default implementation for {@linkplain CsvComparisonVisitor}
+ * Default implementation for {@linkplain CsvComparisonVisitor} for writing outputs.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  * @version 1.0.0
  * @since 2020-01-06
  */
-public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
-    private final static Logger LOGGER = getLogger(DefaultCsvComparisonVisitor.class);
+public class CsvComparisonOutput implements CsvComparisonVisitor {
+    private final static Logger LOGGER = LoggerFactory.getLogger(CsvComparisonOutput.class);
 
-    private final String dir;
+    //-------------------------------------------------------------------------------//
+
+    private String dir;
     private CsvWriter keptWriter;
     private CsvWriter deletedWriter;
     private CsvWriter insertedWriter;
     private CsvWriter modifiedWriter;
     private CsvWriterSettings settings;
 
-    public DefaultCsvComparisonVisitor() {
-        dir = Commons.timestamp();
-    }
+    //-------------------------------------------------------------------------------//
 
     @Override
     public void comparisonStarted(CsvComparisonOptions options, CsvComparisonSource source) {
+        dir = Commons.timestamp();
         settings = new CsvWriterSettings();
     }
 
@@ -82,6 +82,8 @@ public class DefaultCsvComparisonVisitor implements CsvComparisonVisitor {
         if (insertedWriter != null) insertedWriter.close();
         if (modifiedWriter != null) modifiedWriter.close();
     }
+
+    //-------------------------------------------------------------------------------//
 
     private CsvWriter writeHeaders(String[] headers, CsvComparisonOptions options, CsvWriter writer, String fileName) {
         if (writer == null) {
