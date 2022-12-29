@@ -1,10 +1,13 @@
 package com.github.ngoanh2n.comparator;
 
 import com.github.ngoanh2n.Commons;
+import com.google.common.collect.ImmutableList;
 import com.univocity.parsers.common.ParsingContext;
 import com.univocity.parsers.common.processor.RowProcessor;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import java.io.File;
@@ -24,37 +27,40 @@ import static java.util.stream.Collectors.toMap;
  * @since 2020-01-06
  */
 public class CsvComparator {
+    private final static Logger LOGGER = LoggerFactory.getLogger(CsvComparator.class);
+
+
+    //-------------------------------------------------------------------------------//
+
     private final CsvComparisonSource source;
     private final CsvComparisonOptions options;
-    private final CsvComparisonVisitor visitor;
+    private final List<CsvComparisonVisitor> visitors;
+
+    //-------------------------------------------------------------------------------//
+
+    private CsvComparator(@Nonnull CsvComparisonSource source) {
+        this(source, CsvComparisonOptions.defaults());
+    }
 
     private CsvComparator(@Nonnull CsvComparisonSource source,
                           @Nonnull CsvComparisonOptions options) {
-        this(source, options, new DefaultCsvComparisonVisitor());
-    }
-
-    private CsvComparator(@Nonnull CsvComparisonSource source,
-                          @Nonnull CsvComparisonOptions options,
-                          @Nonnull CsvComparisonVisitor visitor) {
         this.source = checkNotNull(source, "source cannot be null");
-        this.options = checkNotNull(options, "source cannot be null");
-        this.visitor = checkNotNull(visitor, "source cannot be null");
+        this.options = checkNotNull(options, "options cannot be null");
+        this.visitors = getVisitors();
     }
 
-    // ------------------------------------------------
+    //-------------------------------------------------------------------------------//
+
+    public static CsvComparisonResult compare(@Nonnull CsvComparisonSource source) {
+        return new CsvComparator(source).compare();
+    }
 
     public static CsvComparisonResult compare(@Nonnull CsvComparisonSource source,
                                               @Nonnull CsvComparisonOptions options) {
         return new CsvComparator(source, options).compare();
     }
 
-    public static CsvComparisonResult compare(@Nonnull CsvComparisonSource source,
-                                              @Nonnull CsvComparisonOptions options,
-                                              @Nonnull CsvComparisonVisitor visitor) {
-        return new CsvComparator(source, options, visitor).compare();
-    }
-
-    // ------------------------------------------------
+    //-------------------------------------------------------------------------------//
 
     static Charset getEncoding(CsvComparisonOptions options, File file) {
         try {
@@ -69,7 +75,7 @@ public class CsvComparator {
 
     @Nonnull
     private CsvComparisonResult compare() {
-        visitor.comparisonStarted(options, source);
+        visitors.forEach(visitor -> visitor.comparisonStarted(options, source));
         Collector collector = new Collector();
         CsvParserSettings settings = getSettings();
         CsvSource cs = CsvSource.parse(options, source.exp());
@@ -85,15 +91,15 @@ public class CsvComparator {
                 String[] expRow = expMap.get(actRow[columnId]);
 
                 if (expRow == null) {
-                    visitor.rowInserted(options, headers, actRow);
+                    visitors.forEach(visitor -> visitor.rowInserted(options, headers, actRow));
                     collector.rowInserted(options, headers, actRow);
                 } else {
                     if (Arrays.equals(actRow, expRow)) {
-                        visitor.rowKept(options, headers, actRow);
+                        visitors.forEach(visitor -> visitor.rowKept(options, headers, actRow));
                         collector.rowKept(options, headers, actRow);
                     } else {
                         List<HashMap<String, String>> diffs = getDiffs(headers, expRow, actRow);
-                        visitor.rowModified(options, headers, actRow, diffs);
+                        visitors.forEach(visitor -> visitor.rowModified(options, headers, actRow, diffs));
                         collector.rowModified(options, headers, actRow, diffs);
                     }
                     expMap.remove(actRow[columnId]);
@@ -111,14 +117,21 @@ public class CsvComparator {
         if (expMap.size() > 0) {
             for (Map.Entry<String, String[]> left : expMap.entrySet()) {
                 String[] row = left.getValue();
-                visitor.rowDeleted(options, headers, row);
+                visitors.forEach(visitor -> visitor.rowDeleted(options, headers, row));
                 collector.rowDeleted(options, headers, row);
             }
         }
 
         Result result = new Result(collector);
-        visitor.comparisonFinished(options, source, result);
+        visitors.forEach(visitor -> visitor.comparisonFinished(options, source, result));
         return result;
+    }
+
+    private List<CsvComparisonVisitor> getVisitors() {
+        ServiceLoader<CsvComparisonVisitor> serviceLoader = ServiceLoader.load(CsvComparisonVisitor.class);
+        List<CsvComparisonVisitor> visitors = ImmutableList.copyOf(serviceLoader.iterator());
+        visitors.forEach(visitor -> LOGGER.debug("{}", visitor.getClass().getName()));
+        return visitors;
     }
 
     private CsvParserSettings getSettings() {
@@ -145,7 +158,7 @@ public class CsvComparator {
         return diffs;
     }
 
-    // ------------------------------------------------
+    //===============================================================================//
 
     private final static class Result implements CsvComparisonResult {
 
