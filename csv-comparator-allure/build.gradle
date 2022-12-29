@@ -2,6 +2,36 @@
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  * @since 2022-12-26
  */
+plugins {
+    id("io.qameta.allure") version "2.11.2"
+}
+
+ext {
+    VERSION_ALLURE = "2.20.1"
+}
+
 dependencies {
     api(project(":csv-comparator"))
+    implementation("io.qameta.allure:allure-java-commons:$VERSION_ALLURE")
+
+    testImplementation("io.qameta.allure:allure-junit5:$VERSION_ALLURE")
+}
+
+allure {
+    version = "$VERSION_ALLURE"
+    adapter {
+        aspectjWeaver = true
+        aspectjVersion = "1.9.5"
+        autoconfigureListeners = true
+
+        frameworks {
+            junit5 {
+                enabled = true
+                autoconfigureListeners = true
+            }
+        }
+    }
+    report {
+        reportDir = project.reporting.baseDirectory.dir("allure-report")
+    }
 }
