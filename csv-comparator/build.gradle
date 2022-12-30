@@ -3,6 +3,4 @@
  * @since 2020-01-27
  */
 dependencies {
-    implementation("com.github.ngoanh2n:utilities:2.3.11")
-    implementation("com.univocity:univocity-parsers:2.9.1")
 }
