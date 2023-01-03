@@ -33,21 +33,22 @@ class CsvSource {
 
     //-------------------------------------------------------------------------------//
 
-    private CsvSource(CsvComparisonOptions options, File file) {
+    private CsvSource(CsvComparisonOptions options, File file, boolean includeHeaders) {
         String[] tmpHeaders = new String[]{};
         CsvParserSettings settings = options.parserSettings();
         CsvParser parser = new CsvParser(settings);
 
-        if (settings.isHeaderExtractionEnabled()) {
+        if (!settings.isHeaderExtractionEnabled() || includeHeaders) {
             settings.setHeaderExtractionEnabled(false);
-            rows = parser.parseAll(file, getEncoding(options, file));
-
+            rows = parser.parseAll(file, getCharset(options, file));
+            settings.setHeaderExtractionEnabled(true);
+        } else {
+            settings.setHeaderExtractionEnabled(false);
+            rows = parser.parseAll(file, getCharset(options, file));
             if (rows.size() > 0) {
                 tmpHeaders = rows.remove(0);
             }
             settings.setHeaderExtractionEnabled(true);
-        } else {
-            rows = parser.parseAll(file, getEncoding(options, file));
         }
         headers = tmpHeaders;
         columnId = getColumnId(options);
@@ -56,13 +57,17 @@ class CsvSource {
     //-------------------------------------------------------------------------------//
 
     static CsvSource parse(CsvComparisonOptions options, File file) {
-        return new CsvSource(options, file);
+        return parse(options, file, false);
     }
 
-    static Charset getEncoding(CsvComparisonOptions options, File file) {
+    static CsvSource parse(CsvComparisonOptions options, File file, boolean includeHeaders) {
+        return new CsvSource(options, file, includeHeaders);
+    }
+
+    static Charset getCharset(CsvComparisonOptions options, File file) {
         try {
-            return options.encoding() != null
-                    ? options.encoding()
+            return options.charset() != null
+                    ? options.charset()
                     : Charset.forName(Commons.detectCharset(file));
         } catch (IOException ignored) {
             // Can't happen

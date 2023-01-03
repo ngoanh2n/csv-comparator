@@ -10,7 +10,7 @@ import java.util.*;
  * @version 1.0.0
  * @since 2020-01-06
  */
-class CsvRow implements RowProcessor {
+class CsvProcessor implements RowProcessor {
     CsvComparisonOptions options;
     List<CsvComparisonVisitor> visitors;
     CsvResult.Collector collector;
@@ -19,8 +19,8 @@ class CsvRow implements RowProcessor {
 
     //-------------------------------------------------------------------------------//
 
-    CsvRow(CsvComparisonOptions options, List<CsvComparisonVisitor> visitors,
-           CsvResult.Collector collector, Map<String, String[]> expMap, CsvSource source) {
+    CsvProcessor(CsvComparisonOptions options, List<CsvComparisonVisitor> visitors,
+                 CsvResult.Collector collector, Map<String, String[]> expMap, CsvSource source) {
         this.options = options;
         this.visitors = visitors;
         this.collector = collector;
