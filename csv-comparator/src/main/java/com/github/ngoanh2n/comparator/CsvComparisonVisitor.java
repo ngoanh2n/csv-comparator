@@ -38,7 +38,7 @@ public interface CsvComparisonVisitor {
      * @param source  {@linkplain CsvComparisonSource} is being to compare.
      * @param options {@linkplain CsvComparisonOptions} you have provided.
      */
-    void comparisonStarted(CsvComparisonOptions options, CsvComparisonSource source);
+    default void comparisonStarted(CsvComparisonOptions options, CsvComparisonSource source) {/**/}
 
     /**
      * Callback for when {@linkplain CsvComparator} detected a row kept.
@@ -48,7 +48,7 @@ public interface CsvComparisonVisitor {
      *                Headers row is existed or not depends on {@linkplain CsvComparisonOptions.Builder#withoutHeaders()}.
      * @param options {@linkplain CsvComparisonOptions} you have provided.
      */
-    void rowKept(CsvComparisonOptions options, String[] headers, String[] row);
+    default void rowKept(CsvComparisonOptions options, String[] headers, String[] row) {/**/}
 
     /**
      * Callback for when {@linkplain CsvComparator} detected a row deleted.
@@ -58,7 +58,7 @@ public interface CsvComparisonVisitor {
      *                Headers row is existed or not depends on {@linkplain CsvComparisonOptions.Builder#withoutHeaders()}.
      * @param options {@linkplain CsvComparisonOptions} you have provided.
      */
-    void rowDeleted(CsvComparisonOptions options, String[] headers, String[] row);
+    default void rowDeleted(CsvComparisonOptions options, String[] headers, String[] row) {/**/}
 
     /**
      * Callback for when {@linkplain CsvComparator} detected a row inserted.
@@ -68,7 +68,7 @@ public interface CsvComparisonVisitor {
      *                Headers row is existed or not depends on {@linkplain CsvComparisonOptions.Builder#withoutHeaders()}.
      * @param options {@linkplain CsvComparisonOptions} you have provided.
      */
-    void rowInserted(CsvComparisonOptions options, String[] headers, String[] row);
+    default void rowInserted(CsvComparisonOptions options, String[] headers, String[] row) {/**/}
 
     /**
      * Callback for when {@linkplain CsvComparator} detected a row modified.
@@ -82,7 +82,7 @@ public interface CsvComparisonVisitor {
      *                - expCell: cell value of expected CSV <br>
      *                - actCell: cell value of actual CSV <br>
      */
-    void rowModified(CsvComparisonOptions options, String[] headers, String[] row, List<HashMap<String, String>> diffs);
+    default void rowModified(CsvComparisonOptions options, String[] headers, String[] row, List<HashMap<String, String>> diffs) {/**/}
 
     /**
      * Callback after {@linkplain CsvComparator#compare(CsvComparisonSource, CsvComparisonOptions)}.
@@ -91,5 +91,5 @@ public interface CsvComparisonVisitor {
      * @param options {@linkplain CsvComparisonOptions} you have provided.
      * @param result  {@linkplain CsvComparisonResult} after comparison process ended.
      */
-    void comparisonFinished(CsvComparisonOptions options, CsvComparisonSource source, CsvComparisonResult result);
+    default void comparisonFinished(CsvComparisonOptions options, CsvComparisonSource source, CsvComparisonResult result) {/**/}
 }

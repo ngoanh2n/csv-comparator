@@ -43,7 +43,7 @@ public interface CsvComparisonOptions {
      * @return {@link Charset}.
      */
     @Nullable
-    Charset encoding();
+    Charset charset();
 
     /**
      * Which column index or name where has a data field unique.
@@ -75,12 +75,12 @@ public interface CsvComparisonOptions {
      */
     final class Builder {
         private final CsvParserSettings parserSettings;
-        private Charset encoding;
+        private Charset charset;
         private Object columnId;
         private CsvComparisonResultOptions resultOptions;
 
         private Builder() {
-            encoding = null;
+            charset = null;
             columnId = null;
             parserSettings = new CsvParserSettings();
             parserSettings.setHeaderExtractionEnabled(true);
@@ -89,15 +89,15 @@ public interface CsvComparisonOptions {
         }
 
         /**
-         * Set encoding to read and writing CSV files
+         * Set charset to read and writing CSV files.
          *
-         * @param encoding is the {@code Charset} for reading and writing CSV files. <br>
-         *                 <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/encoding.doc.html">encoding</a>
+         * @param charset is the {@code Charset} for reading and writing CSV files. <br>
+         *                <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/encoding.doc.html">encoding</a>
          * @return {@link Builder}
          * @see java.nio.charset.StandardCharsets
          */
-        public Builder setEncoding(@Nullable Charset encoding) {
-            this.encoding = encoding;
+        public Builder setCharset(@Nullable Charset charset) {
+            this.charset = charset;
             return this;
         }
 
@@ -195,8 +195,8 @@ public interface CsvComparisonOptions {
         public CsvComparisonOptions build() {
             return new CsvComparisonOptions() {
                 @Override
-                public Charset encoding() {
-                    return encoding;
+                public Charset charset() {
+                    return charset;
                 }
 
                 @Override

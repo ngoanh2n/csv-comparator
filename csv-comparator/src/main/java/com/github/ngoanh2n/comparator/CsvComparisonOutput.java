@@ -103,7 +103,7 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
         if (writer == null) {
             Path location = options.resultOptions().location().resolve(dir);
             File file = Commons.createDir(location).resolve(fileName).toFile();
-            writer = new CsvWriter(file, options.encoding(), settings);
+            writer = new CsvWriter(file, options.charset(), settings);
 
             if (headers.length > 0 && options.resultOptions().includesHeaders()) {
                 writer.writeRow(headers);
