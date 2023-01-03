@@ -20,7 +20,6 @@
 - [Usages](#usages)
   - [Comparison](#comparison)
   - [Asssertion](#asssertion)
-  - [Walking Through](#walking-through)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -28,7 +27,7 @@
 ## Gradle
 _Add dependency to `build.gradle`_
 ```gradle
-implementation("com.github.ngoanh2n:csv-comparator:1.4.1")
+implementation("com.github.ngoanh2n:csv-comparator:1.5.0")
 ```
 
 ## Maven
@@ -37,7 +36,7 @@ _Add dependency to `pom.xml`_
 <dependency>
     <groupId>com.github.ngoanh2n</groupId>
     <artifactId>csv-comparator</artifactId>
-    <version>1.4.1</version>
+    <version>1.5.0</version>
 </dependency>
 ```
 
@@ -78,13 +77,3 @@ CsvComparisonResult.rowsModified()
 ```
 
 _By default, result files which are created after comparing is located at `build/ngoanh2n/csv/{yyyyMMdd.HHmmss.SSS}/`_
-
-## Walking Through
-```java
-CsvComparisonVisitor.comparisonStarted(CsvComparisonOptions options, CsvComparisonSource source)
-CsvComparisonVisitor.rowKept(CsvComparisonOptions options, String[] headers, String[] row)
-CsvComparisonVisitor.rowDeleted(CsvComparisonOptions options, String[] headers, String[] row)
-CsvComparisonVisitor.rowInserted(CsvComparisonOptions options, String[] headers, String[] row)
-CsvComparisonVisitor.rowModified(CsvComparisonOptions options, String[] headers, String[] row, List<HashMap<String, String>> diffs)
-CsvComparisonVisitor.comparisonFinished(CsvComparisonOptions options, CsvComparisonSource source, CsvComparisonResult result)
-```
