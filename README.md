@@ -20,6 +20,7 @@
 - [Usages](#usages)
   - [Comparison](#comparison)
   - [Asssertion](#asssertion)
+  - [Allure Report](#allure-report)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -77,3 +78,12 @@ CsvComparisonResult.rowsModified()
 ```
 
 _By default, result files which are created after comparing is located at `build/ngoanh2n/csv/{yyyyMMdd.HHmmss.SSS}/`_
+
+## Allure Report
+Your project is using Allure as a report framework, `csv-comparator-allure` should be used. ([README](csv-comparator-allure))
+
+<p>
+  <a href="https://www.buymeacoffee.com/ngoanh2n">
+    <img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210"/>
+  </a>
+</p>
