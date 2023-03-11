@@ -1,6 +1,8 @@
 package com.github.ngoanh2n.comparator;
 
 import com.github.ngoanh2n.Resource;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -8,6 +10,8 @@ import org.junit.jupiter.api.Test;
  * @version 1.5.0
  * @since 2022-12-29
  */
+@Epic("CSV Comparator: Has Differences")
+@Feature("CSV Comparator: Demo Test")
 public class CsvComparisonReportTest {
     @Test
     void test() {
