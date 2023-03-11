@@ -14,7 +14,8 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Delarations](#delarations)
+- [CSV Comparator](#csv-comparator)
+- [Declarations](#declarations)
   - [Gradle](#gradle)
   - [Maven](#maven)
 - [Usages](#usages)
@@ -24,7 +25,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# Delarations
+# Declarations
 ## Gradle
 _Add dependency to `build.gradle`_
 ```gradle
@@ -81,9 +82,3 @@ _By default, result files which are created after comparing is located at `build
 
 ## Allure Report
 Your project is using Allure as a report framework, `csv-comparator-allure` should be used. ([README](csv-comparator-allure))
-
-<p>
-  <a href="https://www.buymeacoffee.com/ngoanh2n">
-    <img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210"/>
-  </a>
-</p>
