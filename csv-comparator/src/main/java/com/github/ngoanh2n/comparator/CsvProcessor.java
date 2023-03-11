@@ -63,8 +63,8 @@ class CsvProcessor implements RowProcessor {
 
         for (int index = 0; index < headers.length; index++) {
             String header = headers[index];
-            String expCell = expRow[index];
-            String actCell = actRow[index];
+            String expCell = expRow[index] == null ? "NULL" : expRow[index];
+            String actCell = actRow[index] == null ? "NULL" : actRow[index];
 
             if (!expCell.equals(actCell)) {
                 diffs.add(new HashMap<String, String>() {{
