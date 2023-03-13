@@ -41,6 +41,11 @@ public class CsvComparisonReport implements CsvComparisonVisitor {
     //-------------------------------------------------------------------------------//
 
     /**
+     * Default constructor.
+     */
+    public CsvComparisonReport() { /* No implementation necessary */ }
+
+    /**
      * {@inheritDoc}
      */
     @Override

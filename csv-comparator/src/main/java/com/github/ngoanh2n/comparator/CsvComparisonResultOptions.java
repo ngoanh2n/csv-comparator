@@ -47,14 +47,14 @@ public interface CsvComparisonResultOptions {
      *
      * @return Indicate to write output files
      */
-    boolean writesOutputs();
+    boolean writeOutputs();
 
     /**
      * Whether included headers row in output files
      *
      * @return Indicate to add headers row to results in output files
      */
-    boolean includesHeaders();
+    boolean includeHeaders();
 
     //===============================================================================//
 
@@ -67,7 +67,7 @@ public interface CsvComparisonResultOptions {
         private boolean includeHeaders;
 
         private Builder() {
-            writesOutputs = true;
+            writesOutputs = false;
             includeHeaders = true;
             location = Paths.get("build/ngoanh2n/csv");
         }
@@ -78,7 +78,7 @@ public interface CsvComparisonResultOptions {
          * @param path to location
          * @return {@linkplain CsvComparisonOptions.Builder}
          */
-        public CsvComparisonResultOptions.Builder location(@Nonnull Path path) {
+        public CsvComparisonResultOptions.Builder setLocation(@Nonnull Path path) {
             location = checkNotNull(path, "path cannot not be null");
             return this;
         }
@@ -89,7 +89,7 @@ public interface CsvComparisonResultOptions {
          * @param enabled is a flag whether that includes or not
          * @return {@linkplain CsvComparisonResultOptions.Builder}
          */
-        public CsvComparisonResultOptions.Builder writesOutputs(boolean enabled) {
+        public CsvComparisonResultOptions.Builder writeOutputs(boolean enabled) {
             writesOutputs = enabled;
             return this;
         }
@@ -100,7 +100,7 @@ public interface CsvComparisonResultOptions {
          * @param enabled is a flag whether that includes or not
          * @return {@linkplain CsvComparisonResultOptions.Builder}
          */
-        public CsvComparisonResultOptions.Builder includesHeaders(boolean enabled) {
+        public CsvComparisonResultOptions.Builder includeHeaders(boolean enabled) {
             includeHeaders = enabled;
             return this;
         }
@@ -119,12 +119,12 @@ public interface CsvComparisonResultOptions {
                 }
 
                 @Override
-                public boolean includesHeaders() {
+                public boolean includeHeaders() {
                     return includeHeaders;
                 }
 
                 @Override
-                public boolean writesOutputs() {
+                public boolean writeOutputs() {
                     return writesOutputs;
                 }
             };
