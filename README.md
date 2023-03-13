@@ -20,7 +20,7 @@
   - [Maven](#maven)
 - [Usages](#usages)
   - [Comparison](#comparison)
-  - [Asssertion](#asssertion)
+  - [Assertion](#assertion)
   - [Allure Report](#allure-report)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -66,7 +66,7 @@ CsvComparisonOptions options = CsvComparisonOptions
 CsvComparisonResult result = CsvComparator.compare(source, options);
 ```
 
-## Asssertion
+## Assertion
 ```java
 CsvComparisonResult.isDeleted()
 CsvComparisonResult.isInserted()
