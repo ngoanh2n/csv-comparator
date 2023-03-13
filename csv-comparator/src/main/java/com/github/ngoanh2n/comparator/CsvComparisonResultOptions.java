@@ -63,11 +63,11 @@ public interface CsvComparisonResultOptions {
      */
     final class Builder {
         private Path location;
-        private boolean writesOutputs;
+        private boolean writeOutputs;
         private boolean includeHeaders;
 
         private Builder() {
-            writesOutputs = false;
+            writeOutputs = true;
             includeHeaders = true;
             location = Paths.get("build/ngoanh2n/csv");
         }
@@ -90,7 +90,7 @@ public interface CsvComparisonResultOptions {
          * @return {@linkplain CsvComparisonResultOptions.Builder}
          */
         public CsvComparisonResultOptions.Builder writeOutputs(boolean enabled) {
-            writesOutputs = enabled;
+            writeOutputs = enabled;
             return this;
         }
 
@@ -125,7 +125,7 @@ public interface CsvComparisonResultOptions {
 
                 @Override
                 public boolean writeOutputs() {
-                    return writesOutputs;
+                    return writeOutputs;
                 }
             };
         }
