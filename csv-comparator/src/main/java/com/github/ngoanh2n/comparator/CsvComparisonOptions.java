@@ -84,8 +84,6 @@ public interface CsvComparisonOptions {
             columnId = null;
             parserSettings = new CsvParserSettings();
             parserSettings.setHeaderExtractionEnabled(true);
-            parserSettings.getFormat().setLineSeparator("\r\n");
-            parserSettings.getFormat().setNormalizedNewline('\u0001');
             resultOptions = CsvComparisonResultOptions.defaults();
         }
 
