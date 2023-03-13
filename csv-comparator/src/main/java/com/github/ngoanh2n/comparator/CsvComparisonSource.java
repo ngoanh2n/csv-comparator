@@ -63,5 +63,8 @@ public interface CsvComparisonSource {
 
     //-------------------------------------------------------------------------------//
 
+    /**
+     * Default Logger for {@linkplain  CsvComparisonSource}.
+     */
     Logger LOGGER = LoggerFactory.getLogger(CsvComparisonSource.class);
 }

@@ -2,6 +2,7 @@ package com.github.ngoanh2n.comparator;
 
 import com.github.ngoanh2n.Commons;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
@@ -39,10 +40,23 @@ public class CsvComparator {
 
     //-------------------------------------------------------------------------------//
 
+    /**
+     * Compare 2 CSV files.
+     *
+     * @param source {@linkplain CsvComparisonSource} will be compared.
+     * @return {@linkplain CsvComparisonResult} after comparison process ended.
+     */
     public static CsvComparisonResult compare(@Nonnull CsvComparisonSource source) {
         return new CsvComparator(source).compare();
     }
 
+    /**
+     * Compare 2 CSV files.
+     *
+     * @param source  {@linkplain CsvComparisonSource} will be compared.
+     * @param options {@linkplain CsvComparisonOptions} you have provided.
+     * @return {@linkplain CsvComparisonResult} after comparison process ended.
+     */
     public static CsvComparisonResult compare(@Nonnull CsvComparisonSource source,
                                               @Nonnull CsvComparisonOptions options) {
         return new CsvComparator(source, options).compare();
@@ -83,8 +97,14 @@ public class CsvComparator {
 
     private List<CsvComparisonVisitor> getVisitors() {
         ServiceLoader<CsvComparisonVisitor> serviceLoader = ServiceLoader.load(CsvComparisonVisitor.class);
-        List<CsvComparisonVisitor> visitors = ImmutableList.copyOf(serviceLoader.iterator());
-        visitors.forEach(visitor -> LOGGER.debug("{}", visitor.getClass().getName()));
+        ImmutableList<CsvComparisonVisitor> visitors = ImmutableList.copyOf(serviceLoader.iterator());
+
+        if (!options.resultOptions().writeOutputs()) {
+            visitors = ImmutableList.copyOf(Collections2
+                    .filter(visitors, v -> !v.getClass().getName().equals(CsvComparisonOutput.class.getName())));
+        }
+
+        visitors.forEach(v -> LOGGER.debug("{}", v.getClass().getName()));
         return visitors;
     }
 

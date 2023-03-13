@@ -30,6 +30,11 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
     //-------------------------------------------------------------------------------//
 
     /**
+     * Default constructor.
+     */
+    public CsvComparisonOutput() { /* No implementation necessary */ }
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -43,10 +48,8 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
      */
     @Override
     public void rowKept(CsvComparisonOptions options, String[] headers, String[] row) {
-        if (options.resultOptions().writesOutputs()) {
-            keptWriter = writeHeaders(headers, options, keptWriter, "kept.csv");
-            keptWriter.writeRow(row);
-        }
+        keptWriter = writeHeaders(headers, options, keptWriter, "kept.csv");
+        keptWriter.writeRow(row);
         LOGGER.debug("{}", Arrays.toString(row));
     }
 
@@ -55,10 +58,8 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
      */
     @Override
     public void rowDeleted(CsvComparisonOptions options, String[] headers, String[] row) {
-        if (options.resultOptions().writesOutputs()) {
-            deletedWriter = writeHeaders(headers, options, deletedWriter, "deleted.csv");
-            deletedWriter.writeRow(row);
-        }
+        deletedWriter = writeHeaders(headers, options, deletedWriter, "deleted.csv");
+        deletedWriter.writeRow(row);
         LOGGER.debug("{}", Arrays.toString(row));
     }
 
@@ -67,10 +68,8 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
      */
     @Override
     public void rowInserted(CsvComparisonOptions options, String[] headers, String[] row) {
-        if (options.resultOptions().writesOutputs()) {
-            insertedWriter = writeHeaders(headers, options, insertedWriter, "inserted.csv");
-            insertedWriter.writeRow(row);
-        }
+        insertedWriter = writeHeaders(headers, options, insertedWriter, "inserted.csv");
+        insertedWriter.writeRow(row);
         LOGGER.debug("{}", Arrays.toString(row));
     }
 
@@ -79,10 +78,8 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
      */
     @Override
     public void rowModified(CsvComparisonOptions options, String[] headers, String[] row, List<HashMap<String, String>> diffs) {
-        if (options.resultOptions().writesOutputs()) {
-            modifiedWriter = writeHeaders(headers, options, modifiedWriter, "modified.csv");
-            modifiedWriter.writeRow(row);
-        }
+        modifiedWriter = writeHeaders(headers, options, modifiedWriter, "modified.csv");
+        modifiedWriter.writeRow(row);
         LOGGER.debug("{}", Arrays.toString(row));
     }
 
@@ -105,7 +102,7 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
             File file = Commons.createDir(location).resolve(fileName).toFile();
             writer = new CsvWriter(file, options.charset(), settings);
 
-            if (headers.length > 0 && options.resultOptions().includesHeaders()) {
+            if (headers.length > 0 && options.resultOptions().includeHeaders()) {
                 writer.writeRow(headers);
             }
         }
