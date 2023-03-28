@@ -1,4 +1,4 @@
-package com.github.ngoanh2n.comparator;
+package com.github.ngoanh2n.csv;
 
 import com.github.ngoanh2n.Resource;
 import org.junit.jupiter.api.MethodOrderer;
@@ -19,8 +19,8 @@ public class RowDifferenceTest {
     @Order(1)
     void kept() {
         CsvComparisonSource source = CsvComparisonSource.create(
-                Resource.getFile("com/github/ngoanh2n/comparator/exp/inserted.csv"),
-                Resource.getFile("com/github/ngoanh2n/comparator/exp/inserted.csv")
+                Resource.getFile("com/github/ngoanh2n/csv/exp/inserted.csv"),
+                Resource.getFile("com/github/ngoanh2n/csv/exp/inserted.csv")
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
@@ -40,8 +40,8 @@ public class RowDifferenceTest {
     @Order(2)
     void deleted() {
         CsvComparisonSource source = CsvComparisonSource.create(
-                Resource.getFile("com/github/ngoanh2n/comparator/exp/deleted.csv"),
-                Resource.getFile("com/github/ngoanh2n/comparator/act/deleted.csv")
+                Resource.getFile("com/github/ngoanh2n/csv/exp/deleted.csv"),
+                Resource.getFile("com/github/ngoanh2n/csv/act/deleted.csv")
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
@@ -60,8 +60,8 @@ public class RowDifferenceTest {
     @Order(3)
     void inserted() {
         CsvComparisonSource source = CsvComparisonSource.create(
-                Resource.getFile("com/github/ngoanh2n/comparator/exp/inserted.csv"),
-                Resource.getFile("com/github/ngoanh2n/comparator/act/inserted.csv")
+                Resource.getFile("com/github/ngoanh2n/csv/exp/inserted.csv"),
+                Resource.getFile("com/github/ngoanh2n/csv/act/inserted.csv")
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
@@ -80,8 +80,8 @@ public class RowDifferenceTest {
     @Order(4)
     void modified() {
         CsvComparisonSource source = CsvComparisonSource.create(
-                Resource.getFile("com/github/ngoanh2n/comparator/exp/modified.csv"),
-                Resource.getFile("com/github/ngoanh2n/comparator/act/modified.csv")
+                Resource.getFile("com/github/ngoanh2n/csv/exp/modified.csv"),
+                Resource.getFile("com/github/ngoanh2n/csv/act/modified.csv")
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()

@@ -1,4 +1,4 @@
-package com.github.ngoanh2n.comparator;
+package com.github.ngoanh2n.csv;
 
 import com.github.ngoanh2n.Resource;
 import com.github.ngoanh2n.RuntimeError;
@@ -16,75 +16,48 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @since 2020-01-06
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class WithoutHeadersTest {
+public class WithHeadersTest {
     private final CsvComparisonSource source = CsvComparisonSource.create(
-            Resource.getFile("com/github/ngoanh2n/comparator/exp/combine1.csv"),
-            Resource.getFile("com/github/ngoanh2n/comparator/act/combine1.csv")
+            Resource.getFile("com/github/ngoanh2n/csv/exp/combine2.csv"),
+            Resource.getFile("com/github/ngoanh2n/csv/act/combine2.csv")
     );
 
     @Test
     @Order(1)
-    void withColumns_WithColumnId_Valid() {
+    void unselectColumns_WithColumnIdName_Valid() {
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
-                .withoutHeaders()
-                .selectColumns(0, 1, 2)
-                .selectColumnId(0)
+                .selectColumnId("email")
                 .build();
         assertDoesNotThrow(() -> CsvComparator.compare(source, options));
     }
 
     @Test
     @Order(2)
-    void withColumns_WithColumnId_Invalid() {
+    void unselectColumns_WithColumnIdName_Invalid() {
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
-                .withoutHeaders()
-                .selectColumns(0, 1, 2)
-                .selectColumnId(3)
+                .selectColumnId("unknown")
                 .build();
         assertThrows(RuntimeError.class, () -> CsvComparator.compare(source, options));
     }
 
     @Test
     @Order(3)
-    void withColumns_WithoutColumnId() {
+    void unselectColumns_WithColumnIdIndex_Valid() {
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
-                .withoutHeaders()
-                .selectColumns(0, 1, 2)
-                .build();
-        assertThrows(RuntimeError.class, () -> CsvComparator.compare(source, options));
-    }
-
-    @Test
-    @Order(4)
-    void withoutColumns_WithColumnId_Valid() {
-        CsvComparisonOptions options = CsvComparisonOptions
-                .builder()
-                .withoutHeaders()
                 .selectColumnId(0)
                 .build();
         assertDoesNotThrow(() -> CsvComparator.compare(source, options));
     }
 
     @Test
-    @Order(5)
-    void withoutColumns_WithColumnId_Invalid() {
+    @Order(4)
+    void unselectColumns_WithColumnIdIndex_Invalid() {
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
-                .withoutHeaders()
                 .selectColumnId(4)
-                .build();
-        assertThrows(RuntimeError.class, () -> CsvComparator.compare(source, options));
-    }
-
-    @Test
-    @Order(6)
-    void withoutColumns_WithoutColumnId() {
-        CsvComparisonOptions options = CsvComparisonOptions
-                .builder()
-                .withoutHeaders()
                 .build();
         assertThrows(RuntimeError.class, () -> CsvComparator.compare(source, options));
     }

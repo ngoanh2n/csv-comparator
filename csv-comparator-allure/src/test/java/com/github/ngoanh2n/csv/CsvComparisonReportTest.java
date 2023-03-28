@@ -1,4 +1,4 @@
-package com.github.ngoanh2n.comparator;
+package com.github.ngoanh2n.csv;
 
 import com.github.ngoanh2n.Resource;
 import io.qameta.allure.Epic;
@@ -16,8 +16,8 @@ public class CsvComparisonReportTest {
     @Test
     void test() {
         CsvComparisonSource source = CsvComparisonSource.create(
-                Resource.getFile("com/github/ngoanh2n/comparator/exp/combine2.csv"),
-                Resource.getFile("com/github/ngoanh2n/comparator/act/combine2.csv")
+                Resource.getFile("com/github/ngoanh2n/csv/exp/combine2.csv"),
+                Resource.getFile("com/github/ngoanh2n/csv/act/combine2.csv")
         );
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
