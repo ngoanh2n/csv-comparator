@@ -11,7 +11,7 @@ import java.util.List;
  *      <pre>{@code
  *      package com.company.project.impl;
  *
- *      import com.github.ngoanh2n.comparator.CsvComparisonVisitor;
+ *      import com.github.ngoanh2n.csv.CsvComparisonVisitor;
  *
  *      public class MyComparisonVisitor implements CsvComparisonVisitor {
  *          //
@@ -22,7 +22,7 @@ import java.util.List;
  *      <li>2. Create a provider configuration file:
  *      <ul>
  *          <li>Location: {@code resources/META-INF/services}
- *          <li>Name: {@code com.github.ngoanh2n.comparator.CsvComparisonVisitor}
+ *          <li>Name: {@code com.github.ngoanh2n.csv.CsvComparisonVisitor}
  *          <li>Content: {@code com.company.project.impl.MyComparisonVisitor}
  *      </ul>
  * </ul>
