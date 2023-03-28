@@ -30,8 +30,8 @@ import java.util.UUID;
  * @since 2022-12-29
  */
 public class CsvComparisonReport implements CsvComparisonVisitor {
-    public static final Prop<Boolean> includeSource = Prop.bool("ngoanh2n.comparator.includeSource", true);
-    public static final Prop<Boolean> includeSettings = Prop.bool("ngoanh2n.comparator.includeSettings", true);
+    public static final Prop<Boolean> includeSource = Prop.bool("ngoanh2n.csv.includeSource", true);
+    public static final Prop<Boolean> includeSettings = Prop.bool("ngoanh2n.csv.includeSettings", true);
 
     //-------------------------------------------------------------------------------//
 
@@ -114,9 +114,7 @@ public class CsvComparisonReport implements CsvComparisonVisitor {
                 dataOS.close();
                 byteOS.close();
             } catch (IOException e) {
-                String msg = "Close OutputStream";
-                LOGGER.error(msg);
-                throw new RuntimeError(msg, e);
+                LOGGER.error("Close OutputStream");
             }
         }
         lifecycle.addAttachment(fileDesc, "text/csv", "", byteOS.toByteArray());
