@@ -1,4 +1,4 @@
-package com.github.ngoanh2n.comparator;
+package com.github.ngoanh2n.csv;
 
 import java.util.HashMap;
 import java.util.List;

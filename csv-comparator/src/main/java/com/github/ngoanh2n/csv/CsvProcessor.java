@@ -1,4 +1,4 @@
-package com.github.ngoanh2n.comparator;
+package com.github.ngoanh2n.csv;
 
 import com.univocity.parsers.common.ParsingContext;
 import com.univocity.parsers.common.processor.RowProcessor;
