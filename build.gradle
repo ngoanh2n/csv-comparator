@@ -1,6 +1,5 @@
 /**
- * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @since 2020-01-27
+ * Author: Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
 allprojects {
     group("com.github.ngoanh2n")

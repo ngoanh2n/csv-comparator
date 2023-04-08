@@ -1,6 +1,5 @@
 /**
- * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @since 2022-12-26
+ * Author: Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
 plugins {
     id("io.qameta.allure") version "2.11.2"
