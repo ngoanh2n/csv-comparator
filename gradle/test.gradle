@@ -1,11 +1,25 @@
 /**
  * Author: Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @see <a href="https://docs.gradle.org/current/userguide/java_testing.html">Testing in Java & JVM projects</a>
  */
+reporting {
+    baseDir = "$buildDir/reports"
+}
+testResultsDirName = reporting.baseDir
+
 test {
+    ignoreFailures = true
+    outputs.upToDateWhen { false }
+
+    reports {
+        junitXml {
+            mergeReruns = true
+            outputPerTestCase = true
+        }
+    }
     useJUnitPlatform() {
         includeEngines("junit-jupiter")
     }
-
     testLogging {
         showStandardStreams = true
         events "passed", "skipped", "failed"
@@ -13,8 +27,4 @@ test {
 
     systemProperty("file.encoding", "UTF-8")
     systemProperty("junit.jupiter.extensions.autodetection.enabled", "true")
-
-    ignoreFailures = true
-    outputs.upToDateWhen { false }
-    systemProperties = System.getProperties() as Map<String, ?>
 }
