@@ -1,7 +1,3 @@
-/**
- * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @since 2020-01-27
- */
 rootProject.setName("csvc")
 
 include("csv-comparator")
