@@ -2,7 +2,7 @@
  * Author: Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
 ext {
-    VERSION_UTILITIES               =   "2.3.13"
+    VERSION_COMMONS                 =   "1.0.0"
     VERSION_UNIVOCITY_PARSERS       =   "2.9.1"
     VERSION_ALLURE                  =   "2.21.0"
     VERSION_SLF4J                   =   "2.0.6"

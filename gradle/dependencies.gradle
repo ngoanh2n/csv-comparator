@@ -2,7 +2,7 @@
  * Author: Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
 dependencies {
-    implementation("com.github.ngoanh2n:utilities:$VERSION_UTILITIES")
+    implementation("com.github.ngoanh2n:commons:$VERSION_COMMONS")
     implementation("com.univocity:univocity-parsers:$VERSION_UNIVOCITY_PARSERS")
 
     testImplementation("org.slf4j:slf4j-log4j12:$VERSION_SLF4J")
