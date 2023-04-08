@@ -81,4 +81,4 @@ CsvComparisonResult.rowsModified()
 _By default, result files which are created after comparing is located at `build/ngoanh2n/csv/{yyyyMMdd.HHmmss.SSS}/`_
 
 ## Allure Report
-Your project is using Allure as a report framework, `csv-comparator-allure` should be used. ([README](csv-comparator-allure))
+Your project is using Allure as a report framework, `csv-comparator-allure` should be used. ([README](csv-comparator-allure#readme))
