@@ -90,7 +90,7 @@ public interface CsvComparisonOptions {
          *
          * @param charset is the {@code Charset} for reading and writing CSV files. <br>
          *                <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/encoding.doc.html">encoding</a>
-         * @return {@link Builder}
+         * @return {@link Builder}.
          * @see java.nio.charset.StandardCharsets
          */
         public Builder setCharset(@Nullable Charset charset) {
@@ -99,9 +99,9 @@ public interface CsvComparisonOptions {
         }
 
         /**
-         * Defines the line separator sequence that should be used for parsing and writing
+         * Defines the line separator sequence that should be used for parsing and writing.
          *
-         * @param lineSeparator is a sequence of 1 to 2 characters that identifies the end of a line
+         * @param lineSeparator is a sequence of 1 to 2 characters that identifies the end of a line.
          * @return {@linkplain CsvComparisonOptions.Builder}
          */
         public Builder setLineSeparator(@Nonnull String lineSeparator) {
@@ -111,9 +111,9 @@ public interface CsvComparisonOptions {
         }
 
         /**
-         * This means, CSV files hasn't headers
+         * This means, CSV files hasn't headers.
          *
-         * @return {@linkplain CsvComparisonOptions.Builder}
+         * @return {@linkplain CsvComparisonOptions.Builder}.
          */
         public Builder withoutHeaders() {
             parserSettings.setHeaderExtractionEnabled(false);
@@ -121,10 +121,10 @@ public interface CsvComparisonOptions {
         }
 
         /**
-         * Select columns to compare
+         * Select columns to compare.
          *
-         * @param names is the expected column names which assert or compare
-         * @return {@linkplain CsvComparisonOptions.Builder}
+         * @param names is the expected column names which assert or compare.
+         * @return {@linkplain CsvComparisonOptions.Builder}.
          */
         public Builder selectColumns(@Nonnull String... names) {
             checkNotNull(names, "ColumnNames cannot not be null");
@@ -133,10 +133,10 @@ public interface CsvComparisonOptions {
         }
 
         /**
-         * Select columns to compare (0-based)
+         * Select columns to compare (0-based).
          *
-         * @param indexes is the expected column indexes which assert or compare
-         * @return {@linkplain CsvComparisonOptions.Builder}
+         * @param indexes is the expected column indexes which assert or compare.
+         * @return {@linkplain CsvComparisonOptions.Builder}.
          */
         public Builder selectColumns(@Nonnull Integer... indexes) {
             checkNotNull(indexes, "ColumnIndexes cannot not be null");
@@ -145,12 +145,12 @@ public interface CsvComparisonOptions {
         }
 
         /**
-         * Set column name where has a data field unique
+         * Set column name where has a data field unique.
          *
          * @param name for indicating which is identity column name which data field is unique in a row. <br>
          *             You have to use {@linkplain #selectColumns(String...)} first. <br>
-         *             e.g. {@code #selectColumns("email", "firstname", "lastname")}
-         * @return {@link CsvComparisonOptions.Builder}
+         *             e.g. {@code #selectColumns("email", "firstname", "lastname")}.
+         * @return {@link CsvComparisonOptions.Builder}.
          */
         public Builder selectColumnId(@Nonnull String name) {
             checkNotNull(name, "ColumnId cannot not be null");
@@ -160,12 +160,12 @@ public interface CsvComparisonOptions {
         }
 
         /**
-         * Set column index where has a data field unique
+         * Set column index where has a data field unique.
          *
          * @param index for indicating which is identity column index which data field is unique in a row. <br>
          *              You have to use {@linkplain #selectColumns(Integer...)} first. <br>
-         *              e.g. #selectColumns(1, 2, 5)
-         * @return {@link CsvComparisonOptions.Builder}
+         *              e.g. #selectColumns(1, 2, 5).
+         * @return {@link CsvComparisonOptions.Builder}.
          */
         public Builder selectColumnId(int index) {
             checkArgument(index > -1, "ColumnId should be greater -1");
@@ -174,10 +174,10 @@ public interface CsvComparisonOptions {
         }
 
         /**
-         * Set {@linkplain CsvComparisonResultOptions} to adjust {@linkplain CsvComparisonResult} output
+         * Set {@linkplain CsvComparisonResultOptions} to adjust {@linkplain CsvComparisonResult} output.
          *
-         * @param options to adjust output
-         * @return {@link CsvComparisonOptions.Builder}
+         * @param options to adjust output.
+         * @return {@link CsvComparisonOptions.Builder}.
          */
         public Builder setResultOptions(@Nonnull CsvComparisonResultOptions options) {
             resultOptions = options;
@@ -185,9 +185,9 @@ public interface CsvComparisonOptions {
         }
 
         /**
-         * Build {@linkplain CsvComparisonOptions} based on {@linkplain CsvComparisonOptions.Builder}
+         * Build {@linkplain CsvComparisonOptions} based on {@linkplain CsvComparisonOptions.Builder}.
          *
-         * @return {@linkplain CsvComparisonOptions}
+         * @return {@linkplain CsvComparisonOptions}.
          */
         public CsvComparisonOptions build() {
             return new CsvComparisonOptions() {
