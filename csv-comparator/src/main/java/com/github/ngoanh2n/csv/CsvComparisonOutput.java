@@ -16,8 +16,6 @@ import java.util.List;
  * Default implementation for {@linkplain CsvComparisonVisitor} for writing outputs.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @version 1.0.0
- * @since 2020-01-06
  */
 public class CsvComparisonOutput implements CsvComparisonVisitor {
     private String dir;

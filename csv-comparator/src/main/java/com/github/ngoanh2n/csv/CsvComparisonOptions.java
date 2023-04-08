@@ -13,8 +13,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * This class allows to adjust {@linkplain CsvComparator} by your expectation.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @version 1.0.0
- * @since 2020-01-06
  */
 public interface CsvComparisonOptions {
     /**

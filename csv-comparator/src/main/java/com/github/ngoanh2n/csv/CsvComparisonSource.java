@@ -12,8 +12,6 @@ import java.io.File;
  * This interface should be used to provide comparison source for {@linkplain CsvComparator}.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @version 1.0.0
- * @since 2020-01-06
  */
 public interface CsvComparisonSource {
     /**

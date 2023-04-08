@@ -6,8 +6,6 @@ import java.util.List;
 
 /**
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @version 1.0.0
- * @since 2020-01-06
  */
 class CsvResult implements CsvComparisonResult {
     private final Collector collector;

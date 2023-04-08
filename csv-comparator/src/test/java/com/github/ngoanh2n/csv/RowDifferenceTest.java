@@ -10,8 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @version 1.0.0
- * @since 2020-01-06
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RowDifferenceTest {
