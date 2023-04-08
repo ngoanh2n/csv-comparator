@@ -10,7 +10,7 @@ Your project is using Allure as a report framework, `csv-comparator-allure` shou
 ## Gradle
 Add to `build.gradle`
 ```gradle
-implementation("com.github.ngoanh2n:csv-comparator-allure:1.5.0")
+implementation("com.github.ngoanh2n:csv-comparator-allure:1.5.1")
 ```
 
 ## Maven
@@ -19,6 +19,6 @@ Add to `pom.xml`
 <dependency>
     <groupId>com.github.ngoanh2n</groupId>
     <artifactId>csv-comparator-allure</artifactId>
-    <version>1.5.0</version>
+    <version>1.5.1</version>
 </dependency>
 ```
