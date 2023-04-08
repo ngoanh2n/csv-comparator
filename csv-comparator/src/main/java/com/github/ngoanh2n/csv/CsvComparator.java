@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
  * This class handles to compare {@linkplain CsvComparisonSource#exp()} and {@linkplain CsvComparisonSource#act()}.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @version 1.0.0
- * @since 2020-01-06
  */
 public class CsvComparator {
     private final CsvComparisonSource source;

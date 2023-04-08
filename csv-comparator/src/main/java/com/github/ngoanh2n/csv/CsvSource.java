@@ -23,8 +23,6 @@ import static java.util.stream.Collectors.toList;
  * This class parse CSV file to rows and headers, columnId.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @version 1.0.0
- * @since 2020-01-06
  */
 class CsvSource {
     private final int columnId;

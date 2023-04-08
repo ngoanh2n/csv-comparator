@@ -7,8 +7,6 @@ import java.util.*;
 
 /**
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @version 1.0.0
- * @since 2020-01-06
  */
 class CsvProcessor implements RowProcessor {
     CsvComparisonOptions options;

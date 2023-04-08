@@ -26,8 +26,6 @@ import java.util.UUID;
  * Writes Allure results while comparing.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @version 1.5.0
- * @since 2022-12-29
  */
 public class CsvComparisonReport implements CsvComparisonVisitor {
     public static final Prop<Boolean> includeSource = Prop.bool("ngoanh2n.csv.includeSource", true);

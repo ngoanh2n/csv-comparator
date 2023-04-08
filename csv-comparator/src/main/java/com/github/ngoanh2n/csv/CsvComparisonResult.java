@@ -6,8 +6,6 @@ import java.util.List;
  * The result of {@linkplain CsvComparator}.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @version 1.0.0
- * @since 2020-01-06
  */
 public interface CsvComparisonResult {
     /**

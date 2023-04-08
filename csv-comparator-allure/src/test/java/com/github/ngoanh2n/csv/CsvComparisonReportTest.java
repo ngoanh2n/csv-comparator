@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 
 /**
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
- * @version 1.5.0
- * @since 2022-12-29
  */
 @Epic("CSV Comparator: Has Differences")
 @Feature("CSV Comparator: Demo Test")
