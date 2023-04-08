@@ -2,9 +2,9 @@
  * Author: Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
 ext {
-    VERSION_COMMONS                 =   "1.0.0"
-    VERSION_UNIVOCITY_PARSERS       =   "2.9.1"
-    VERSION_ALLURE                  =   "2.21.0"
-    VERSION_SLF4J                   =   "2.0.6"
-    VERSION_JUNIT5_JUPITER          =   "5.9.1"
+    versionCommons                  =   "1.0.0"
+    versionUnivocityParsers         =   "2.9.1"
+    versionAllure                   =   "2.21.0"
+    versionSlf4j                    =   "2.0.6"
+    versionJunitJupiter             =   "5.9.1"
 }

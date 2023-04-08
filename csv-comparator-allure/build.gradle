@@ -7,13 +7,13 @@ plugins {
 
 dependencies {
     api(project(":csv-comparator"))
-    implementation("io.qameta.allure:allure-java-commons:$VERSION_ALLURE")
+    implementation("io.qameta.allure:allure-java-commons:$versionAllure")
 
-    testImplementation("io.qameta.allure:allure-junit5:$VERSION_ALLURE")
+    testImplementation("io.qameta.allure:allure-junit5:$versionAllure")
 }
 
 allure {
-    version = "$VERSION_ALLURE"
+    version = "$versionAllure"
     adapter {
         aspectjWeaver = true
         aspectjVersion = "1.9.5"
