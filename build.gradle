@@ -19,7 +19,7 @@ subprojects {
     apply plugin: "java-library"
     apply plugin: "maven-publish"
 
-    apply from: rootProject.file("gradle/testing.gradle")
+    apply from: rootProject.file("gradle/test.gradle")
     apply from: rootProject.file("gradle/compiling.gradle")
     apply from: rootProject.file("gradle/publishing.gradle")
     apply from: rootProject.file("gradle/dependencies.gradle")
