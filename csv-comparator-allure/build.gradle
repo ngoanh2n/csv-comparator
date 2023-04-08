@@ -27,6 +27,6 @@ allure {
         }
     }
     report {
-        reportDir = project.reporting.baseDirectory.dir("allure-report")
+        reportDir = layout.buildDirectory.dir("allure")
     }
 }
