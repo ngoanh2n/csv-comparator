@@ -25,12 +25,12 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
     private CsvWriter modifiedWriter;
     private CsvWriterSettings settings;
 
-    //-------------------------------------------------------------------------------//
-
     /**
      * Default constructor.
      */
     public CsvComparisonOutput() { /* No implementation necessary */ }
+
+    //-------------------------------------------------------------------------------//
 
     /**
      * {@inheritDoc}
@@ -48,7 +48,7 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
     public void rowKept(CsvComparisonOptions options, String[] headers, String[] row) {
         keptWriter = writeHeaders(headers, options, keptWriter, "kept.csv");
         keptWriter.writeRow(row);
-        LOGGER.debug("{}", Arrays.toString(row));
+        log.debug("{}", Arrays.toString(row));
     }
 
     /**
@@ -58,7 +58,7 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
     public void rowDeleted(CsvComparisonOptions options, String[] headers, String[] row) {
         deletedWriter = writeHeaders(headers, options, deletedWriter, "deleted.csv");
         deletedWriter.writeRow(row);
-        LOGGER.debug("{}", Arrays.toString(row));
+        log.debug("{}", Arrays.toString(row));
     }
 
     /**
@@ -68,7 +68,7 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
     public void rowInserted(CsvComparisonOptions options, String[] headers, String[] row) {
         insertedWriter = writeHeaders(headers, options, insertedWriter, "inserted.csv");
         insertedWriter.writeRow(row);
-        LOGGER.debug("{}", Arrays.toString(row));
+        log.debug("{}", Arrays.toString(row));
     }
 
     /**
@@ -78,7 +78,7 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
     public void rowModified(CsvComparisonOptions options, String[] headers, String[] row, List<HashMap<String, String>> diffs) {
         modifiedWriter = writeHeaders(headers, options, modifiedWriter, "modified.csv");
         modifiedWriter.writeRow(row);
-        LOGGER.debug("{}", Arrays.toString(row));
+        log.debug("{}", Arrays.toString(row));
     }
 
     /**
@@ -109,5 +109,5 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
 
     //-------------------------------------------------------------------------------//
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(CsvComparisonOutput.class);
+    private final static Logger log = LoggerFactory.getLogger(CsvComparisonOutput.class);
 }

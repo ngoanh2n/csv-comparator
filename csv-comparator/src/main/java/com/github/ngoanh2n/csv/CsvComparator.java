@@ -21,10 +21,9 @@ import java.util.stream.Collectors;
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
 public class CsvComparator {
+    private final static Logger log = LoggerFactory.getLogger(CsvComparator.class);
     private final CsvComparisonSource source;
     private final CsvComparisonOptions options;
-
-    //-------------------------------------------------------------------------------//
 
     private CsvComparator(@Nonnull CsvComparisonSource source) {
         this(source, CsvComparisonOptions.defaults());
@@ -102,11 +101,7 @@ public class CsvComparator {
                     .filter(visitors, v -> !v.getClass().getName().equals(CsvComparisonOutput.class.getName())));
         }
 
-        visitors.forEach(v -> LOGGER.debug("{}", v.getClass().getName()));
+        visitors.forEach(v -> log.debug("{}", v.getClass().getName()));
         return visitors;
     }
-
-    //-------------------------------------------------------------------------------//
-
-    private final static Logger LOGGER = LoggerFactory.getLogger(CsvComparator.class);
 }

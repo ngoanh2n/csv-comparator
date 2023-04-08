@@ -36,8 +36,8 @@ public interface CsvComparisonSource {
             }
         };
 
-        LOGGER.debug("Exp CSV {}", Commons.getRelative(source.exp()));
-        LOGGER.debug("Act CSV {}", Commons.getRelative(source.act()));
+        log.debug("Exp CSV {}", Commons.getRelative(source.exp()));
+        log.debug("Act CSV {}", Commons.getRelative(source.act()));
         return source;
     }
 
@@ -64,5 +64,5 @@ public interface CsvComparisonSource {
     /**
      * Default Logger for {@linkplain  CsvComparisonSource}.
      */
-    Logger LOGGER = LoggerFactory.getLogger(CsvComparisonSource.class);
+    Logger log = LoggerFactory.getLogger(CsvComparisonSource.class);
 }

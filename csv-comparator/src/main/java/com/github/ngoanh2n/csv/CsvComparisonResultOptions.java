@@ -13,18 +13,19 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public interface CsvComparisonResultOptions {
     /**
-     * Gets {@linkplain CsvComparisonResultOptions.Builder} class where allows to build your {@linkplain CsvComparisonResultOptions}
+     * Gets {@linkplain CsvComparisonResultOptions.Builder} class
+     * where allows to build your {@linkplain CsvComparisonResultOptions}.
      *
-     * @return {@linkplain CsvComparisonResultOptions.Builder}
+     * @return {@linkplain CsvComparisonResultOptions.Builder}.
      */
     static Builder builder() {
         return new Builder();
     }
 
     /**
-     * Gets {@linkplain CsvComparisonResultOptions} with default options
+     * Gets {@linkplain CsvComparisonResultOptions} with default options.
      *
-     * @return {@linkplain CsvComparisonResultOptions}
+     * @return {@linkplain CsvComparisonResultOptions}.
      */
     static CsvComparisonResultOptions defaults() {
         return builder().build();
@@ -33,24 +34,24 @@ public interface CsvComparisonResultOptions {
     //-------------------------------------------------------------------------------//
 
     /**
-     * Where you want to store comparison result output files
+     * Where you want to store comparison result output files.
      *
-     * @return path to location
+     * @return path to location.
      */
     @Nonnull
     Path location();
 
     /**
-     * Whether wrote output files
+     * Whether wrote output files.
      *
-     * @return Indicate to write output files
+     * @return Indicate to write output files.
      */
     boolean writeOutputs();
 
     /**
-     * Whether included headers row in output files
+     * Whether included headers row in output files.
      *
-     * @return Indicate to add headers row to results in output files
+     * @return Indicate to add headers row to results in output files.
      */
     boolean includeHeaders();
 
@@ -71,10 +72,10 @@ public interface CsvComparisonResultOptions {
         }
 
         /**
-         * Set location where you want to store comparison result output files
+         * Set location where you want to store comparison result output files.
          *
-         * @param path to location
-         * @return {@linkplain CsvComparisonOptions.Builder}
+         * @param path to location.
+         * @return {@linkplain CsvComparisonOptions.Builder}.
          */
         public CsvComparisonResultOptions.Builder setLocation(@Nonnull Path path) {
             location = checkNotNull(path, "path cannot not be null");
@@ -82,10 +83,10 @@ public interface CsvComparisonResultOptions {
         }
 
         /**
-         * Indicate which writes output files
+         * Indicate which writes output files.
          *
-         * @param enabled is a flag whether that includes or not
-         * @return {@linkplain CsvComparisonResultOptions.Builder}
+         * @param enabled is a flag whether that includes or not.
+         * @return {@linkplain CsvComparisonResultOptions.Builder}.
          */
         public CsvComparisonResultOptions.Builder writeOutputs(boolean enabled) {
             writeOutputs = enabled;
@@ -93,10 +94,10 @@ public interface CsvComparisonResultOptions {
         }
 
         /**
-         * Indicate which includes headers row to comparison result output files
+         * Indicate which includes headers row to comparison result output files.
          *
-         * @param enabled is a flag whether that includes or not
-         * @return {@linkplain CsvComparisonResultOptions.Builder}
+         * @param enabled is a flag whether that includes or not.
+         * @return {@linkplain CsvComparisonResultOptions.Builder}.
          */
         public CsvComparisonResultOptions.Builder includeHeaders(boolean enabled) {
             includeHeaders = enabled;
@@ -104,9 +105,9 @@ public interface CsvComparisonResultOptions {
         }
 
         /**
-         * Build {@linkplain CsvComparisonResultOptions} based on {@linkplain CsvComparisonResultOptions.Builder}
+         * Build {@linkplain CsvComparisonResultOptions} based on {@linkplain CsvComparisonResultOptions.Builder}.
          *
-         * @return {@linkplain CsvComparisonResultOptions}
+         * @return {@linkplain CsvComparisonResultOptions}.
          */
         public CsvComparisonResultOptions build() {
             return new CsvComparisonResultOptions() {

@@ -28,7 +28,16 @@ import java.util.UUID;
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
 public class CsvComparisonReport implements CsvComparisonVisitor {
+    private static final Logger log = LoggerFactory.getLogger(CsvComparisonReport.class);
+    /**
+     * Indicate which attaches CSV sources to Allure report.<br>
+     * Default to {@code true}.
+     */
     public static final Prop<Boolean> includeSource = Prop.bool("ngoanh2n.csv.includeSource", true);
+    /**
+     * Indicate which attaches CSV parser settings to Allure report.<br>
+     * Default to {@code true}.
+     */
     public static final Prop<Boolean> includeSettings = Prop.bool("ngoanh2n.csv.includeSettings", true);
 
     //-------------------------------------------------------------------------------//
@@ -36,12 +45,12 @@ public class CsvComparisonReport implements CsvComparisonVisitor {
     private String uuid;
     private AllureLifecycle lifecycle;
 
-    //-------------------------------------------------------------------------------//
-
     /**
      * Default constructor.
      */
     public CsvComparisonReport() { /* No implementation necessary */ }
+
+    //-------------------------------------------------------------------------------//
 
     /**
      * {@inheritDoc}
@@ -105,14 +114,14 @@ public class CsvComparisonReport implements CsvComparisonVisitor {
             }
         } catch (IOException e) {
             String msg = String.format("Write %s to OutputStream", Commons.getRelative(file));
-            LOGGER.error(msg);
+            log.error(msg);
             throw new RuntimeError(msg, e);
         } finally {
             try {
                 dataOS.close();
                 byteOS.close();
             } catch (IOException e) {
-                LOGGER.error("Close OutputStream");
+                log.error("Close OutputStream");
             }
         }
         lifecycle.addAttachment(fileDesc, "text/csv", "", byteOS.toByteArray());
@@ -125,8 +134,4 @@ public class CsvComparisonReport implements CsvComparisonVisitor {
             lifecycle.addAttachment("Parser Settings", "text/plain", "", bytes);
         }
     }
-
-    //-------------------------------------------------------------------------------//
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(CsvComparisonReport.class);
 }
