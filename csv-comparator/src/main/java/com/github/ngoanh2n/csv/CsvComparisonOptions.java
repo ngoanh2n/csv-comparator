@@ -10,24 +10,24 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * This class allows to adjust {@linkplain CsvComparator} by your expectation.
+ * This class allows to adjust {@link CsvComparator} by your expectation.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
 public interface CsvComparisonOptions {
     /**
-     * Gets {@linkplain Builder} class where allows to build your {@linkplain CsvComparisonOptions}.
+     * Gets {@link Builder} class where allows to build your {@link CsvComparisonOptions}.
      *
-     * @return {@linkplain CsvComparisonOptions.Builder}.
+     * @return {@link CsvComparisonOptions.Builder}.
      */
     static Builder builder() {
         return new Builder();
     }
 
     /**
-     * Gets {@linkplain CsvComparisonOptions} with default options.
+     * Gets {@link CsvComparisonOptions} with default options.
      *
-     * @return {@linkplain CsvComparisonOptions}.
+     * @return {@link CsvComparisonOptions}.
      */
     static CsvComparisonOptions defaults() {
         return builder().build();
@@ -36,7 +36,7 @@ public interface CsvComparisonOptions {
     //-------------------------------------------------------------------------------//
 
     /**
-     * {@linkplain Charset} for reading and writing CSV files.
+     * {@link Charset} for reading and writing CSV files.
      *
      * @return {@link Charset}.
      */
@@ -53,15 +53,15 @@ public interface CsvComparisonOptions {
     /**
      * The configuration class used by the CSV parser.
      *
-     * @return {@linkplain CsvParserSettings}.
+     * @return {@link CsvParserSettings}.
      */
     @Nonnull
     CsvParserSettings parserSettings();
 
     /**
-     * The comparison result options to adjust your {@linkplain CsvComparisonResult} output.
+     * The comparison result options to adjust your {@link CsvComparisonResult} output.
      *
-     * @return {@linkplain CsvComparisonResultOptions}.
+     * @return {@link CsvComparisonResultOptions}.
      */
     @Nonnull
     CsvComparisonResultOptions resultOptions();
@@ -69,7 +69,7 @@ public interface CsvComparisonOptions {
     //===============================================================================//
 
     /**
-     * This class allows to build {@linkplain CsvComparisonOptions}.
+     * This class allows to build {@link CsvComparisonOptions}.
      */
     final class Builder {
         private final CsvParserSettings parserSettings;
@@ -102,7 +102,7 @@ public interface CsvComparisonOptions {
          * Defines the line separator sequence that should be used for parsing and writing.
          *
          * @param lineSeparator is a sequence of 1 to 2 characters that identifies the end of a line.
-         * @return {@linkplain CsvComparisonOptions.Builder}
+         * @return {@link CsvComparisonOptions.Builder}
          */
         public Builder setLineSeparator(@Nonnull String lineSeparator) {
             checkNotNull(lineSeparator, "`lineSeparator` cannot not be null");
@@ -113,7 +113,7 @@ public interface CsvComparisonOptions {
         /**
          * This means, CSV files hasn't headers.
          *
-         * @return {@linkplain CsvComparisonOptions.Builder}.
+         * @return {@link CsvComparisonOptions.Builder}.
          */
         public Builder withoutHeaders() {
             parserSettings.setHeaderExtractionEnabled(false);
@@ -124,7 +124,7 @@ public interface CsvComparisonOptions {
          * Select columns to compare.
          *
          * @param names is the expected column names which assert or compare.
-         * @return {@linkplain CsvComparisonOptions.Builder}.
+         * @return {@link CsvComparisonOptions.Builder}.
          */
         public Builder selectColumns(@Nonnull String... names) {
             checkNotNull(names, "ColumnNames cannot not be null");
@@ -136,7 +136,7 @@ public interface CsvComparisonOptions {
          * Select columns to compare (0-based).
          *
          * @param indexes is the expected column indexes which assert or compare.
-         * @return {@linkplain CsvComparisonOptions.Builder}.
+         * @return {@link CsvComparisonOptions.Builder}.
          */
         public Builder selectColumns(@Nonnull Integer... indexes) {
             checkNotNull(indexes, "ColumnIndexes cannot not be null");
@@ -148,7 +148,7 @@ public interface CsvComparisonOptions {
          * Set column name where has a data field unique.
          *
          * @param name for indicating which is identity column name which data field is unique in a row. <br>
-         *             You have to use {@linkplain #selectColumns(String...)} first. <br>
+         *             You have to use {@link #selectColumns(String...)} first. <br>
          *             e.g. {@code #selectColumns("email", "firstname", "lastname")}.
          * @return {@link CsvComparisonOptions.Builder}.
          */
@@ -163,7 +163,7 @@ public interface CsvComparisonOptions {
          * Set column index where has a data field unique.
          *
          * @param index for indicating which is identity column index which data field is unique in a row. <br>
-         *              You have to use {@linkplain #selectColumns(Integer...)} first. <br>
+         *              You have to use {@link #selectColumns(Integer...)} first. <br>
          *              e.g. #selectColumns(1, 2, 5).
          * @return {@link CsvComparisonOptions.Builder}.
          */
@@ -174,7 +174,7 @@ public interface CsvComparisonOptions {
         }
 
         /**
-         * Set {@linkplain CsvComparisonResultOptions} to adjust {@linkplain CsvComparisonResult} output.
+         * Set {@link CsvComparisonResultOptions} to adjust {@link CsvComparisonResult} output.
          *
          * @param options to adjust output.
          * @return {@link CsvComparisonOptions.Builder}.
@@ -185,9 +185,9 @@ public interface CsvComparisonOptions {
         }
 
         /**
-         * Build {@linkplain CsvComparisonOptions} based on {@linkplain CsvComparisonOptions.Builder}.
+         * Build {@link CsvComparisonOptions} based on {@link CsvComparisonOptions.Builder}.
          *
-         * @return {@linkplain CsvComparisonOptions}.
+         * @return {@link CsvComparisonOptions}.
          */
         public CsvComparisonOptions build() {
             return new CsvComparisonOptions() {

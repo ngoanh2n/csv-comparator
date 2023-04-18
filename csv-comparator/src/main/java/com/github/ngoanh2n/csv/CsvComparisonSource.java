@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 import java.io.File;
 
 /**
- * This interface should be used to provide comparison source for {@linkplain CsvComparator}.
+ * This interface should be used to provide comparison source for {@link CsvComparator}.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
@@ -19,7 +19,7 @@ public interface CsvComparisonSource {
      *
      * @param exp the expected CSV.
      * @param act the actual CSV needs to compare.
-     * @return {@linkplain CsvComparisonSource}
+     * @return {@link CsvComparisonSource}
      */
     static CsvComparisonSource create(@Nonnull File exp, @Nonnull File act) {
         CsvComparisonSource source = new CsvComparisonSource() {
@@ -62,7 +62,7 @@ public interface CsvComparisonSource {
     //-------------------------------------------------------------------------------//
 
     /**
-     * Default Logger for {@linkplain  CsvComparisonSource}.
+     * Default Logger for {@link  CsvComparisonSource}.
      */
     Logger log = LoggerFactory.getLogger(CsvComparisonSource.class);
 }

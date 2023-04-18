@@ -16,7 +16,7 @@ import java.util.ServiceLoader;
 import java.util.stream.Collectors;
 
 /**
- * This class handles to compare {@linkplain CsvComparisonSource#exp()} and {@linkplain CsvComparisonSource#act()}.
+ * This class handles to compare {@link CsvComparisonSource#exp()} and {@link CsvComparisonSource#act()}.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
@@ -40,8 +40,8 @@ public class CsvComparator {
     /**
      * Compare 2 CSV files.
      *
-     * @param source {@linkplain CsvComparisonSource} will be compared.
-     * @return {@linkplain CsvComparisonResult} after comparison process ended.
+     * @param source {@link CsvComparisonSource} will be compared.
+     * @return {@link CsvComparisonResult} after comparison process ended.
      */
     public static CsvComparisonResult compare(@Nonnull CsvComparisonSource source) {
         return new CsvComparator(source).compare();
@@ -50,9 +50,9 @@ public class CsvComparator {
     /**
      * Compare 2 CSV files.
      *
-     * @param source  {@linkplain CsvComparisonSource} will be compared.
-     * @param options {@linkplain CsvComparisonOptions} you have provided.
-     * @return {@linkplain CsvComparisonResult} after comparison process ended.
+     * @param source  {@link CsvComparisonSource} will be compared.
+     * @param options {@link CsvComparisonOptions} you have provided.
+     * @return {@link CsvComparisonResult} after comparison process ended.
      */
     public static CsvComparisonResult compare(@Nonnull CsvComparisonSource source,
                                               @Nonnull CsvComparisonOptions options) {
@@ -98,7 +98,7 @@ public class CsvComparator {
 
         if (!options.resultOptions().writeOutputs()) {
             visitors = ImmutableList.copyOf(Collections2
-                    .filter(visitors, v -> !v.getClass().getName().equals(CsvComparisonOutput.class.getName())));
+                    .filter(visitors, visitor -> !visitor.getClass().getName().equals(CsvComparisonOutput.class.getName())));
         }
 
         visitors.forEach(v -> log.debug("{}", v.getClass().getName()));
