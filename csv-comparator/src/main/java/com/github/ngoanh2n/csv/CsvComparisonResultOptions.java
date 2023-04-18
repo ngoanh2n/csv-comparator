@@ -7,25 +7,25 @@ import java.nio.file.Paths;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * This class allows to adjust {@linkplain CsvComparisonResult} output by your expectation.
+ * This class allows to adjust {@link CsvComparisonResult} output by your expectation.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
 public interface CsvComparisonResultOptions {
     /**
-     * Gets {@linkplain CsvComparisonResultOptions.Builder} class
-     * where allows to build your {@linkplain CsvComparisonResultOptions}.
+     * Gets {@link CsvComparisonResultOptions.Builder} class
+     * where allows to build your {@link CsvComparisonResultOptions}.
      *
-     * @return {@linkplain CsvComparisonResultOptions.Builder}.
+     * @return {@link CsvComparisonResultOptions.Builder}.
      */
     static Builder builder() {
         return new Builder();
     }
 
     /**
-     * Gets {@linkplain CsvComparisonResultOptions} with default options.
+     * Gets {@link CsvComparisonResultOptions} with default options.
      *
-     * @return {@linkplain CsvComparisonResultOptions}.
+     * @return {@link CsvComparisonResultOptions}.
      */
     static CsvComparisonResultOptions defaults() {
         return builder().build();
@@ -58,7 +58,7 @@ public interface CsvComparisonResultOptions {
     //===============================================================================//
 
     /**
-     * This class allows to build {@linkplain CsvComparisonResultOptions}.
+     * This class allows to build {@link CsvComparisonResultOptions}.
      */
     final class Builder {
         private Path location;
@@ -75,7 +75,7 @@ public interface CsvComparisonResultOptions {
          * Set location where you want to store comparison result output files.
          *
          * @param path to location.
-         * @return {@linkplain CsvComparisonOptions.Builder}.
+         * @return {@link CsvComparisonOptions.Builder}.
          */
         public CsvComparisonResultOptions.Builder setLocation(@Nonnull Path path) {
             location = checkNotNull(path, "path cannot not be null");
@@ -86,7 +86,7 @@ public interface CsvComparisonResultOptions {
          * Indicate which writes output files.
          *
          * @param enabled is a flag whether that includes or not.
-         * @return {@linkplain CsvComparisonResultOptions.Builder}.
+         * @return {@link CsvComparisonResultOptions.Builder}.
          */
         public CsvComparisonResultOptions.Builder writeOutputs(boolean enabled) {
             writeOutputs = enabled;
@@ -97,7 +97,7 @@ public interface CsvComparisonResultOptions {
          * Indicate which includes headers row to comparison result output files.
          *
          * @param enabled is a flag whether that includes or not.
-         * @return {@linkplain CsvComparisonResultOptions.Builder}.
+         * @return {@link CsvComparisonResultOptions.Builder}.
          */
         public CsvComparisonResultOptions.Builder includeHeaders(boolean enabled) {
             includeHeaders = enabled;
@@ -105,9 +105,9 @@ public interface CsvComparisonResultOptions {
         }
 
         /**
-         * Build {@linkplain CsvComparisonResultOptions} based on {@linkplain CsvComparisonResultOptions.Builder}.
+         * Build {@link CsvComparisonResultOptions} based on {@link CsvComparisonResultOptions.Builder}.
          *
-         * @return {@linkplain CsvComparisonResultOptions}.
+         * @return {@link CsvComparisonResultOptions}.
          */
         public CsvComparisonResultOptions build() {
             return new CsvComparisonResultOptions() {

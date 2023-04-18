@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Default implementation for {@linkplain CsvComparisonVisitor} for writing outputs.
+ * Default implementation for {@link CsvComparisonVisitor} for writing outputs.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  */

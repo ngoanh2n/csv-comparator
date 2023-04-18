@@ -3,52 +3,52 @@ package com.github.ngoanh2n.csv;
 import java.util.List;
 
 /**
- * The result of {@linkplain CsvComparator}.
+ * The result of {@link CsvComparator}.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
 public interface CsvComparisonResult {
     /**
      * Whether there is any row deleted in
-     * the {@linkplain CsvComparisonSource#act()} CSV file against
-     * to {@linkplain CsvComparisonSource#exp()} CSV file.
+     * the {@link CsvComparisonSource#act()} CSV file against
+     * to {@link CsvComparisonSource#exp()} CSV file.
      *
-     * @return Indicate {@linkplain CsvComparisonSource#act()} CSV file is deleted any row or not.
+     * @return Indicate {@link CsvComparisonSource#act()} CSV file is deleted any row or not.
      */
     boolean isDeleted();
 
     /**
      * Whether there is any row inserted in
-     * the {@linkplain CsvComparisonSource#act()} CSV file against
-     * to {@linkplain CsvComparisonSource#exp()} CSV file.
+     * the {@link CsvComparisonSource#act()} CSV file against
+     * to {@link CsvComparisonSource#exp()} CSV file.
      *
-     * @return Indicate {@linkplain CsvComparisonSource#act()} CSV file is inserted any row or not.
+     * @return Indicate {@link CsvComparisonSource#act()} CSV file is inserted any row or not.
      */
     boolean isInserted();
 
     /**
      * Whether there is any row modified in
-     * the {@linkplain CsvComparisonSource#act()} CSV file against
-     * to {@linkplain CsvComparisonSource#exp()} CSV file.
+     * the {@link CsvComparisonSource#act()} CSV file against
+     * to {@link CsvComparisonSource#exp()} CSV file.
      *
-     * @return Indicate {@linkplain CsvComparisonSource#act()} CSV file is modified any row or not.
+     * @return Indicate {@link CsvComparisonSource#act()} CSV file is modified any row or not.
      */
     boolean isModified();
 
     /**
      * Whether there is any difference between
-     * {@linkplain CsvComparisonSource#act()} file and
-     * {@linkplain CsvComparisonSource#exp()} file.
+     * {@link CsvComparisonSource#act()} file and
+     * {@link CsvComparisonSource#exp()} file.
      *
-     * @return Indicate {@linkplain CsvComparisonSource#act()} file is different
-     * against to {@linkplain CsvComparisonSource#exp()}.
+     * @return Indicate {@link CsvComparisonSource#act()} file is different
+     * against to {@link CsvComparisonSource#exp()}.
      */
     boolean isDifferent();
 
     /**
      * Get all kept rows in
-     * the {@linkplain CsvComparisonSource#act()} CSV file against
-     * to {@linkplain CsvComparisonSource#exp()} CSV file.
+     * the {@link CsvComparisonSource#act()} CSV file against
+     * to {@link CsvComparisonSource#exp()} CSV file.
      *
      * @return Rows were kept.
      */
@@ -56,8 +56,8 @@ public interface CsvComparisonResult {
 
     /**
      * Get all deleted rows in
-     * the {@linkplain CsvComparisonSource#act()} CSV file against
-     * to {@linkplain CsvComparisonSource#exp()} CSV file.
+     * the {@link CsvComparisonSource#act()} CSV file against
+     * to {@link CsvComparisonSource#exp()} CSV file.
      *
      * @return Rows were deleted.
      */
@@ -65,8 +65,8 @@ public interface CsvComparisonResult {
 
     /**
      * Get all inserted rows in
-     * the {@linkplain CsvComparisonSource#act()} CSV file against
-     * to {@linkplain CsvComparisonSource#exp()} CSV file.
+     * the {@link CsvComparisonSource#act()} CSV file against
+     * to {@link CsvComparisonSource#exp()} CSV file.
      *
      * @return Rows were inserted.
      */
@@ -74,8 +74,8 @@ public interface CsvComparisonResult {
 
     /**
      * Get all modified rows in
-     * the {@linkplain CsvComparisonSource#act()} CSV file against
-     * to {@linkplain CsvComparisonSource#exp()} CSV file.
+     * the {@link CsvComparisonSource#act()} CSV file against
+     * to {@link CsvComparisonSource#exp()} CSV file.
      *
      * @return Rows were modified.
      */

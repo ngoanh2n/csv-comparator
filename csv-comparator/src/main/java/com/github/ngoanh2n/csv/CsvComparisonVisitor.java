@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * This interface should be used to walk through {@linkplain CsvComparator}. <br>
+ * This interface should be used to walk through {@link CsvComparator}. <br>
  * How to build the service provider:<br>
  * <ul>
- *      <li>1. Create a class that implements SPI {@linkplain CsvComparisonVisitor}
+ *      <li>1. Create a class that implements SPI {@link CsvComparisonVisitor}
  *      <pre>{@code
  *      package com.company.project.impl;
  *
@@ -31,50 +31,50 @@ import java.util.List;
  */
 public interface CsvComparisonVisitor {
     /**
-     * Callback before {@linkplain CsvComparator#compare(CsvComparisonSource, CsvComparisonOptions)}.
+     * Callback before {@link CsvComparator#compare(CsvComparisonSource, CsvComparisonOptions)}.
      *
-     * @param source  {@linkplain CsvComparisonSource} is being to compare.
-     * @param options {@linkplain CsvComparisonOptions} you have provided.
+     * @param source  {@link CsvComparisonSource} is being to compare.
+     * @param options {@link CsvComparisonOptions} you have provided.
      */
     default void comparisonStarted(CsvComparisonOptions options, CsvComparisonSource source) {/**/}
 
     /**
-     * Callback for when {@linkplain CsvComparator} detected a row kept.
+     * Callback for when {@link CsvComparator} detected a row kept.
      *
      * @param row     The row kept.
-     * @param headers Extracted from {@linkplain CsvComparisonSource} you have provided. <br>
-     *                Headers row is existed or not depends on {@linkplain CsvComparisonOptions.Builder#withoutHeaders()}.
-     * @param options {@linkplain CsvComparisonOptions} you have provided.
+     * @param headers Extracted from {@link CsvComparisonSource} you have provided. <br>
+     *                Headers row is existed or not depends on {@link CsvComparisonOptions.Builder#withoutHeaders()}.
+     * @param options {@link CsvComparisonOptions} you have provided.
      */
     default void rowKept(CsvComparisonOptions options, String[] headers, String[] row) {/**/}
 
     /**
-     * Callback for when {@linkplain CsvComparator} detected a row deleted.
+     * Callback for when {@link CsvComparator} detected a row deleted.
      *
      * @param row     The row deleted.
-     * @param headers Extracted from {@linkplain CsvComparisonSource} you have provided. <br>
-     *                Headers row is existed or not depends on {@linkplain CsvComparisonOptions.Builder#withoutHeaders()}.
-     * @param options {@linkplain CsvComparisonOptions} you have provided.
+     * @param headers Extracted from {@link CsvComparisonSource} you have provided. <br>
+     *                Headers row is existed or not depends on {@link CsvComparisonOptions.Builder#withoutHeaders()}.
+     * @param options {@link CsvComparisonOptions} you have provided.
      */
     default void rowDeleted(CsvComparisonOptions options, String[] headers, String[] row) {/**/}
 
     /**
-     * Callback for when {@linkplain CsvComparator} detected a row inserted.
+     * Callback for when {@link CsvComparator} detected a row inserted.
      *
      * @param row     The row inserted.
-     * @param headers Extracted from {@linkplain CsvComparisonSource} you have provided. <br>
-     *                Headers row is existed or not depends on {@linkplain CsvComparisonOptions.Builder#withoutHeaders()}.
-     * @param options {@linkplain CsvComparisonOptions} you have provided.
+     * @param headers Extracted from {@link CsvComparisonSource} you have provided. <br>
+     *                Headers row is existed or not depends on {@link CsvComparisonOptions.Builder#withoutHeaders()}.
+     * @param options {@link CsvComparisonOptions} you have provided.
      */
     default void rowInserted(CsvComparisonOptions options, String[] headers, String[] row) {/**/}
 
     /**
-     * Callback for when {@linkplain CsvComparator} detected a row modified.
+     * Callback for when {@link CsvComparator} detected a row modified.
      *
      * @param row     The row modified.
-     * @param headers Extracted from {@linkplain CsvComparisonSource} you have provided. <br>
-     *                Headers row is existed or not depends on {@linkplain CsvComparisonOptions.Builder#withoutHeaders()} (boolean)}.
-     * @param options {@linkplain CsvComparisonOptions} you have provided.
+     * @param headers Extracted from {@link CsvComparisonSource} you have provided. <br>
+     *                Headers row is existed or not depends on {@link CsvComparisonOptions.Builder#withoutHeaders()} (boolean)}.
+     * @param options {@link CsvComparisonOptions} you have provided.
      * @param diffs   List of difference at specific cells: [column, expCell, actCell] <br>
      *                - column: name of column (header) <br>
      *                - expCell: cell value of expected CSV <br>
@@ -83,11 +83,11 @@ public interface CsvComparisonVisitor {
     default void rowModified(CsvComparisonOptions options, String[] headers, String[] row, List<HashMap<String, String>> diffs) {/**/}
 
     /**
-     * Callback after {@linkplain CsvComparator#compare(CsvComparisonSource, CsvComparisonOptions)}.
+     * Callback after {@link CsvComparator#compare(CsvComparisonSource, CsvComparisonOptions)}.
      *
-     * @param source  {@linkplain CsvComparisonSource} is being to compare.
-     * @param options {@linkplain CsvComparisonOptions} you have provided.
-     * @param result  {@linkplain CsvComparisonResult} after comparison process ended.
+     * @param source  {@link CsvComparisonSource} is being to compare.
+     * @param options {@link CsvComparisonOptions} you have provided.
+     * @param result  {@link CsvComparisonResult} after comparison process ended.
      */
     default void comparisonFinished(CsvComparisonOptions options, CsvComparisonSource source, CsvComparisonResult result) {/**/}
 }
