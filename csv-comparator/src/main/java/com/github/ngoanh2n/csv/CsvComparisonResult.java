@@ -9,73 +9,57 @@ import java.util.List;
  */
 public interface CsvComparisonResult {
     /**
-     * Whether there is any row deleted in
-     * the {@link CsvComparisonSource#act()} CSV file against
-     * to {@link CsvComparisonSource#exp()} CSV file.
+     * Whether there is any row deleted in the expected CSV file against to actual CSV file.
      *
-     * @return Indicate {@link CsvComparisonSource#act()} CSV file is deleted any row or not.
+     * @return Indicate expected CSV file is deleted any row or not.
      */
     boolean isDeleted();
 
     /**
-     * Whether there is any row inserted in
-     * the {@link CsvComparisonSource#act()} CSV file against
-     * to {@link CsvComparisonSource#exp()} CSV file.
+     * Whether there is any row inserted in the expected CSV file against to actual CSV file.
      *
-     * @return Indicate {@link CsvComparisonSource#act()} CSV file is inserted any row or not.
+     * @return Indicate expected CSV file is inserted any row or not.
      */
     boolean isInserted();
 
     /**
-     * Whether there is any row modified in
-     * the {@link CsvComparisonSource#act()} CSV file against
-     * to {@link CsvComparisonSource#exp()} CSV file.
+     * Whether there is any row modified in the expected CSV file against to actual CSV file.
      *
-     * @return Indicate {@link CsvComparisonSource#act()} CSV file is modified any row or not.
+     * @return Indicate expected CSV file is modified any row or not.
      */
     boolean isModified();
 
     /**
-     * Whether there is any difference between
-     * {@link CsvComparisonSource#act()} file and
-     * {@link CsvComparisonSource#exp()} file.
+     * Whether there is any difference between expected CSV file and actual CSV file.
      *
-     * @return Indicate {@link CsvComparisonSource#act()} file is different
-     * against to {@link CsvComparisonSource#exp()}.
+     * @return Indicate expected file is different
+     * against to actual.
      */
     boolean isDifferent();
 
     /**
-     * Get all kept rows in
-     * the {@link CsvComparisonSource#act()} CSV file against
-     * to {@link CsvComparisonSource#exp()} CSV file.
+     * Get all kept rows in the expected CSV file against to actual CSV file.
      *
      * @return Rows were kept.
      */
     List<String[]> rowsKept();
 
     /**
-     * Get all deleted rows in
-     * the {@link CsvComparisonSource#act()} CSV file against
-     * to {@link CsvComparisonSource#exp()} CSV file.
+     * Get all deleted rows in the expected CSV file against to actual CSV file.
      *
      * @return Rows were deleted.
      */
     List<String[]> rowsDeleted();
 
     /**
-     * Get all inserted rows in
-     * the {@link CsvComparisonSource#act()} CSV file against
-     * to {@link CsvComparisonSource#exp()} CSV file.
+     * Get all inserted rows in the expected CSV file against to actual CSV file.
      *
      * @return Rows were inserted.
      */
     List<String[]> rowsInserted();
 
     /**
-     * Get all modified rows in
-     * the {@link CsvComparisonSource#act()} CSV file against
-     * to {@link CsvComparisonSource#exp()} CSV file.
+     * Get all modified rows in the expected CSV file against to actual CSV file.
      *
      * @return Rows were modified.
      */

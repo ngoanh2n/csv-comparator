@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.io.File;
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -15,10 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class WithHeadersTest {
-    private final CsvComparisonSource source = CsvComparisonSource.create(
-            Resource.getFile("com/github/ngoanh2n/csv/exp/combine2.csv"),
-            Resource.getFile("com/github/ngoanh2n/csv/act/combine2.csv")
-    );
+    private final File exp = Resource.getFile("com/github/ngoanh2n/csv/exp/combine2.csv");
+    private final File act = Resource.getFile("com/github/ngoanh2n/csv/act/combine2.csv");
 
     @Test
     @Order(1)
@@ -27,7 +27,7 @@ public class WithHeadersTest {
                 .builder()
                 .selectColumnId("email")
                 .build();
-        assertDoesNotThrow(() -> CsvComparator.compare(source, options));
+        assertDoesNotThrow(() -> CsvComparator.compare(exp, act, options));
     }
 
     @Test
@@ -37,7 +37,7 @@ public class WithHeadersTest {
                 .builder()
                 .selectColumnId("unknown")
                 .build();
-        assertThrows(RuntimeError.class, () -> CsvComparator.compare(source, options));
+        assertThrows(RuntimeError.class, () -> CsvComparator.compare(exp, act, options));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class WithHeadersTest {
                 .builder()
                 .selectColumnId(0)
                 .build();
-        assertDoesNotThrow(() -> CsvComparator.compare(source, options));
+        assertDoesNotThrow(() -> CsvComparator.compare(exp, act, options));
     }
 
     @Test
@@ -57,6 +57,6 @@ public class WithHeadersTest {
                 .builder()
                 .selectColumnId(4)
                 .build();
-        assertThrows(RuntimeError.class, () -> CsvComparator.compare(source, options));
+        assertThrows(RuntimeError.class, () -> CsvComparator.compare(exp, act, options));
     }
 }

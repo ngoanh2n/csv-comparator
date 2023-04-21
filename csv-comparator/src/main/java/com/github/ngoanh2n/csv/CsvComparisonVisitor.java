@@ -1,5 +1,6 @@
 package com.github.ngoanh2n.csv;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,18 +32,19 @@ import java.util.List;
  */
 public interface CsvComparisonVisitor {
     /**
-     * Callback before {@link CsvComparator#compare(CsvComparisonSource, CsvComparisonOptions)}.
+     * Callback before {@link CsvComparator#compare(File, File, CsvComparisonOptions)}.
      *
-     * @param source  {@link CsvComparisonSource} is being to compare.
+     * @param exp     The expected CSV file.
+     * @param act     The actual CSV file needs to compare.
      * @param options {@link CsvComparisonOptions} you have provided.
      */
-    default void comparisonStarted(CsvComparisonOptions options, CsvComparisonSource source) {/**/}
+    default void comparisonStarted(CsvComparisonOptions options, File exp, File act) {/**/}
 
     /**
      * Callback for when {@link CsvComparator} detected a row kept.
      *
      * @param row     The row kept.
-     * @param headers Extracted from {@link CsvComparisonSource} you have provided. <br>
+     * @param headers Extracted from the CSV file you have provided. <br>
      *                Headers row is existed or not depends on {@link CsvComparisonOptions.Builder#withoutHeaders()}.
      * @param options {@link CsvComparisonOptions} you have provided.
      */
@@ -52,7 +54,7 @@ public interface CsvComparisonVisitor {
      * Callback for when {@link CsvComparator} detected a row deleted.
      *
      * @param row     The row deleted.
-     * @param headers Extracted from {@link CsvComparisonSource} you have provided. <br>
+     * @param headers Extracted from the CSV file you have provided. <br>
      *                Headers row is existed or not depends on {@link CsvComparisonOptions.Builder#withoutHeaders()}.
      * @param options {@link CsvComparisonOptions} you have provided.
      */
@@ -62,7 +64,7 @@ public interface CsvComparisonVisitor {
      * Callback for when {@link CsvComparator} detected a row inserted.
      *
      * @param row     The row inserted.
-     * @param headers Extracted from {@link CsvComparisonSource} you have provided. <br>
+     * @param headers Extracted from the CSV file you have provided. <br>
      *                Headers row is existed or not depends on {@link CsvComparisonOptions.Builder#withoutHeaders()}.
      * @param options {@link CsvComparisonOptions} you have provided.
      */
@@ -72,7 +74,7 @@ public interface CsvComparisonVisitor {
      * Callback for when {@link CsvComparator} detected a row modified.
      *
      * @param row     The row modified.
-     * @param headers Extracted from {@link CsvComparisonSource} you have provided. <br>
+     * @param headers Extracted from the CSV file you have provided. <br>
      *                Headers row is existed or not depends on {@link CsvComparisonOptions.Builder#withoutHeaders()} (boolean)}.
      * @param options {@link CsvComparisonOptions} you have provided.
      * @param diffs   List of difference at specific cells: [column, expCell, actCell] <br>
@@ -83,11 +85,12 @@ public interface CsvComparisonVisitor {
     default void rowModified(CsvComparisonOptions options, String[] headers, String[] row, List<HashMap<String, String>> diffs) {/**/}
 
     /**
-     * Callback after {@link CsvComparator#compare(CsvComparisonSource, CsvComparisonOptions)}.
+     * Callback after {@link CsvComparator#compare(File, File, CsvComparisonOptions)}.
      *
-     * @param source  {@link CsvComparisonSource} is being to compare.
+     * @param exp     The expected CSV file.
+     * @param act     The actual CSV file needs to compare.
      * @param options {@link CsvComparisonOptions} you have provided.
      * @param result  {@link CsvComparisonResult} after comparison process ended.
      */
-    default void comparisonFinished(CsvComparisonOptions options, CsvComparisonSource source, CsvComparisonResult result) {/**/}
+    default void comparisonFinished(CsvComparisonOptions options, File exp, File act, CsvComparisonResult result) {/**/}
 }

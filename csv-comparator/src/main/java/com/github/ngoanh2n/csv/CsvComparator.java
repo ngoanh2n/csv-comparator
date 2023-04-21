@@ -10,28 +10,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.stream.Collectors;
 
 /**
- * This class handles to compare {@link CsvComparisonSource#exp()} and {@link CsvComparisonSource#act()}.
+ * This is starting point to compare 2 CSV files.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
+@ParametersAreNonnullByDefault
 public class CsvComparator {
     private final static Logger log = LoggerFactory.getLogger(CsvComparator.class);
-    private final CsvComparisonSource source;
+    private final File exp;
+    private final File act;
     private final CsvComparisonOptions options;
 
-    private CsvComparator(@Nonnull CsvComparisonSource source) {
-        this(source, CsvComparisonOptions.defaults());
-    }
-
-    private CsvComparator(@Nonnull CsvComparisonSource source,
-                          @Nonnull CsvComparisonOptions options) {
-        this.source = Preconditions.checkNotNull(source, "source cannot be null");
+    private CsvComparator(File exp, File act, CsvComparisonOptions options) {
+        this.exp = Preconditions.checkNotNull(exp, "exp CSV cannot be null");
+        this.act = Preconditions.checkNotNull(act, "act CSV cannot be null");
         this.options = Preconditions.checkNotNull(options, "options cannot be null");
     }
 
@@ -40,23 +40,24 @@ public class CsvComparator {
     /**
      * Compare 2 CSV files.
      *
-     * @param source {@link CsvComparisonSource} will be compared.
+     * @param exp The expected CSV file.
+     * @param act The actual CSV file needs to compare.
      * @return {@link CsvComparisonResult} after comparison process ended.
      */
-    public static CsvComparisonResult compare(@Nonnull CsvComparisonSource source) {
-        return new CsvComparator(source).compare();
+    public static CsvComparisonResult compare(File exp, File act) {
+        return compare(exp, act, CsvComparisonOptions.defaults());
     }
 
     /**
      * Compare 2 CSV files.
      *
-     * @param source  {@link CsvComparisonSource} will be compared.
+     * @param exp     The expected CSV file.
+     * @param act     The actual CSV file needs to compare.
      * @param options {@link CsvComparisonOptions} you have provided.
      * @return {@link CsvComparisonResult} after comparison process ended.
      */
-    public static CsvComparisonResult compare(@Nonnull CsvComparisonSource source,
-                                              @Nonnull CsvComparisonOptions options) {
-        return new CsvComparator(source, options).compare();
+    public static CsvComparisonResult compare(File exp, File act, CsvComparisonOptions options) {
+        return new CsvComparator(exp, act, options).compare();
     }
 
     //-------------------------------------------------------------------------------//
@@ -64,26 +65,26 @@ public class CsvComparator {
     @Nonnull
     private CsvComparisonResult compare() {
         List<CsvComparisonVisitor> visitors = getVisitors();
-        visitors.forEach(v -> v.comparisonStarted(options, source));
+        visitors.forEach(visitor -> visitor.comparisonStarted(options, exp, act));
         CsvParserSettings settings = getSettings();
-        CsvSource cs = CsvSource.parse(options, source.exp());
+        CsvSource cs = CsvSource.parse(options, exp);
         CsvResult.Collector collector = new CsvResult.Collector();
 
         Map<String, String[]> expMap = cs.getRows().stream().collect(
                 Collectors.toMap(rk -> rk[cs.getColumnId()], rv -> rv, (rk, rv) -> rv));
         settings.setProcessor(new CsvProcessor(options, visitors, collector, expMap, cs));
-        new CsvParser(settings).parse(source.act(), CsvSource.getCharset(options, source.act()));
+        new CsvParser(settings).parse(act, CsvSource.getCharset(options, act));
 
         if (expMap.size() > 0) {
             for (Map.Entry<String, String[]> left : expMap.entrySet()) {
                 String[] row = left.getValue();
                 collector.rowDeleted(options, cs.getHeaders(), row);
-                visitors.forEach(v -> v.rowDeleted(options, cs.getHeaders(), row));
+                visitors.forEach(visitor -> visitor.rowDeleted(options, cs.getHeaders(), row));
             }
         }
 
         CsvComparisonResult result = new CsvResult(collector);
-        visitors.forEach(v -> v.comparisonFinished(options, source, result));
+        visitors.forEach(visitor -> visitor.comparisonFinished(options, exp, act, result));
         return result;
     }
 
@@ -101,7 +102,7 @@ public class CsvComparator {
                     .filter(visitors, visitor -> !visitor.getClass().getName().equals(CsvComparisonOutput.class.getName())));
         }
 
-        visitors.forEach(v -> log.debug("{}", v.getClass().getName()));
+        visitors.forEach(visitor -> log.debug("{}", visitor.getClass().getName()));
         return visitors;
     }
 }
