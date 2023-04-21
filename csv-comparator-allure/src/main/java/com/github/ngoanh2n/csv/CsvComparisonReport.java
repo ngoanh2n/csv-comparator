@@ -28,7 +28,6 @@ import java.util.UUID;
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
 public class CsvComparisonReport implements CsvComparisonVisitor {
-    private static final Logger log = LoggerFactory.getLogger(CsvComparisonReport.class);
     /**
      * Indicate which attaches CSV sources to Allure report.<br>
      * Default to {@code true}.
@@ -39,9 +38,9 @@ public class CsvComparisonReport implements CsvComparisonVisitor {
      * Default to {@code true}.
      */
     public static final Prop<Boolean> includeSettings = Prop.bool("ngoanh2n.csv.includeSettings", true);
+    private static final Logger log = LoggerFactory.getLogger(CsvComparisonReport.class);
 
     //-------------------------------------------------------------------------------//
-
     private String uuid;
     private AllureLifecycle lifecycle;
 
@@ -56,26 +55,26 @@ public class CsvComparisonReport implements CsvComparisonVisitor {
      * {@inheritDoc}
      */
     @Override
-    public void comparisonStarted(CsvComparisonOptions options, CsvComparisonSource source) {
+    public void comparisonStarted(CsvComparisonOptions options, File exp, File act) {
         uuid = UUID.randomUUID().toString();
         lifecycle = Allure.getLifecycle();
 
         List<Parameter> parameters = new ArrayList<>();
-        parameters.add(ResultsUtils.createParameter("exp", Commons.getRelative(source.exp())));
-        parameters.add(ResultsUtils.createParameter("act", Commons.getRelative(source.act())));
+        parameters.add(ResultsUtils.createParameter("exp", Commons.getRelative(exp)));
+        parameters.add(ResultsUtils.createParameter("act", Commons.getRelative(act)));
 
         StepResult result = new StepResult().setName("CSV Comparison").setParameters(parameters);
         lifecycle.startStep(uuid, result);
 
-        attachSource(options, source);
-        attachSettings(options, source);
+        attachSource(options, exp, act);
+        attachSettings(options, exp);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void comparisonFinished(CsvComparisonOptions options, CsvComparisonSource source, CsvComparisonResult result) {
+    public void comparisonFinished(CsvComparisonOptions options, File exp, File act, CsvComparisonResult result) {
         if (result.isDifferent()) {
             lifecycle.updateStep(uuid, sr -> sr.setStatus(Status.FAILED));
         } else {
@@ -86,10 +85,10 @@ public class CsvComparisonReport implements CsvComparisonVisitor {
 
     //-------------------------------------------------------------------------------//
 
-    private void attachSource(CsvComparisonOptions options, CsvComparisonSource source) {
+    private void attachSource(CsvComparisonOptions options, File exp, File act) {
         if (includeSource.getValue()) {
-            attachSource(options, source.exp(), "Exp CSV");
-            attachSource(options, source.act(), "Act CSV");
+            attachSource(options, exp, "Exp CSV");
+            attachSource(options, act, "Act CSV");
         }
     }
 
@@ -127,9 +126,9 @@ public class CsvComparisonReport implements CsvComparisonVisitor {
         lifecycle.addAttachment(fileDesc, "text/csv", "", byteOS.toByteArray());
     }
 
-    private void attachSettings(CsvComparisonOptions options, CsvComparisonSource source) {
+    private void attachSettings(CsvComparisonOptions options, File exp) {
         if (includeSettings.getValue()) {
-            Charset charset = CsvSource.getCharset(options, source.exp());
+            Charset charset = CsvSource.getCharset(options, exp);
             byte[] bytes = options.parserSettings().toString().getBytes(charset);
             lifecycle.addAttachment("Parser Settings", "text/plain", "", bytes);
         }

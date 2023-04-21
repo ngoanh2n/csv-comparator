@@ -18,6 +18,7 @@ import java.util.List;
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
 public class CsvComparisonOutput implements CsvComparisonVisitor {
+    private final static Logger log = LoggerFactory.getLogger(CsvComparisonOutput.class);
     private String dir;
     private CsvWriter keptWriter;
     private CsvWriter deletedWriter;
@@ -25,18 +26,18 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
     private CsvWriter modifiedWriter;
     private CsvWriterSettings settings;
 
+    //-------------------------------------------------------------------------------//
+
     /**
      * Default constructor.
      */
     public CsvComparisonOutput() { /* No implementation necessary */ }
 
-    //-------------------------------------------------------------------------------//
-
     /**
      * {@inheritDoc}
      */
     @Override
-    public void comparisonStarted(CsvComparisonOptions options, CsvComparisonSource source) {
+    public void comparisonStarted(CsvComparisonOptions options, File exp, File act) {
         dir = Commons.timestamp();
         settings = new CsvWriterSettings();
     }
@@ -81,11 +82,13 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
         log.debug("{}", Arrays.toString(row));
     }
 
+    //-------------------------------------------------------------------------------//
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public void comparisonFinished(CsvComparisonOptions options, CsvComparisonSource source, CsvComparisonResult result) {
+    public void comparisonFinished(CsvComparisonOptions options, File exp, File act, CsvComparisonResult result) {
         if (keptWriter != null) keptWriter.close();
         if (deletedWriter != null) deletedWriter.close();
         if (insertedWriter != null) insertedWriter.close();
@@ -106,8 +109,4 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
         }
         return writer;
     }
-
-    //-------------------------------------------------------------------------------//
-
-    private final static Logger log = LoggerFactory.getLogger(CsvComparisonOutput.class);
 }

@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.io.File;
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -15,10 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class WithoutHeadersTest {
-    private final CsvComparisonSource source = CsvComparisonSource.create(
-            Resource.getFile("com/github/ngoanh2n/csv/exp/combine1.csv"),
-            Resource.getFile("com/github/ngoanh2n/csv/act/combine1.csv")
-    );
+    private final File exp = Resource.getFile("com/github/ngoanh2n/csv/exp/combine1.csv");
+    private final File act = Resource.getFile("com/github/ngoanh2n/csv/act/combine1.csv");
 
     @Test
     @Order(1)
@@ -29,7 +29,7 @@ public class WithoutHeadersTest {
                 .selectColumns(0, 1, 2)
                 .selectColumnId(0)
                 .build();
-        assertDoesNotThrow(() -> CsvComparator.compare(source, options));
+        assertDoesNotThrow(() -> CsvComparator.compare(exp, act, options));
     }
 
     @Test
@@ -41,7 +41,7 @@ public class WithoutHeadersTest {
                 .selectColumns(0, 1, 2)
                 .selectColumnId(3)
                 .build();
-        assertThrows(RuntimeError.class, () -> CsvComparator.compare(source, options));
+        assertThrows(RuntimeError.class, () -> CsvComparator.compare(exp, act, options));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class WithoutHeadersTest {
                 .withoutHeaders()
                 .selectColumns(0, 1, 2)
                 .build();
-        assertThrows(RuntimeError.class, () -> CsvComparator.compare(source, options));
+        assertThrows(RuntimeError.class, () -> CsvComparator.compare(exp, act, options));
     }
 
     @Test
@@ -63,7 +63,7 @@ public class WithoutHeadersTest {
                 .withoutHeaders()
                 .selectColumnId(0)
                 .build();
-        assertDoesNotThrow(() -> CsvComparator.compare(source, options));
+        assertDoesNotThrow(() -> CsvComparator.compare(exp, act, options));
     }
 
     @Test
@@ -74,7 +74,7 @@ public class WithoutHeadersTest {
                 .withoutHeaders()
                 .selectColumnId(4)
                 .build();
-        assertThrows(RuntimeError.class, () -> CsvComparator.compare(source, options));
+        assertThrows(RuntimeError.class, () -> CsvComparator.compare(exp, act, options));
     }
 
     @Test
@@ -84,6 +84,6 @@ public class WithoutHeadersTest {
                 .builder()
                 .withoutHeaders()
                 .build();
-        assertThrows(RuntimeError.class, () -> CsvComparator.compare(source, options));
+        assertThrows(RuntimeError.class, () -> CsvComparator.compare(exp, act, options));
     }
 }

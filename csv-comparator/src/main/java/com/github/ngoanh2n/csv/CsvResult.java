@@ -61,13 +61,13 @@ class CsvResult implements CsvComparisonResult {
     //===============================================================================//
 
     static class Collector implements CsvComparisonVisitor {
-        boolean isDeleted = false;
-        boolean isInserted = false;
-        boolean isModified = false;
         final List<String[]> rowsKept = new ArrayList<>();
         final List<String[]> rowsDeleted = new ArrayList<>();
         final List<String[]> rowsInserted = new ArrayList<>();
         final List<String[]> rowsModified = new ArrayList<>();
+        boolean isDeleted = false;
+        boolean isInserted = false;
+        boolean isModified = false;
 
         //-------------------------------------------------------------------------------//
 

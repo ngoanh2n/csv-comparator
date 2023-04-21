@@ -5,6 +5,8 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+
 /**
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
@@ -13,14 +15,13 @@ import org.junit.jupiter.api.Test;
 public class CsvComparisonReportTest {
     @Test
     void test() {
-        CsvComparisonSource source = CsvComparisonSource.create(
-                Resource.getFile("com/github/ngoanh2n/csv/exp/combine2.csv"),
-                Resource.getFile("com/github/ngoanh2n/csv/act/combine2.csv")
-        );
+        File exp = Resource.getFile("com/github/ngoanh2n/csv/exp/combine2.csv");
+        File act = Resource.getFile("com/github/ngoanh2n/csv/act/combine2.csv");
+
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
                 .selectColumnId(0)
                 .build();
-        CsvComparator.compare(source, options);
+        CsvComparator.compare(exp, act, options);
     }
 }

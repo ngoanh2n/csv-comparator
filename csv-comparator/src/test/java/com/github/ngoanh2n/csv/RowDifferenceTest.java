@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
+import java.io.File;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -16,16 +18,15 @@ public class RowDifferenceTest {
     @Test
     @Order(1)
     void kept() {
-        CsvComparisonSource source = CsvComparisonSource.create(
-                Resource.getFile("com/github/ngoanh2n/csv/exp/inserted.csv"),
-                Resource.getFile("com/github/ngoanh2n/csv/exp/inserted.csv")
-        );
+        File exp = Resource.getFile("com/github/ngoanh2n/csv/exp/inserted.csv");
+        File act = Resource.getFile("com/github/ngoanh2n/csv/exp/inserted.csv");
+
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
                 .selectColumns(1, 2, 3)
                 .selectColumnId(1)
                 .build();
-        CsvComparisonResult result = CsvComparator.compare(source, options);
+        CsvComparisonResult result = CsvComparator.compare(exp, act, options);
 
         assertFalse(result.isDeleted());
         assertFalse(result.isInserted());
@@ -37,16 +38,15 @@ public class RowDifferenceTest {
     @Test
     @Order(2)
     void deleted() {
-        CsvComparisonSource source = CsvComparisonSource.create(
-                Resource.getFile("com/github/ngoanh2n/csv/exp/deleted.csv"),
-                Resource.getFile("com/github/ngoanh2n/csv/act/deleted.csv")
-        );
+        File exp = Resource.getFile("com/github/ngoanh2n/csv/exp/deleted.csv");
+        File act = Resource.getFile("com/github/ngoanh2n/csv/act/deleted.csv");
+
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
                 .selectColumns("email", "firstname", "lastname")
                 .selectColumnId("email")
                 .build();
-        CsvComparisonResult result = CsvComparator.compare(source, options);
+        CsvComparisonResult result = CsvComparator.compare(exp, act, options);
 
         assertTrue(result.isDeleted());
         assertTrue(result.isDifferent());
@@ -57,16 +57,15 @@ public class RowDifferenceTest {
     @Test
     @Order(3)
     void inserted() {
-        CsvComparisonSource source = CsvComparisonSource.create(
-                Resource.getFile("com/github/ngoanh2n/csv/exp/inserted.csv"),
-                Resource.getFile("com/github/ngoanh2n/csv/act/inserted.csv")
-        );
+        File exp = Resource.getFile("com/github/ngoanh2n/csv/exp/inserted.csv");
+        File act = Resource.getFile("com/github/ngoanh2n/csv/act/inserted.csv");
+
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
                 .selectColumns(1, 2, 3)
                 .selectColumnId(1)
                 .build();
-        CsvComparisonResult result = CsvComparator.compare(source, options);
+        CsvComparisonResult result = CsvComparator.compare(exp, act, options);
 
         assertTrue(result.isInserted());
         assertTrue(result.isDifferent());
@@ -77,16 +76,15 @@ public class RowDifferenceTest {
     @Test
     @Order(4)
     void modified() {
-        CsvComparisonSource source = CsvComparisonSource.create(
-                Resource.getFile("com/github/ngoanh2n/csv/exp/modified.csv"),
-                Resource.getFile("com/github/ngoanh2n/csv/act/modified.csv")
-        );
+        File exp = Resource.getFile("com/github/ngoanh2n/csv/exp/modified.csv");
+        File act = Resource.getFile("com/github/ngoanh2n/csv/act/modified.csv");
+
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
                 .selectColumns("email", "firstname", "lastname")
                 .selectColumnId("email")
                 .build();
-        CsvComparisonResult result = CsvComparator.compare(source, options);
+        CsvComparisonResult result = CsvComparator.compare(exp, act, options);
 
         assertTrue(result.isModified());
         assertTrue(result.isDifferent());

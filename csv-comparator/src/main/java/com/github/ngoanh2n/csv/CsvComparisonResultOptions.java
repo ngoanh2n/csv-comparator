@@ -77,7 +77,7 @@ public interface CsvComparisonResultOptions {
          * @param path to location.
          * @return {@link CsvComparisonOptions.Builder}.
          */
-        public CsvComparisonResultOptions.Builder setLocation(@Nonnull Path path) {
+        public Builder setLocation(@Nonnull Path path) {
             location = checkNotNull(path, "path cannot not be null");
             return this;
         }
@@ -86,9 +86,9 @@ public interface CsvComparisonResultOptions {
          * Indicate which writes output files.
          *
          * @param enabled is a flag whether that includes or not.
-         * @return {@link CsvComparisonResultOptions.Builder}.
+         * @return {@link Builder}.
          */
-        public CsvComparisonResultOptions.Builder writeOutputs(boolean enabled) {
+        public Builder writeOutputs(boolean enabled) {
             writeOutputs = enabled;
             return this;
         }
@@ -97,15 +97,15 @@ public interface CsvComparisonResultOptions {
          * Indicate which includes headers row to comparison result output files.
          *
          * @param enabled is a flag whether that includes or not.
-         * @return {@link CsvComparisonResultOptions.Builder}.
+         * @return {@link Builder}.
          */
-        public CsvComparisonResultOptions.Builder includeHeaders(boolean enabled) {
+        public Builder includeHeaders(boolean enabled) {
             includeHeaders = enabled;
             return this;
         }
 
         /**
-         * Build {@link CsvComparisonResultOptions} based on {@link CsvComparisonResultOptions.Builder}.
+         * Build {@link CsvComparisonResultOptions} based on {@link Builder}.
          *
          * @return {@link CsvComparisonResultOptions}.
          */
