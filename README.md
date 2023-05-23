@@ -14,7 +14,6 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [CSV Comparator](#csv-comparator)
 - [Declarations](#declarations)
   - [Gradle](#gradle)
   - [Maven](#maven)
@@ -50,20 +49,17 @@ id,email,firstname,lastname,age,note
 
 ## Comparison
 ```java
-// Create comparison source from actual and expected file
-CsvComparisonSource source = CsvComparisonSource.create(expectedCsv, actualCsv);
-
 // Build comparison options to navigate behaviors of comparison process
 CsvComparisonOptions options = CsvComparisonOptions
-                .builder()
-                .selectColumns("email", "firstname", "lastname")
-                .selectColumnId("email")
-                //.selectColumns(1, 2, 3)
-                //.selectColumnId(1)
-                .build();
+        .builder()
+        .selectColumns("email", "firstname", "lastname")
+        .selectColumnId("email")
+        //.selectColumns(1, 2, 3)
+        //.selectColumnId(1)
+        .build();
 
 // Do comparison
-CsvComparisonResult result = CsvComparator.compare(source, options);
+CsvComparisonResult result = CsvComparator.compare(expectedCSV, actualCSV, options);
 ```
 
 ## Assertion
