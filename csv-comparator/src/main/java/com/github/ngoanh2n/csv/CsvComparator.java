@@ -18,7 +18,7 @@ import java.util.ServiceLoader;
 import java.util.stream.Collectors;
 
 /**
- * This is starting point to compare 2 CSV files.
+ * Starting point to compare 2 CSV files.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  */

@@ -10,24 +10,24 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * This class allows to adjust {@link CsvComparator} by your expectation.
+ * Adjust behaviors of {@link CsvComparator}.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
 public interface CsvComparisonOptions {
     /**
-     * Gets {@link Builder} class where allows to build your {@link CsvComparisonOptions}.
+     * Get {@link Builder} class where allows to build your {@link CsvComparisonOptions}.
      *
-     * @return {@link CsvComparisonOptions.Builder}.
+     * @return A {@link CsvComparisonOptions.Builder}.
      */
     static Builder builder() {
         return new Builder();
     }
 
     /**
-     * Gets {@link CsvComparisonOptions} with default options.
+     * Get {@link CsvComparisonOptions} with default options.
      *
-     * @return {@link CsvComparisonOptions}.
+     * @return A {@link CsvComparisonOptions}.
      */
     static CsvComparisonOptions defaults() {
         return builder().build();
@@ -38,7 +38,7 @@ public interface CsvComparisonOptions {
     /**
      * {@link Charset} for reading and writing CSV files.
      *
-     * @return {@link Charset}.
+     * @return A {@link Charset}.
      */
     @Nullable
     Charset charset();
@@ -46,14 +46,14 @@ public interface CsvComparisonOptions {
     /**
      * Which column index or name where has a data field unique.
      *
-     * @return column id.
+     * @return The column id.
      */
     Object columnId();
 
     /**
      * The configuration class used by the CSV parser.
      *
-     * @return {@link CsvParserSettings}.
+     * @return A {@link CsvParserSettings}.
      */
     @Nonnull
     CsvParserSettings parserSettings();
@@ -61,7 +61,7 @@ public interface CsvComparisonOptions {
     /**
      * The comparison result options to adjust your {@link CsvComparisonResult} output.
      *
-     * @return {@link CsvComparisonResultOptions}.
+     * @return A {@link CsvComparisonResultOptions}.
      */
     @Nonnull
     CsvComparisonResultOptions resultOptions();
@@ -69,7 +69,7 @@ public interface CsvComparisonOptions {
     //===============================================================================//
 
     /**
-     * This class allows to build {@link CsvComparisonOptions}.
+     * Build a {@link CsvComparisonOptions}.
      */
     final class Builder {
         private final CsvParserSettings parserSettings;
@@ -78,19 +78,19 @@ public interface CsvComparisonOptions {
         private CsvComparisonResultOptions resultOptions;
 
         private Builder() {
-            charset = null;
-            columnId = null;
-            parserSettings = new CsvParserSettings();
-            parserSettings.setHeaderExtractionEnabled(true);
-            resultOptions = CsvComparisonResultOptions.defaults();
+            this.charset = null;
+            this.columnId = null;
+            this.parserSettings = new CsvParserSettings();
+            this.parserSettings.setHeaderExtractionEnabled(true);
+            this.resultOptions = CsvComparisonResultOptions.defaults();
         }
 
         /**
          * Set charset to read and writing CSV files.
          *
-         * @param charset is the {@code Charset} for reading and writing CSV files. <br>
+         * @param charset The {@code Charset} for reading and writing CSV files.<br>
          *                <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/encoding.doc.html">encoding</a>
-         * @return {@link Builder}.
+         * @return The current {@link CsvComparisonOptions.Builder}.
          * @see java.nio.charset.StandardCharsets
          */
         public Builder setCharset(@Nullable Charset charset) {
@@ -99,77 +99,77 @@ public interface CsvComparisonOptions {
         }
 
         /**
-         * Defines the line separator sequence that should be used for parsing and writing.
+         * Define the line separator sequence that should be used for parsing and writing.
          *
-         * @param lineSeparator is a sequence of 1 to 2 characters that identifies the end of a line.
-         * @return {@link CsvComparisonOptions.Builder}
+         * @param lineSeparator The sequence of 1 to 2 characters that identifies the end of a line.
+         * @return The current {@link CsvComparisonOptions.Builder}.
          */
         public Builder setLineSeparator(@Nonnull String lineSeparator) {
             checkNotNull(lineSeparator, "`lineSeparator` cannot not be null");
-            parserSettings.getFormat().setLineSeparator(lineSeparator);
+            this.parserSettings.getFormat().setLineSeparator(lineSeparator);
             return this;
         }
 
         /**
          * This means, CSV files hasn't headers.
          *
-         * @return {@link CsvComparisonOptions.Builder}.
+         * @return The current {@link CsvComparisonOptions.Builder}.
          */
         public Builder withoutHeaders() {
-            parserSettings.setHeaderExtractionEnabled(false);
+            this.parserSettings.setHeaderExtractionEnabled(false);
             return this;
         }
 
         /**
          * Select columns to compare.
          *
-         * @param names is the expected column names which assert or compare.
-         * @return {@link CsvComparisonOptions.Builder}.
+         * @param names The expected column names which assert or compare.
+         * @return The current {@link CsvComparisonOptions.Builder}.
          */
         public Builder selectColumns(@Nonnull String... names) {
             checkNotNull(names, "ColumnNames cannot not be null");
-            parserSettings.selectFields(names);
+            this.parserSettings.selectFields(names);
             return this;
         }
 
         /**
          * Select columns to compare (0-based).
          *
-         * @param indexes is the expected column indexes which assert or compare.
-         * @return {@link CsvComparisonOptions.Builder}.
+         * @param indexes The expected column indexes which assert or compare.
+         * @return The current {@link CsvComparisonOptions.Builder}.
          */
         public Builder selectColumns(@Nonnull Integer... indexes) {
             checkNotNull(indexes, "ColumnIndexes cannot not be null");
-            parserSettings.selectIndexes(indexes);
+            this.parserSettings.selectIndexes(indexes);
             return this;
         }
 
         /**
          * Set column name where has a data field unique.
          *
-         * @param name for indicating which is identity column name which data field is unique in a row. <br>
-         *             You have to use {@link #selectColumns(String...)} first. <br>
+         * @param name Indicate which is identity column name which data field is unique in a row.<br>
+         *             You have to use {@link #selectColumns(String...)} first.<br>
          *             e.g. {@code #selectColumns("email", "firstname", "lastname")}.
-         * @return {@link CsvComparisonOptions.Builder}.
+         * @return The current {@link CsvComparisonOptions.Builder}.
          */
         public Builder selectColumnId(@Nonnull String name) {
             checkNotNull(name, "ColumnId cannot not be null");
             checkArgument(!name.isEmpty(), "ColumnId cannot not be empty");
-            columnId = name;
+            this.columnId = name;
             return this;
         }
 
         /**
          * Set column index where has a data field unique.
          *
-         * @param index for indicating which is identity column index which data field is unique in a row. <br>
-         *              You have to use {@link #selectColumns(Integer...)} first. <br>
+         * @param index Indicate which is identity column index which data field is unique in a row.<br>
+         *              You have to use {@link #selectColumns(Integer...)} first.<br>
          *              e.g. #selectColumns(1, 2, 5).
-         * @return {@link CsvComparisonOptions.Builder}.
+         * @return The current {@link CsvComparisonOptions.Builder}.
          */
         public Builder selectColumnId(int index) {
             checkArgument(index > -1, "ColumnId should be greater -1");
-            columnId = index;
+            this.columnId = index;
             return this;
         }
 
@@ -177,10 +177,10 @@ public interface CsvComparisonOptions {
          * Set {@link CsvComparisonResultOptions} to adjust {@link CsvComparisonResult} output.
          *
          * @param options to adjust output.
-         * @return {@link CsvComparisonOptions.Builder}.
+         * @return The current {@link CsvComparisonOptions.Builder}.
          */
         public Builder setResultOptions(@Nonnull CsvComparisonResultOptions options) {
-            resultOptions = options;
+            this.resultOptions = options;
             return this;
         }
 

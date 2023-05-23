@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * This interface should be used to walk through {@link CsvComparator}. <br>
+ * Use to walk through {@link CsvComparator}.<br>
  * How to build the service provider:<br>
  * <ul>
  *      <li>1. Create a class that implements SPI {@link CsvComparisonVisitor}
@@ -44,7 +44,7 @@ public interface CsvComparisonVisitor {
      * Callback for when {@link CsvComparator} detected a row kept.
      *
      * @param row     The row kept.
-     * @param headers Extracted from the CSV file you have provided. <br>
+     * @param headers Extracted from the CSV file you have provided.<br>
      *                Headers row is existed or not depends on {@link CsvComparisonOptions.Builder#withoutHeaders()}.
      * @param options {@link CsvComparisonOptions} you have provided.
      */
@@ -54,7 +54,7 @@ public interface CsvComparisonVisitor {
      * Callback for when {@link CsvComparator} detected a row deleted.
      *
      * @param row     The row deleted.
-     * @param headers Extracted from the CSV file you have provided. <br>
+     * @param headers Extracted from the CSV file you have provided.<br>
      *                Headers row is existed or not depends on {@link CsvComparisonOptions.Builder#withoutHeaders()}.
      * @param options {@link CsvComparisonOptions} you have provided.
      */
@@ -64,7 +64,7 @@ public interface CsvComparisonVisitor {
      * Callback for when {@link CsvComparator} detected a row inserted.
      *
      * @param row     The row inserted.
-     * @param headers Extracted from the CSV file you have provided. <br>
+     * @param headers Extracted from the CSV file you have provided.<br>
      *                Headers row is existed or not depends on {@link CsvComparisonOptions.Builder#withoutHeaders()}.
      * @param options {@link CsvComparisonOptions} you have provided.
      */
@@ -74,10 +74,10 @@ public interface CsvComparisonVisitor {
      * Callback for when {@link CsvComparator} detected a row modified.
      *
      * @param row     The row modified.
-     * @param headers Extracted from the CSV file you have provided. <br>
+     * @param headers Extracted from the CSV file you have provided.<br>
      *                Headers row is existed or not depends on {@link CsvComparisonOptions.Builder#withoutHeaders()} (boolean)}.
      * @param options {@link CsvComparisonOptions} you have provided.
-     * @param diffs   List of difference at specific cells: [column, expCell, actCell] <br>
+     * @param diffs   List of difference at specific cells: [column, expCell, actCell]<br>
      *                - column: name of column (header) <br>
      *                - expCell: cell value of expected CSV <br>
      *                - actCell: cell value of actual CSV <br>

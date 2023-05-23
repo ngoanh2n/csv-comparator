@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
 import static java.util.stream.Collectors.toList;
 
 /**
- * This class parse CSV file to rows and headers, columnId.
+ * Parse CSV file to rows and headers, columnId.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  */

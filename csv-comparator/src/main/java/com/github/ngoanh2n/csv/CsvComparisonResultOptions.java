@@ -7,25 +7,24 @@ import java.nio.file.Paths;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * This class allows to adjust {@link CsvComparisonResult} output by your expectation.
+ * Adjust behaviors of {@link CsvComparisonResult}.
  *
  * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
  */
 public interface CsvComparisonResultOptions {
     /**
-     * Gets {@link CsvComparisonResultOptions.Builder} class
-     * where allows to build your {@link CsvComparisonResultOptions}.
+     * Get {@link CsvComparisonResultOptions.Builder} class where allows to build your {@link CsvComparisonResultOptions}.
      *
-     * @return {@link CsvComparisonResultOptions.Builder}.
+     * @return A {@link CsvComparisonResultOptions.Builder}.
      */
     static Builder builder() {
         return new Builder();
     }
 
     /**
-     * Gets {@link CsvComparisonResultOptions} with default options.
+     * Get {@link CsvComparisonResultOptions} with default options.
      *
-     * @return {@link CsvComparisonResultOptions}.
+     * @return A {@link CsvComparisonResultOptions}.
      */
     static CsvComparisonResultOptions defaults() {
         return builder().build();
@@ -36,7 +35,7 @@ public interface CsvComparisonResultOptions {
     /**
      * Where you want to store comparison result output files.
      *
-     * @return path to location.
+     * @return The path to location.
      */
     @Nonnull
     Path location();
@@ -58,7 +57,7 @@ public interface CsvComparisonResultOptions {
     //===============================================================================//
 
     /**
-     * This class allows to build {@link CsvComparisonResultOptions}.
+     * Build a {@link CsvComparisonResultOptions}.
      */
     final class Builder {
         private Path location;
@@ -66,41 +65,41 @@ public interface CsvComparisonResultOptions {
         private boolean includeHeaders;
 
         private Builder() {
-            writeOutputs = true;
-            includeHeaders = true;
-            location = Paths.get("build/ngoanh2n/csv");
+            this.location = Paths.get("build/ngoanh2n/csv");
+            this.writeOutputs = true;
+            this.includeHeaders = true;
         }
 
         /**
          * Set location where you want to store comparison result output files.
          *
-         * @param path to location.
-         * @return {@link CsvComparisonOptions.Builder}.
+         * @param path The path to location.
+         * @return The current {@link CsvComparisonResultOptions.Builder}.
          */
         public Builder setLocation(@Nonnull Path path) {
-            location = checkNotNull(path, "path cannot not be null");
+            this.location = checkNotNull(path, "path cannot not be null");
             return this;
         }
 
         /**
          * Indicate which writes output files.
          *
-         * @param enabled is a flag whether that includes or not.
-         * @return {@link Builder}.
+         * @param enabled The flag whether that includes or not.
+         * @return The current {@link CsvComparisonResultOptions.Builder}.
          */
         public Builder writeOutputs(boolean enabled) {
-            writeOutputs = enabled;
+            this.writeOutputs = enabled;
             return this;
         }
 
         /**
          * Indicate which includes headers row to comparison result output files.
          *
-         * @param enabled is a flag whether that includes or not.
-         * @return {@link Builder}.
+         * @param enabled The flag whether that includes or not.
+         * @return The current {@link CsvComparisonResultOptions.Builder}.
          */
         public Builder includeHeaders(boolean enabled) {
-            includeHeaders = enabled;
+            this.includeHeaders = enabled;
             return this;
         }
 
