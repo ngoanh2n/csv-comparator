@@ -1,6 +1,6 @@
 package com.github.ngoanh2n.csv;
 
-import com.github.ngoanh2n.Resource;
+import com.github.ngoanh2n.Resources;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import org.junit.jupiter.api.Test;
@@ -15,8 +15,8 @@ import java.io.File;
 public class CsvComparisonReportTest {
     @Test
     void test() {
-        File exp = Resource.getFile("com/github/ngoanh2n/csv/exp/combine2.csv");
-        File act = Resource.getFile("com/github/ngoanh2n/csv/act/combine2.csv");
+        File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/combine2.csv");
+        File act = Resources.getFile("com/github/ngoanh2n/csv/act/combine2.csv");
 
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()

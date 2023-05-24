@@ -1,6 +1,6 @@
 package com.github.ngoanh2n.csv;
 
-import com.github.ngoanh2n.Resource;
+import com.github.ngoanh2n.Resources;
 import com.github.ngoanh2n.RuntimeError;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -17,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class WithHeadersTest {
-    private final File exp = Resource.getFile("com/github/ngoanh2n/csv/exp/combine2.csv");
-    private final File act = Resource.getFile("com/github/ngoanh2n/csv/act/combine2.csv");
+    private final File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/combine2.csv");
+    private final File act = Resources.getFile("com/github/ngoanh2n/csv/act/combine2.csv");
 
     @Test
     @Order(1)

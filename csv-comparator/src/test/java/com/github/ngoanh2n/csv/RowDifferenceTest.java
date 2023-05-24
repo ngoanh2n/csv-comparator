@@ -1,6 +1,6 @@
 package com.github.ngoanh2n.csv;
 
-import com.github.ngoanh2n.Resource;
+import com.github.ngoanh2n.Resources;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -18,8 +18,8 @@ public class RowDifferenceTest {
     @Test
     @Order(1)
     void kept() {
-        File exp = Resource.getFile("com/github/ngoanh2n/csv/exp/inserted.csv");
-        File act = Resource.getFile("com/github/ngoanh2n/csv/exp/inserted.csv");
+        File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/inserted.csv");
+        File act = Resources.getFile("com/github/ngoanh2n/csv/exp/inserted.csv");
 
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
@@ -38,8 +38,8 @@ public class RowDifferenceTest {
     @Test
     @Order(2)
     void deleted() {
-        File exp = Resource.getFile("com/github/ngoanh2n/csv/exp/deleted.csv");
-        File act = Resource.getFile("com/github/ngoanh2n/csv/act/deleted.csv");
+        File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/deleted.csv");
+        File act = Resources.getFile("com/github/ngoanh2n/csv/act/deleted.csv");
 
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
@@ -57,8 +57,8 @@ public class RowDifferenceTest {
     @Test
     @Order(3)
     void inserted() {
-        File exp = Resource.getFile("com/github/ngoanh2n/csv/exp/inserted.csv");
-        File act = Resource.getFile("com/github/ngoanh2n/csv/act/inserted.csv");
+        File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/inserted.csv");
+        File act = Resources.getFile("com/github/ngoanh2n/csv/act/inserted.csv");
 
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
@@ -76,8 +76,8 @@ public class RowDifferenceTest {
     @Test
     @Order(4)
     void modified() {
-        File exp = Resource.getFile("com/github/ngoanh2n/csv/exp/modified.csv");
-        File act = Resource.getFile("com/github/ngoanh2n/csv/act/modified.csv");
+        File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/modified.csv");
+        File act = Resources.getFile("com/github/ngoanh2n/csv/act/modified.csv");
 
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
