@@ -36,7 +36,7 @@ public interface CsvComparisonVisitor {
      *
      * @param exp     The expected CSV file.
      * @param act     The actual CSV file needs to compare.
-     * @param options {@link CsvComparisonOptions} you have provided.
+     * @param options The {@link CsvComparisonOptions} to adjust behaviors of {@link CsvComparator}.
      */
     default void comparisonStarted(CsvComparisonOptions options, File exp, File act) {/**/}
 
@@ -46,7 +46,7 @@ public interface CsvComparisonVisitor {
      * @param row     The row kept.
      * @param headers Extracted from the CSV file you have provided.<br>
      *                Headers row is existed or not depends on {@link CsvComparisonOptions.Builder#withoutHeaders()}.
-     * @param options {@link CsvComparisonOptions} you have provided.
+     * @param options The {@link CsvComparisonOptions} to adjust behaviors of {@link CsvComparator}.
      */
     default void rowKept(CsvComparisonOptions options, String[] headers, String[] row) {/**/}
 
@@ -56,7 +56,7 @@ public interface CsvComparisonVisitor {
      * @param row     The row deleted.
      * @param headers Extracted from the CSV file you have provided.<br>
      *                Headers row is existed or not depends on {@link CsvComparisonOptions.Builder#withoutHeaders()}.
-     * @param options {@link CsvComparisonOptions} you have provided.
+     * @param options The {@link CsvComparisonOptions} to adjust behaviors of {@link CsvComparator}.
      */
     default void rowDeleted(CsvComparisonOptions options, String[] headers, String[] row) {/**/}
 
@@ -66,7 +66,7 @@ public interface CsvComparisonVisitor {
      * @param row     The row inserted.
      * @param headers Extracted from the CSV file you have provided.<br>
      *                Headers row is existed or not depends on {@link CsvComparisonOptions.Builder#withoutHeaders()}.
-     * @param options {@link CsvComparisonOptions} you have provided.
+     * @param options The {@link CsvComparisonOptions} to adjust behaviors of {@link CsvComparator}.
      */
     default void rowInserted(CsvComparisonOptions options, String[] headers, String[] row) {/**/}
 
@@ -75,8 +75,8 @@ public interface CsvComparisonVisitor {
      *
      * @param row     The row modified.
      * @param headers Extracted from the CSV file you have provided.<br>
-     *                Headers row is existed or not depends on {@link CsvComparisonOptions.Builder#withoutHeaders()} (boolean)}.
-     * @param options {@link CsvComparisonOptions} you have provided.
+     *                Headers row is existed or not depends on {@link CsvComparisonOptions.Builder#withoutHeaders()}.
+     * @param options The {@link CsvComparisonOptions} to adjust behaviors of {@link CsvComparator}.
      * @param diffs   List of difference at specific cells: [column, expCell, actCell]<br>
      *                - column: name of column (header) <br>
      *                - expCell: cell value of expected CSV <br>
@@ -89,8 +89,8 @@ public interface CsvComparisonVisitor {
      *
      * @param exp     The expected CSV file.
      * @param act     The actual CSV file needs to compare.
-     * @param options {@link CsvComparisonOptions} you have provided.
-     * @param result  {@link CsvComparisonResult} after comparison process ended.
+     * @param options The {@link CsvComparisonOptions} to adjust behaviors of {@link CsvComparator}.
+     * @param result  A {@link CsvComparisonResult} after comparison process ended.
      */
     default void comparisonFinished(CsvComparisonOptions options, File exp, File act, CsvComparisonResult result) {/**/}
 }

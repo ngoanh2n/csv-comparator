@@ -32,8 +32,7 @@ public interface CsvComparisonResult {
     /**
      * Whether there is any difference between expected CSV file and actual CSV file.
      *
-     * @return Indicate expected file is different
-     * against to actual.
+     * @return Indicate expected file is different against to actual.
      */
     boolean isDifferent();
 
