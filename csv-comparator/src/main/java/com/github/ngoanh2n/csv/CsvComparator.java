@@ -9,7 +9,6 @@ import com.univocity.parsers.csv.CsvParserSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.File;
 import java.util.List;
@@ -42,7 +41,7 @@ public class CsvComparator {
      *
      * @param exp The expected CSV file.
      * @param act The actual CSV file needs to compare.
-     * @return {@link CsvComparisonResult} after comparison process ended.
+     * @return A {@link CsvComparisonResult} after comparison process ended.
      */
     public static CsvComparisonResult compare(File exp, File act) {
         return compare(exp, act, CsvComparisonOptions.defaults());
@@ -53,8 +52,8 @@ public class CsvComparator {
      *
      * @param exp     The expected CSV file.
      * @param act     The actual CSV file needs to compare.
-     * @param options {@link CsvComparisonOptions} you have provided.
-     * @return {@link CsvComparisonResult} after comparison process ended.
+     * @param options The {@link CsvComparisonOptions} to adjust behaviors of {@link CsvComparator}.
+     * @return A {@link CsvComparisonResult} after comparison process ended.
      */
     public static CsvComparisonResult compare(File exp, File act, CsvComparisonOptions options) {
         return new CsvComparator(exp, act, options).compare();
@@ -62,7 +61,6 @@ public class CsvComparator {
 
     //-------------------------------------------------------------------------------//
 
-    @Nonnull
     private CsvComparisonResult compare() {
         List<CsvComparisonVisitor> visitors = getVisitors();
         visitors.forEach(visitor -> visitor.comparisonStarted(options, exp, act));
