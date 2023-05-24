@@ -8,7 +8,6 @@ plugins {
 dependencies {
     api(project(":csv-comparator"))
     implementation("io.qameta.allure:allure-java-commons:$versionAllure")
-
     testImplementation("io.qameta.allure:allure-junit5:$versionAllure")
 }
 
