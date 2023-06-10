@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @author ngoanh2n
  */
 class CsvResult implements CsvComparisonResult {
     private final Collector collector;

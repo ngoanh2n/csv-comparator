@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * The result of {@link CsvComparator}.
  *
- * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @author ngoanh2n
  */
 public interface CsvComparisonResult {
     /**

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 
 /**
- * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @author ngoanh2n
  */
 @Epic("CSV Comparator: Has Differences")
 @Feature("CSV Comparator: Demo Test")

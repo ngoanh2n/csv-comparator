@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * A default implementation for {@link CsvComparisonVisitor} for writing outputs.
  *
- * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @author ngoanh2n
  */
 public class CsvComparisonOutput implements CsvComparisonVisitor {
     private final static Logger log = LoggerFactory.getLogger(CsvComparisonOutput.class);

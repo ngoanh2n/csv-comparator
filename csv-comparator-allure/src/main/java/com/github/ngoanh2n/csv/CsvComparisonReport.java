@@ -25,7 +25,7 @@ import java.util.UUID;
 /**
  * Write Allure results while comparing.
  *
- * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @author ngoanh2n
  */
 public class CsvComparisonReport implements CsvComparisonVisitor {
     /**

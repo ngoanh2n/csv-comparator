@@ -28,7 +28,7 @@ import java.util.List;
  *      </ul>
  * </ul>
  *
- * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @author ngoanh2n
  */
 public interface CsvComparisonVisitor {
     /**
