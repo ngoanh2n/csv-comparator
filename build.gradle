@@ -1,5 +1,5 @@
 /**
- * Author: Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * Author: ngoanh2n
  */
 allprojects {
     group("com.github.ngoanh2n")
