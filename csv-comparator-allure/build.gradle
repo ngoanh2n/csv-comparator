@@ -1,5 +1,5 @@
 /**
- * Author: Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * Author: ngoanh2n
  */
 plugins {
     id("io.qameta.allure") version "2.11.2"
