@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 /**
  * Starting point to compare 2 CSV files.
  *
- * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @author ngoanh2n
  */
 @ParametersAreNonnullByDefault
 public class CsvComparator {

@@ -22,7 +22,7 @@ import static java.util.stream.Collectors.toList;
 /**
  * Parse CSV file to rows and headers, columnId.
  *
- * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @author ngoanh2n
  */
 class CsvSource {
     private final int columnId;

@@ -6,7 +6,7 @@ import com.univocity.parsers.common.processor.RowProcessor;
 import java.util.*;
 
 /**
- * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @author ngoanh2n
  */
 class CsvProcessor implements RowProcessor {
     CsvComparisonOptions options;

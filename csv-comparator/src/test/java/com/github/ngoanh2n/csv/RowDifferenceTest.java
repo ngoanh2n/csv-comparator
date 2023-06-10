@@ -11,7 +11,7 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @author ngoanh2n
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RowDifferenceTest {

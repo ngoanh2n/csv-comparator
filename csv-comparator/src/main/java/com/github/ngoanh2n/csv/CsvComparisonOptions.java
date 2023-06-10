@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Adjust behaviors of {@link CsvComparator}.
  *
- * @author Ho Huu Ngoan (ngoanh2n@gmail.com)
+ * @author ngoanh2n
  */
 public interface CsvComparisonOptions {
     /**
