@@ -33,7 +33,7 @@ publishing {
                 developers {
                     developer {
                         id = "ngoanh2n"
-                        name = "Ho Huu Ngoan"
+                        name = "ngoanh2n"
                         email = "ngoanh2n@gmail.com"
                         organizationUrl = "https://github.com/ngoanh2n"
                     }
