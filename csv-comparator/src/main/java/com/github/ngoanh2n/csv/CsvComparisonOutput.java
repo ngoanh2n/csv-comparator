@@ -13,9 +13,16 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * A default implementation for {@link CsvComparisonVisitor} for writing outputs.
+ * A default implementation for {@link CsvComparisonVisitor} for writing output files.<br><br>
+ *
+ * <em>Repository:</em>
+ * <ul>
+ *     <li><em>GitHub: <a href="https://github.com/ngoanh2n/csv-comparator">ngoanh2n/csv-comparator</a></em></li>
+ *     <li><em>Maven: <a href="https://mvnrepository.com/artifact/com.github.ngoanh2n/csv-comparator">com.github.ngoanh2n:csv-comparator</a></em></li>
+ * </ul>
  *
  * @author ngoanh2n
+ * @since 2019
  */
 public class CsvComparisonOutput implements CsvComparisonVisitor {
     private final static Logger log = LoggerFactory.getLogger(CsvComparisonOutput.class);
@@ -31,7 +38,7 @@ public class CsvComparisonOutput implements CsvComparisonVisitor {
     /**
      * Default constructor.
      */
-    public CsvComparisonOutput() { /* No implementation necessary */ }
+    public CsvComparisonOutput() { /**/ }
 
     /**
      * {@inheritDoc}

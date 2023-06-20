@@ -23,22 +23,31 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Write Allure results while comparing.
+ * Write Allure results while comparing.<br><br>
+ *
+ * <b>System Property</b>
+ * <ul>
+ *     <li>{@code ngoanh2n.csv.includeSource}<br>
+ *         Indicate which attaches CSV sources to Allure report. Default to {@code true}.
+ *     </li>
+ *     <li>{@code ngoanh2n.csv.includeSettings}<br>
+ *         Indicate which attaches CSV parser settings to Allure report. Default to {@code true}.
+ *     </li>
+ * </ul>
+ *
+ * <em>Repository:</em>
+ * <ul>
+ *     <li><em>GitHub: <a href="https://github.com/ngoanh2n/csv-comparator">ngoanh2n/csv-comparator</a></em></li>
+ *     <li><em>Maven: <a href="https://mvnrepository.com/artifact/com.github.ngoanh2n/csv-comparator-allure">com.github.ngoanh2n:csv-comparator-allure</a></em></li>
+ * </ul>
  *
  * @author ngoanh2n
+ * @since 2019
  */
 public class CsvComparisonReport implements CsvComparisonVisitor {
-    /**
-     * Indicate which attaches CSV sources to Allure report.<br>
-     * Default to {@code true}.
-     */
-    public static final Property<Boolean> includeSource = Property.ofBoolean("ngoanh2n.csv.includeSource", true);
-    /**
-     * Indicate which attaches CSV parser settings to Allure report.<br>
-     * Default to {@code true}.
-     */
-    public static final Property<Boolean> includeSettings = Property.ofBoolean("ngoanh2n.csv.includeSettings", true);
     private static final Logger log = LoggerFactory.getLogger(CsvComparisonReport.class);
+    private static final Property<Boolean> includeSource = Property.ofBoolean("ngoanh2n.csv.includeSource", true);
+    private static final Property<Boolean> includeSettings = Property.ofBoolean("ngoanh2n.csv.includeSettings", true);
 
     //-------------------------------------------------------------------------------//
     private String uuid;
@@ -47,7 +56,7 @@ public class CsvComparisonReport implements CsvComparisonVisitor {
     /**
      * Default constructor.
      */
-    public CsvComparisonReport() { /* No implementation necessary */ }
+    public CsvComparisonReport() { /**/ }
 
     //-------------------------------------------------------------------------------//
 

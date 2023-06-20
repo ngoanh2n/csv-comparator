@@ -3,9 +3,16 @@ package com.github.ngoanh2n.csv;
 import java.util.List;
 
 /**
- * The result of {@link CsvComparator}.
+ * The result of {@link CsvComparator}.<br><br>
+ *
+ * <em>Repository:</em>
+ * <ul>
+ *     <li><em>GitHub: <a href="https://github.com/ngoanh2n/csv-comparator">ngoanh2n/csv-comparator</a></em></li>
+ *     <li><em>Maven: <a href="https://mvnrepository.com/artifact/com.github.ngoanh2n/csv-comparator">com.github.ngoanh2n:csv-comparator</a></em></li>
+ * </ul>
  *
  * @author ngoanh2n
+ * @since 2019
  */
 public interface CsvComparisonResult {
     /**

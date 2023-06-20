@@ -6,7 +6,14 @@ import com.univocity.parsers.common.processor.RowProcessor;
 import java.util.*;
 
 /**
+ * <em>Repository:</em>
+ * <ul>
+ *     <li><em>GitHub: <a href="https://github.com/ngoanh2n/csv-comparator">ngoanh2n/csv-comparator</a></em></li>
+ *     <li><em>Maven: <a href="https://mvnrepository.com/artifact/com.github.ngoanh2n/csv-comparator">com.github.ngoanh2n:csv-comparator</a></em></li>
+ * </ul>
+ *
  * @author ngoanh2n
+ * @since 2019
  */
 class CsvProcessor implements RowProcessor {
     CsvComparisonOptions options;
@@ -49,10 +56,10 @@ class CsvProcessor implements RowProcessor {
     }
 
     @Override
-    public void processStarted(ParsingContext context) { /* No implementation necessary */ }
+    public void processStarted(ParsingContext context) { /**/ }
 
     @Override
-    public void processEnded(ParsingContext context) { /* No implementation necessary */ }
+    public void processEnded(ParsingContext context) { /**/ }
 
     //-------------------------------------------------------------------------------//
 

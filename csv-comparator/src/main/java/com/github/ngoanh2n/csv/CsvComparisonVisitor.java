@@ -5,30 +5,39 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Use to walk through {@link CsvComparator}.<br>
- * How to build the service provider:<br>
+ * Use to walk through {@link CsvComparator}.<br><br>
+ *
+ * <b>Build the service provider:</b>
+ * <ol>
+ *      <li>Create a class that implements SPI {@link CsvComparisonVisitor}
+ *          <pre>{@code
+ *              package com.company.project.impl;
+ *
+ *              import com.github.ngoanh2n.csv.CsvComparisonVisitor;
+ *
+ *              public class MyComparisonVisitor implements CsvComparisonVisitor {
+ *                  ...IMPLEMENTED METHODS...
+ *              }
+ *          }</pre>
+ *      </li>
+ *
+ *      <li>Create a provider configuration file
+ *          <ol>
+ *              <li>Location: {@code resources/META-INF/services}</li>
+ *              <li>Name: {@code com.github.ngoanh2n.csv.CsvComparisonVisitor}</li>
+ *              <li>Content: {@code com.company.project.impl.MyComparisonVisitor}</li>
+ *          </ol>
+ *      </li>
+ * </ol>
+ *
+ * <em>Repository:</em>
  * <ul>
- *      <li>1. Create a class that implements SPI {@link CsvComparisonVisitor}
- *      <pre>{@code
- *      package com.company.project.impl;
- *
- *      import com.github.ngoanh2n.csv.CsvComparisonVisitor;
- *
- *      public class MyComparisonVisitor implements CsvComparisonVisitor {
- *          //
- *          // IMPLEMENTED METHODS
- *          //
- *      }
- *      }</pre>
- *      <li>2. Create a provider configuration file:
- *      <ul>
- *          <li>Location: {@code resources/META-INF/services}
- *          <li>Name: {@code com.github.ngoanh2n.csv.CsvComparisonVisitor}
- *          <li>Content: {@code com.company.project.impl.MyComparisonVisitor}
- *      </ul>
+ *     <li><em>GitHub: <a href="https://github.com/ngoanh2n/csv-comparator">ngoanh2n/csv-comparator</a></em></li>
+ *     <li><em>Maven: <a href="https://mvnrepository.com/artifact/com.github.ngoanh2n/csv-comparator">com.github.ngoanh2n:csv-comparator</a></em></li>
  * </ul>
  *
  * @author ngoanh2n
+ * @since 2019
  */
 public interface CsvComparisonVisitor {
     /**
