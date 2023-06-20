@@ -9,30 +9,28 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blueviolet.svg)](https://opensource.org/licenses/MIT)
 
 # CSV Comparator
+**Table of Contents**
+<!-- TOC -->
+* [Declaration](#declaration)
+  * [Gradle](#gradle)
+  * [Maven](#maven)
+* [Usage](#usage)
+  * [Comparison](#comparison)
+  * [Result](#result)
+  * [Visitor](#visitor)
+  * [Output](#output)
+  * [Allure Report](#allure-report)
+<!-- TOC -->
 
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
-
-- [Declarations](#declarations)
-  - [Gradle](#gradle)
-  - [Maven](#maven)
-- [Usages](#usages)
-  - [Comparison](#comparison)
-  - [Assertion](#assertion)
-  - [Allure Report](#allure-report)
-
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-# Declarations
+# Declaration
 ## Gradle
-_Add dependency to `build.gradle`_
+Add dependency to `build.gradle`.
 ```gradle
 implementation("com.github.ngoanh2n:csv-comparator:1.5.2")
 ```
 
 ## Maven
-_Add dependency to `pom.xml`_
+Add dependency to `pom.xml`.
 ```xml
 <dependency>
     <groupId>com.github.ngoanh2n</groupId>
@@ -41,15 +39,10 @@ _Add dependency to `pom.xml`_
 </dependency>
 ```
 
-# Usages
-Compare 2 CSV files formatted columns:
-```
-id,email,firstname,lastname,age,note
-```
-
+# Usage
 ## Comparison
+Example: CSV is formatted columns `[id,email,firstname,lastname,age,note]`.
 ```java
-// Build comparison options to navigate behaviors of comparison process
 CsvComparisonOptions options = CsvComparisonOptions
         .builder()
         .selectColumns("email", "firstname", "lastname")
@@ -57,24 +50,49 @@ CsvComparisonOptions options = CsvComparisonOptions
         //.selectColumns(1, 2, 3)
         //.selectColumnId(1)
         .build();
-
-// Do comparison
 CsvComparisonResult result = CsvComparator.compare(expectedCSV, actualCSV, options);
 ```
 
-## Assertion
+## Result
+`CsvComparisonResult` is the result of `CsvComparator`.
 ```java
-CsvComparisonResult.isDeleted()
-CsvComparisonResult.isInserted()
-CsvComparisonResult.isModified()
-CsvComparisonResult.isDifferent()
-CsvComparisonResult.rowsKept()
-CsvComparisonResult.rowsDeleted()
-CsvComparisonResult.rowsInserted()
-CsvComparisonResult.rowsModified()
+boolean isDeleted = CsvComparisonResult.isDeleted();
+boolean isInserted = CsvComparisonResult.isInserted();
+boolean isModified = CsvComparisonResult.isModified();
+boolean isDifferent = CsvComparisonResult.isDifferent();
+List<String[]> rowsKept = CsvComparisonResult.rowsKept();
+List<String[]> rowsDeleted = CsvComparisonResult.rowsDeleted();
+List<String[]> rowsInserted = CsvComparisonResult.rowsInserted();
+List<String[]> rowsModified = CsvComparisonResult.rowsModified();
 ```
 
-_By default, result files which are created after comparing is located at `build/ngoanh2n/csv/{yyyyMMdd.HHmmss.SSS}/`_
+## Visitor
+`CsvComparisonVisitor` for walking through `CsvComparator`.
+- `CsvComparisonVisitor#comparisonStarted(CsvComparisonOptions, File, File)`
+- `CsvComparisonVisitor#rowKept(CsvComparisonOptions, String[], String[])`
+- `CsvComparisonVisitor#rowDeleted(CsvComparisonOptions, String[], String[])`
+- `CsvComparisonVisitor#rowInserted(CsvComparisonOptions, String[], String[])`
+- `CsvComparisonVisitor#rowModified(CsvComparisonOptions, String[], String[], List)`
+- `CsvComparisonVisitor#comparisonFinished(CsvComparisonOptions, File, File, CsvComparisonResult)`
+
+## Output
+`CsvComparisonOutput` for writing comparison output files to specified location.<br>
+An implementation of `CsvComparisonVisitor`.
+- The output is always created at `build/ngoanh2n/csv/{yyyyMMdd.HHmmss.SSS}` by default
+- Use `CsvComparisonResultOptions` to adjust the output behaviors. And set to `CsvComparisonOptions`
+  ```java
+  CsvComparisonResultOptions resultOptions = CsvComparisonResultOptions
+         .builder()
+         .writeOutputs(false)                       // Default to true
+         //.setLocation(Paths.get("build/custom"))  // Default to build/ngoanh2n/csv
+         .build();
+  CsvComparisonOptions options = CsvComparisonOptions
+          .builder()
+          .setResultOptions(resultOptions)          // Default to CsvComparisonResultOptions.defaults()
+          .build();
+  ```
 
 ## Allure Report
-Your project is using Allure as a report framework, `csv-comparator-allure` should be used. ([README](csv-comparator-allure#readme))
+When using Allure as a report framework, should use
+<a href="https://mvnrepository.com/artifact/com.github.ngoanh2n/csv-comparator-allure">com.github.ngoanh2n:csv-comparator-allure</a>.<br>
+`csv-comparator-allure` [README](csv-comparator-allure#readme).
