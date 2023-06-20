@@ -7,9 +7,16 @@ import java.nio.file.Paths;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Adjust behaviors of {@link CsvComparisonResult}.
+ * Adjust behaviors of {@link CsvComparisonResult} and {@link CsvComparisonOutput}.<br><br>
+ *
+ * <em>Repository:</em>
+ * <ul>
+ *     <li><em>GitHub: <a href="https://github.com/ngoanh2n/csv-comparator">ngoanh2n/csv-comparator</a></em></li>
+ *     <li><em>Maven: <a href="https://mvnrepository.com/artifact/com.github.ngoanh2n/csv-comparator">com.github.ngoanh2n:csv-comparator</a></em></li>
+ * </ul>
  *
  * @author ngoanh2n
+ * @since 2019
  */
 public interface CsvComparisonResultOptions {
     /**
@@ -106,7 +113,7 @@ public interface CsvComparisonResultOptions {
         /**
          * Build {@link CsvComparisonResultOptions} based on {@link Builder}.
          *
-         * @return {@link CsvComparisonResultOptions}.
+         * @return A {@link CsvComparisonResultOptions}.
          */
         public CsvComparisonResultOptions build() {
             return new CsvComparisonResultOptions() {
