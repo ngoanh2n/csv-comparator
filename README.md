@@ -26,7 +26,7 @@
 ## Gradle
 Add dependency to `build.gradle`.
 ```gradle
-implementation("com.github.ngoanh2n:csv-comparator:1.5.2")
+implementation("com.github.ngoanh2n:csv-comparator:1.6.0")
 ```
 
 ## Maven
@@ -35,7 +35,7 @@ Add dependency to `pom.xml`.
 <dependency>
     <groupId>com.github.ngoanh2n</groupId>
     <artifactId>csv-comparator</artifactId>
-    <version>1.5.2</version>
+    <version>1.6.0</version>
 </dependency>
 ```
 
