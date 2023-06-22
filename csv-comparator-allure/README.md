@@ -19,7 +19,7 @@ When using Allure as a report framework, `csv-comparator-allure` should be used.
 ## Gradle
 Add to `build.gradle`.
 ```gradle
-implementation("com.github.ngoanh2n:csv-comparator-allure:1.5.2")
+implementation("com.github.ngoanh2n:csv-comparator-allure:1.6.0")
 ```
 
 ## Maven
@@ -28,7 +28,7 @@ Add to `pom.xml`.
 <dependency>
     <groupId>com.github.ngoanh2n</groupId>
     <artifactId>csv-comparator-allure</artifactId>
-    <version>1.5.2</version>
+    <version>1.6.0</version>
 </dependency>
 ```
 
