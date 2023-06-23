@@ -38,4 +38,5 @@ test {
 
     systemProperty("file.encoding", "UTF-8")
     systemProperty("junit.jupiter.extensions.autodetection.enabled", "true")
+    systemProperties = System.getProperties() as Map<String, ?>
 }
