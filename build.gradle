@@ -34,4 +34,8 @@ subprojects {
         assemble.dependsOn("clean")
         dependsOn("publishToMavenLocal")
     }
+
+    tasks.withType(Test).configureEach {
+        System.setProperty("user.dir", projectDir.toString())
+    }
 }
