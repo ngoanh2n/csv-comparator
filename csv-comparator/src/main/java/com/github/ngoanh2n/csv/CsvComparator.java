@@ -124,6 +124,9 @@ public class CsvComparator {
      * @return A {@link CsvComparisonResult} after comparison process ended.
      */
     public static CsvComparisonResult compare(File exp, File act, CsvComparisonOptions options) {
+        log.debug("//-----CSV Comparison-----//");
+        log.debug("Exp CSV file: {}", Commons.getRelative(exp));
+        log.debug("Act CSV file: {}", Commons.getRelative(act));
         return new CsvComparator(exp, act, options).compare();
     }
 
