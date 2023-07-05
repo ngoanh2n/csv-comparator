@@ -65,6 +65,12 @@ class CsvResult implements CsvComparisonResult {
         return collector.rowsModified;
     }
 
+    @Override
+    public String toString() {
+        return String.format("diff=[deleted:%s, inserted:%s, modified:%s]",
+                rowsDeleted().size(), rowsInserted().size(), rowsModified().size());
+    }
+
     //===============================================================================//
 
     static class Collector implements CsvComparisonVisitor {
