@@ -46,7 +46,7 @@ class CsvResult implements CsvComparisonResult {
     }
 
     @Override
-    public List<String[]> rowsKept() {
+    public List<String[]> getKeptRows() {
         return collector.rowsKept;
     }
 

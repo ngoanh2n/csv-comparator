@@ -48,7 +48,7 @@ public interface CsvComparisonResult {
      *
      * @return Rows were kept.
      */
-    List<String[]> rowsKept();
+    List<String[]> getKeptRows();
 
     /**
      * Get all deleted rows in the expected CSV file against to actual CSV file.
