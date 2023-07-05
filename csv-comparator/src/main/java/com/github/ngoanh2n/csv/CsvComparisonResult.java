@@ -27,7 +27,7 @@ public interface CsvComparisonResult {
      *
      * @return Indicate expected CSV file is deleted any row or not.
      */
-    boolean isDeleted();
+    boolean hasDeletion();
 
     /**
      * Whether there is any row inserted in the expected CSV file against to actual CSV file.
