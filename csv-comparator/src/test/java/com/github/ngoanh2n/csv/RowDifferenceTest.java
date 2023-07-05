@@ -1,14 +1,9 @@
 package com.github.ngoanh2n.csv;
 
 import com.github.ngoanh2n.Resources;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 
 import java.io.File;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author ngoanh2n
@@ -17,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RowDifferenceTest {
     @Test
     @Order(1)
-    void kept() {
-        File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/inserted.csv");
-        File act = Resources.getFile("com/github/ngoanh2n/csv/exp/inserted.csv");
+    void hasDiff() {
+        File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/insertion.csv");
+        File act = Resources.getFile("com/github/ngoanh2n/csv/exp/insertion.csv");
 
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
@@ -28,18 +23,18 @@ public class RowDifferenceTest {
                 .build();
         CsvComparisonResult result = CsvComparator.compare(exp, act, options);
 
-        assertFalse(result.hasDeletion());
-        assertFalse(result.hasInsertion());
-        assertFalse(result.hasModification());
-        assertFalse(result.hasDiff());
-        assertEquals(1, result.getKeptRows().size());
+        Assertions.assertFalse(result.hasDiff());
+        Assertions.assertFalse(result.hasDeletion());
+        Assertions.assertFalse(result.hasInsertion());
+        Assertions.assertFalse(result.hasModification());
+        Assertions.assertEquals(1, result.getKeptRows().size());
     }
 
     @Test
     @Order(2)
-    void deleted() {
-        File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/deleted.csv");
-        File act = Resources.getFile("com/github/ngoanh2n/csv/act/deleted.csv");
+    void hasDeletion() {
+        File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/deletion.csv");
+        File act = Resources.getFile("com/github/ngoanh2n/csv/act/deletion.csv");
 
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
@@ -48,17 +43,19 @@ public class RowDifferenceTest {
                 .build();
         CsvComparisonResult result = CsvComparator.compare(exp, act, options);
 
-        assertTrue(result.hasDeletion());
-        assertTrue(result.hasDiff());
-        assertEquals(1, result.getKeptRows().size());
-        assertEquals(1, result.getDeletedRows().size());
+        Assertions.assertTrue(result.hasDiff());
+        Assertions.assertTrue(result.hasDeletion());
+        Assertions.assertFalse(result.hasInsertion());
+        Assertions.assertFalse(result.hasModification());
+        Assertions.assertEquals(1, result.getKeptRows().size());
+        Assertions.assertEquals(1, result.getDeletedRows().size());
     }
 
     @Test
     @Order(3)
-    void inserted() {
-        File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/inserted.csv");
-        File act = Resources.getFile("com/github/ngoanh2n/csv/act/inserted.csv");
+    void hasInsertion() {
+        File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/insertion.csv");
+        File act = Resources.getFile("com/github/ngoanh2n/csv/act/insertion.csv");
 
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
@@ -67,17 +64,19 @@ public class RowDifferenceTest {
                 .build();
         CsvComparisonResult result = CsvComparator.compare(exp, act, options);
 
-        assertTrue(result.hasInsertion());
-        assertTrue(result.hasDiff());
-        assertEquals(1, result.getKeptRows().size());
-        assertEquals(2, result.getInsertedRows().size());
+        Assertions.assertTrue(result.hasDiff());
+        Assertions.assertFalse(result.hasDeletion());
+        Assertions.assertTrue(result.hasInsertion());
+        Assertions.assertFalse(result.hasModification());
+        Assertions.assertEquals(1, result.getKeptRows().size());
+        Assertions.assertEquals(2, result.getInsertedRows().size());
     }
 
     @Test
     @Order(4)
-    void modified() {
-        File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/modified.csv");
-        File act = Resources.getFile("com/github/ngoanh2n/csv/act/modified.csv");
+    void hasModification() {
+        File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/modification.csv");
+        File act = Resources.getFile("com/github/ngoanh2n/csv/act/modification.csv");
 
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
@@ -86,9 +85,11 @@ public class RowDifferenceTest {
                 .build();
         CsvComparisonResult result = CsvComparator.compare(exp, act, options);
 
-        assertTrue(result.hasModification());
-        assertTrue(result.hasDiff());
-        assertEquals(2, result.getKeptRows().size());
-        assertEquals(1, result.getModifiedRows().size());
+        Assertions.assertTrue(result.hasDiff());
+        Assertions.assertFalse(result.hasDeletion());
+        Assertions.assertFalse(result.hasInsertion());
+        Assertions.assertTrue(result.hasModification());
+        Assertions.assertEquals(2, result.getKeptRows().size());
+        Assertions.assertEquals(1, result.getModifiedRows().size());
     }
 }

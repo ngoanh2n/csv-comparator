@@ -2,23 +2,17 @@ package com.github.ngoanh2n.csv;
 
 import com.github.ngoanh2n.Resources;
 import com.github.ngoanh2n.RuntimeError;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 
 import java.io.File;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author ngoanh2n
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class WithHeadersTest {
-    private final File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/combine2.csv");
-    private final File act = Resources.getFile("com/github/ngoanh2n/csv/act/combine2.csv");
+    private final File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/combination2.csv");
+    private final File act = Resources.getFile("com/github/ngoanh2n/csv/act/combination2.csv");
 
     @Test
     @Order(1)
@@ -27,7 +21,7 @@ public class WithHeadersTest {
                 .builder()
                 .selectColumnId("email")
                 .build();
-        assertDoesNotThrow(() -> CsvComparator.compare(exp, act, options));
+        Assertions.assertDoesNotThrow(() -> CsvComparator.compare(exp, act, options));
     }
 
     @Test
@@ -37,7 +31,7 @@ public class WithHeadersTest {
                 .builder()
                 .selectColumnId("unknown")
                 .build();
-        assertThrows(RuntimeError.class, () -> CsvComparator.compare(exp, act, options));
+        Assertions.assertThrows(RuntimeError.class, () -> CsvComparator.compare(exp, act, options));
     }
 
     @Test
@@ -47,7 +41,7 @@ public class WithHeadersTest {
                 .builder()
                 .selectColumnId(0)
                 .build();
-        assertDoesNotThrow(() -> CsvComparator.compare(exp, act, options));
+        Assertions.assertDoesNotThrow(() -> CsvComparator.compare(exp, act, options));
     }
 
     @Test
@@ -57,6 +51,6 @@ public class WithHeadersTest {
                 .builder()
                 .selectColumnId(4)
                 .build();
-        assertThrows(RuntimeError.class, () -> CsvComparator.compare(exp, act, options));
+        Assertions.assertThrows(RuntimeError.class, () -> CsvComparator.compare(exp, act, options));
     }
 }

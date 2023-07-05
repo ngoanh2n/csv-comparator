@@ -15,8 +15,8 @@ import java.io.File;
 public class CsvComparisonReportTest {
     @Test
     void test() {
-        File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/combine2.csv");
-        File act = Resources.getFile("com/github/ngoanh2n/csv/act/combine2.csv");
+        File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/combination2.csv");
+        File act = Resources.getFile("com/github/ngoanh2n/csv/act/combination2.csv");
 
         CsvComparisonOptions options = CsvComparisonOptions
                 .builder()
