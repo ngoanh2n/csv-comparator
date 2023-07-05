@@ -29,7 +29,7 @@ public class RowDifferenceTest {
         CsvComparisonResult result = CsvComparator.compare(exp, act, options);
 
         assertFalse(result.hasDeletion());
-        assertFalse(result.isInserted());
+        assertFalse(result.hasInsertion());
         assertFalse(result.isModified());
         assertFalse(result.hasDiff());
         assertEquals(1, result.rowsKept().size());
@@ -67,7 +67,7 @@ public class RowDifferenceTest {
                 .build();
         CsvComparisonResult result = CsvComparator.compare(exp, act, options);
 
-        assertTrue(result.isInserted());
+        assertTrue(result.hasInsertion());
         assertTrue(result.hasDiff());
         assertEquals(1, result.rowsKept().size());
         assertEquals(2, result.rowsInserted().size());
