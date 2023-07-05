@@ -62,7 +62,7 @@ public interface CsvComparisonResult {
      *
      * @return Rows were inserted.
      */
-    List<String[]> rowsInserted();
+    List<String[]> getInsertedRows();
 
     /**
      * Get all modified rows in the expected CSV file against to actual CSV file.

@@ -70,7 +70,7 @@ public class RowDifferenceTest {
         assertTrue(result.hasInsertion());
         assertTrue(result.hasDiff());
         assertEquals(1, result.getKeptRows().size());
-        assertEquals(2, result.rowsInserted().size());
+        assertEquals(2, result.getInsertedRows().size());
     }
 
     @Test
