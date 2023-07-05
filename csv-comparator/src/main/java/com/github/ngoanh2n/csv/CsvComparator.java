@@ -1,11 +1,13 @@
 package com.github.ngoanh2n.csv;
 
 import com.github.ngoanh2n.Commons;
+import com.github.ngoanh2n.RuntimeError;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
+import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -132,34 +134,54 @@ public class CsvComparator {
 
     //-------------------------------------------------------------------------------//
 
-    private CsvComparisonResult compare() {
-        List<CsvComparisonVisitor> visitors = getVisitors();
-        visitors.forEach(visitor -> visitor.comparisonStarted(options, exp, act));
-        CsvParserSettings settings = getSettings();
-        CsvSource cs = CsvSource.parse(options, exp);
+    private static CsvResult.Collector doComparison(CsvComparisonOptions options, File exp, File act, List<CsvComparisonVisitor> visitors) {
+        CsvParserSettings settings = getSettings(options);
+        CsvSource source = CsvSource.parse(options, exp);
         CsvResult.Collector collector = new CsvResult.Collector();
 
-        Map<String, String[]> expMap = cs.getRows().stream().collect(
-                Collectors.toMap(rk -> rk[cs.getColumnId()], rv -> rv, (rk, rv) -> rv));
-        settings.setProcessor(new CsvProcessor(options, visitors, collector, expMap, cs));
+        Map<String, String[]> expMap = source.getRows().stream().collect(
+                Collectors.toMap(rk -> rk[source.getColumnId()], rv -> rv, (rk, rv) -> rv));
+        settings.setProcessor(new CsvProcessor(options, visitors, collector, expMap, source));
         new CsvParser(settings).parse(act, CsvSource.getCharset(options, act));
 
         if (expMap.size() > 0) {
             for (Map.Entry<String, String[]> left : expMap.entrySet()) {
                 String[] row = left.getValue();
-                collector.rowDeleted(options, cs.getHeaders(), row);
-                visitors.forEach(visitor -> visitor.rowDeleted(options, cs.getHeaders(), row));
+                collector.rowDeleted(options, source.getHeaders(), row);
+                visitors.forEach(visitor -> visitor.rowDeleted(options, source.getHeaders(), row));
             }
         }
-
-        CsvComparisonResult result = new CsvResult(collector);
-        visitors.forEach(visitor -> visitor.comparisonFinished(options, exp, act, result));
-        return result;
+        return collector;
     }
 
-    private CsvParserSettings getSettings() {
+    private static CsvParserSettings getSettings(CsvComparisonOptions options) {
         Commons.createDir(options.resultOptions().location());
         return options.parserSettings();
+    }
+
+    //-------------------------------------------------------------------------------//
+
+    private CsvComparisonResult compare() {
+        CsvComparisonResult result;
+        long starting = System.currentTimeMillis();
+        List<CsvComparisonVisitor> visitors = getVisitors();
+
+        try {
+            visitors.forEach(visitor -> visitor.comparisonStarted(options, exp, act));
+            CsvResult.Collector collector = doComparison(options, exp, act, visitors);
+            result = new CsvResult(collector);
+            visitors.forEach(visitor -> visitor.comparisonFinished(options, exp, act, result));
+            log.debug("CSV comparison result: {}", result);
+        } catch (Exception ex) {
+            String msg = "Error occurred while comparing";
+            log.error(msg);
+            throw new RuntimeError(msg, ex);
+        } finally {
+            long ending = System.currentTimeMillis();
+            String format = "[HH 'hours', mm 'minutes', ss 'seconds', SS 'milliseconds']";
+            log.info("CSV comparison finished in {}", DurationFormatUtils.formatDuration(ending - starting, format, true));
+        }
+        return result;
     }
 
     private List<CsvComparisonVisitor> getVisitors() {
