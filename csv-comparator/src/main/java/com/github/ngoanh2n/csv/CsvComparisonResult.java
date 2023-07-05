@@ -41,7 +41,7 @@ public interface CsvComparisonResult {
      *
      * @return Indicate expected CSV file is modified any row or not.
      */
-    boolean isModified();
+    boolean hasModification();
 
     /**
      * Get all kept rows in the expected CSV file against to actual CSV file.
