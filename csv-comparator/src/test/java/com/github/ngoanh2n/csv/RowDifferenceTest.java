@@ -89,6 +89,6 @@ public class RowDifferenceTest {
         assertTrue(result.hasModification());
         assertTrue(result.hasDiff());
         assertEquals(2, result.getKeptRows().size());
-        assertEquals(1, result.rowsModified().size());
+        assertEquals(1, result.getModifiedRows().size());
     }
 }

@@ -61,14 +61,14 @@ class CsvResult implements CsvComparisonResult {
     }
 
     @Override
-    public List<String[]> rowsModified() {
+    public List<String[]> getModifiedRows() {
         return collector.rowsModified;
     }
 
     @Override
     public String toString() {
         return String.format("diff=[deleted:%s, inserted:%s, modified:%s]",
-                getDeletedRows().size(), getInsertedRows().size(), rowsModified().size());
+                getDeletedRows().size(), getInsertedRows().size(), getModifiedRows().size());
     }
 
     //===============================================================================//

@@ -69,5 +69,5 @@ public interface CsvComparisonResult {
      *
      * @return Rows were modified.
      */
-    List<String[]> rowsModified();
+    List<String[]> getModifiedRows();
 }
