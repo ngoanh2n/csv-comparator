@@ -84,7 +84,7 @@ public class CsvComparisonReport implements CsvComparisonVisitor {
      */
     @Override
     public void comparisonFinished(CsvComparisonOptions options, File exp, File act, CsvComparisonResult result) {
-        if (result.isDifferent()) {
+        if (result.hasDiff()) {
             lifecycle.updateStep(uuid, sr -> sr.setStatus(Status.FAILED));
         } else {
             lifecycle.updateStep(uuid, sr -> sr.setStatus(Status.PASSED));

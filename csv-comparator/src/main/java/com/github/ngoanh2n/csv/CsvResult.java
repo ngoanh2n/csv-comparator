@@ -41,7 +41,7 @@ class CsvResult implements CsvComparisonResult {
     }
 
     @Override
-    public boolean isDifferent() {
+    public boolean hasDiff() {
         return isDeleted() || isInserted() || isModified();
     }
 
