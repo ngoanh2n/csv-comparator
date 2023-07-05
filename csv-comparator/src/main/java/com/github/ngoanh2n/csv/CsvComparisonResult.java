@@ -55,7 +55,7 @@ public interface CsvComparisonResult {
      *
      * @return Rows were deleted.
      */
-    List<String[]> rowsDeleted();
+    List<String[]> getDeletedRows();
 
     /**
      * Get all inserted rows in the expected CSV file against to actual CSV file.

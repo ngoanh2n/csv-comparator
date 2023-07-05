@@ -51,7 +51,7 @@ public class RowDifferenceTest {
         assertTrue(result.hasDeletion());
         assertTrue(result.hasDiff());
         assertEquals(1, result.getKeptRows().size());
-        assertEquals(1, result.rowsDeleted().size());
+        assertEquals(1, result.getDeletedRows().size());
     }
 
     @Test
