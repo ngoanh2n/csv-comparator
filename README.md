@@ -43,6 +43,8 @@ Add dependency to `pom.xml`.
 ## Comparison
 Example: CSV is formatted columns `[id,email,firstname,lastname,age,note]`.
 ```java
+File expFile = new File("data/expected/file.csv");
+File actFile = new File("data/actual/file.csv");
 CsvComparisonOptions options = CsvComparisonOptions
         .builder()
         .selectColumns("email", "firstname", "lastname")
@@ -50,20 +52,20 @@ CsvComparisonOptions options = CsvComparisonOptions
         //.selectColumns(1, 2, 3)
         //.selectColumnId(1)
         .build();
-CsvComparisonResult result = CsvComparator.compare(expectedCSV, actualCSV, options);
+CsvComparisonResult result = CsvComparator.compare(expFile, actFile, options);
 ```
 
 ## Result
 `CsvComparisonResult` is the result of `CsvComparator`.
 ```java
-boolean isDeleted = CsvComparisonResult.isDeleted();
-boolean isInserted = CsvComparisonResult.isInserted();
-boolean isModified = CsvComparisonResult.isModified();
-boolean isDifferent = CsvComparisonResult.isDifferent();
-List<String[]> rowsKept = CsvComparisonResult.rowsKept();
-List<String[]> rowsDeleted = CsvComparisonResult.rowsDeleted();
-List<String[]> rowsInserted = CsvComparisonResult.rowsInserted();
-List<String[]> rowsModified = CsvComparisonResult.rowsModified();
+boolean hasDiff = CsvComparisonResult.hasDiff();
+boolean hasDeletion = CsvComparisonResult.hasDeletion();
+boolean hasInsertion = CsvComparisonResult.hasInsertion();
+boolean hasModification = CsvComparisonResult.hasModification();
+List<String[]> keptRows = CsvComparisonResult.getKeptRows();
+List<String[]> deletedRows = CsvComparisonResult.getDeletedRows();
+List<String[]> insertedRows = CsvComparisonResult.getInsertedRows();
+List<String[]> modifiedRows = CsvComparisonResult.getModifiedRows();
 ```
 
 ## Visitor
