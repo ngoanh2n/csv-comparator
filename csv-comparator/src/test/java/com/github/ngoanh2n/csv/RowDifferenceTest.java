@@ -32,7 +32,7 @@ public class RowDifferenceTest {
         assertFalse(result.hasInsertion());
         assertFalse(result.hasModification());
         assertFalse(result.hasDiff());
-        assertEquals(1, result.rowsKept().size());
+        assertEquals(1, result.getKeptRows().size());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class RowDifferenceTest {
 
         assertTrue(result.hasDeletion());
         assertTrue(result.hasDiff());
-        assertEquals(1, result.rowsKept().size());
+        assertEquals(1, result.getKeptRows().size());
         assertEquals(1, result.rowsDeleted().size());
     }
 
@@ -69,7 +69,7 @@ public class RowDifferenceTest {
 
         assertTrue(result.hasInsertion());
         assertTrue(result.hasDiff());
-        assertEquals(1, result.rowsKept().size());
+        assertEquals(1, result.getKeptRows().size());
         assertEquals(2, result.rowsInserted().size());
     }
 
@@ -88,7 +88,7 @@ public class RowDifferenceTest {
 
         assertTrue(result.hasModification());
         assertTrue(result.hasDiff());
-        assertEquals(2, result.rowsKept().size());
+        assertEquals(2, result.getKeptRows().size());
         assertEquals(1, result.rowsModified().size());
     }
 }
