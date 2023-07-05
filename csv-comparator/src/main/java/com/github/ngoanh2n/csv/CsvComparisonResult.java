@@ -16,6 +16,13 @@ import java.util.List;
  */
 public interface CsvComparisonResult {
     /**
+     * Whether there is any difference between expected CSV file and actual CSV file.
+     *
+     * @return Indicate expected file is different against to actual.
+     */
+    boolean hasDiff();
+
+    /**
      * Whether there is any row deleted in the expected CSV file against to actual CSV file.
      *
      * @return Indicate expected CSV file is deleted any row or not.
@@ -35,13 +42,6 @@ public interface CsvComparisonResult {
      * @return Indicate expected CSV file is modified any row or not.
      */
     boolean isModified();
-
-    /**
-     * Whether there is any difference between expected CSV file and actual CSV file.
-     *
-     * @return Indicate expected file is different against to actual.
-     */
-    boolean isDifferent();
 
     /**
      * Get all kept rows in the expected CSV file against to actual CSV file.
