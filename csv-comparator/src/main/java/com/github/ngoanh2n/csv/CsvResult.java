@@ -31,7 +31,7 @@ class CsvResult implements CsvComparisonResult {
     }
 
     @Override
-    public boolean isInserted() {
+    public boolean hasInsertion() {
         return collector.isInserted;
     }
 
@@ -42,7 +42,7 @@ class CsvResult implements CsvComparisonResult {
 
     @Override
     public boolean hasDiff() {
-        return hasDeletion() || isInserted() || isModified();
+        return hasDeletion() || hasInsertion() || isModified();
     }
 
     @Override

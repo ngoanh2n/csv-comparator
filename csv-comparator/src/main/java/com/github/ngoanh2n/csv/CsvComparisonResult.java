@@ -34,7 +34,7 @@ public interface CsvComparisonResult {
      *
      * @return Indicate expected CSV file is inserted any row or not.
      */
-    boolean isInserted();
+    boolean hasInsertion();
 
     /**
      * Whether there is any row modified in the expected CSV file against to actual CSV file.
