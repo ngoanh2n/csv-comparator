@@ -36,13 +36,13 @@ class CsvResult implements CsvComparisonResult {
     }
 
     @Override
-    public boolean isModified() {
+    public boolean hasModification() {
         return collector.isModified;
     }
 
     @Override
     public boolean hasDiff() {
-        return hasDeletion() || hasInsertion() || isModified();
+        return hasDeletion() || hasInsertion() || hasModification();
     }
 
     @Override
