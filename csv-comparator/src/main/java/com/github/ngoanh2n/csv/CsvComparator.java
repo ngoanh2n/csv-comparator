@@ -21,32 +21,61 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Compare 2 CSV files.<br><br>
+ * Compare 2 CSV files or 2 CSV directories.<br><br>
  *
  * <b>Comparison</b><br>
  * Example: CSV is formatted columns {@code [id,email,firstname,lastname,age,note]}.
- * <pre>{@code
- *     CsvComparisonOptions options = CsvComparisonOptions
- *             .builder()
- *             .selectColumns("email", "firstname", "lastname")
- *             .selectColumnId("email")
- *             //.selectColumns(1, 2, 3)
- *             //.selectColumnId(1)
- *             .build();
- *     CsvComparisonResult result = CsvComparator.compare(expectedCSV, actualCSV, options);
- * }</pre><br>
+ *
+ * <ol>
+ *     <li>Compare 2 CSV file
+ *          <pre>{@code
+ *              File expectedCsvFile = new File("data/expected/file.csv");
+ *              File actualCsvFile = new File("data/actual/file.csv");
+ *
+ *              CsvComparisonOptions options = CsvComparisonOptions
+ *                      .builder()
+ *                      .selectColumns("email", "firstname", "lastname")
+ *                      .selectColumnId("email")
+ *                      //.selectColumns(1, 2, 3)
+ *                      //.selectColumnId(1)
+ *                      .build();
+ *              CsvComparisonResult result = CsvComparator.compare(expectedCsvFile, actualCsvFile, options);
+ *          }</pre>
+ *     </li>
+ *     <li>Compare 2 CSV directory
+ *          <pre>{@code
+ *              Path expectedCsvDir = Paths.get("data/expected");
+ *              Path actualCsvDir = Paths.get("data/actual");
+ *
+ *              CsvComparisonOptions options = CsvComparisonOptions
+ *                      .builder()
+ *                      .selectColumns("email", "firstname", "lastname")
+ *                      .selectColumnId("email")
+ *                      //.selectColumns(1, 2, 3)
+ *                      //.selectColumnId(1)
+ *                      .build();
+ *              CsvBulkComparisonResult result = CsvComparator.compare(expectedCsvDir, actualCsvDir, options);
+ *          }</pre>
+ *     </li>
+ * </ol>
  *
  * <b>Result</b><br>
- * {@link CsvComparisonResult} is the result of {@link CsvComparator}.
+ * {@link CsvComparisonResult} is the result of {@link CsvComparator#compare(File, File, CsvComparisonOptions) CsvComparator.compare(expectedCsvFile, actualCsvFile, options)}.
  * <pre>{@code
- *      boolean isDeleted = CsvComparisonResult.isDeleted();
- *      boolean isInserted = CsvComparisonResult.isInserted();
- *      boolean isModified = CsvComparisonResult.isModified();
- *      boolean isDifferent = CsvComparisonResult.isDifferent();
- *      List<String[]> rowsKept = CsvComparisonResult.rowsKept();
- *      List<String[]> rowsDeleted = CsvComparisonResult.rowsDeleted();
- *      List<String[]> rowsInserted = CsvComparisonResult.rowsInserted();
- *      List<String[]> rowsModified = CsvComparisonResult.rowsModified();
+ *      boolean hasDiff = CsvComparisonResult.hasDiff();
+ *      boolean hasDeletion = CsvComparisonResult.hasDeletion();
+ *      boolean hasInsertion = CsvComparisonResult.hasInsertion();
+ *      boolean hasModification = CsvComparisonResult.hasModification();
+ *      List<String[]> keptRows = CsvComparisonResult.getKeptRows();
+ *      List<String[]> deletedRows = CsvComparisonResult.getDeletedRows();
+ *      List<String[]> insertedRows = CsvComparisonResult.getInsertedRows();
+ *      List<String[]> modifiedRows = CsvComparisonResult.getModifiedRows();
+ * }</pre><br>
+ * {@link CsvBulkComparisonResult} is the result of {@link CsvComparator#compare(Path, Path, CsvComparisonOptions) CsvComparator.compare(expectedCsvDir, actualCsvDir, options)}.
+ * <pre>{@code
+ *      boolean hasDiff = CsvBulkComparisonResult.hasDiff();
+ *      int diffTotal = CsvBulkComparisonResult.getDiffTotal();
+ *      List<CsvComparisonResult> diffResults = CsvBulkComparisonResult.getDiffResults();
  * }</pre><br>
  *
  * <b>Visitor</b><br>
