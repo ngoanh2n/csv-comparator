@@ -134,10 +134,27 @@ public class CsvComparator {
         return new CsvComparator(exp, act, options).compare();
     }
 
+    /**
+     * Compare 2 CSV directories.<br>
+     * All CSV files in directories must be same column format.
+     *
+     * @param exp The expected CSV directory.
+     * @param act The actual CSV directory needs to compare.
+     * @return A {@link CsvBulkComparisonResult} after bulk comparison process ended.
+     */
     public static CsvBulkComparisonResult compare(Path exp, Path act) {
         return compare(exp, act, CsvComparisonOptions.defaults());
     }
 
+    /**
+     * Compare 2 CSV directories.<br>
+     * All CSV files in directories must be same column format.
+     *
+     * @param exp     The expected CSV directory.
+     * @param act     The actual CSV directory needs to compare.
+     * @param options The {@link CsvComparisonOptions} to adjust behaviors of {@link CsvComparator}.
+     * @return A {@link CsvBulkComparisonResult} after bulk comparison process ended.
+     */
     public static CsvBulkComparisonResult compare(Path exp, Path act, CsvComparisonOptions options) {
         log.debug("//-----Bulk CSV Comparison-----//");
         log.debug("Exp CSV directory: {}", Commons.getRelative(exp));
