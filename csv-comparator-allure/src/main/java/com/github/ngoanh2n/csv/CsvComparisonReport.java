@@ -1,6 +1,7 @@
 package com.github.ngoanh2n.csv;
 
 import com.github.ngoanh2n.Commons;
+import com.github.ngoanh2n.PropertiesFile;
 import com.github.ngoanh2n.Property;
 import com.github.ngoanh2n.RuntimeError;
 import io.qameta.allure.Allure;
@@ -46,6 +47,7 @@ import java.util.UUID;
  */
 public class CsvComparisonReport implements CsvComparisonVisitor {
     private static final Logger log = LoggerFactory.getLogger(CsvComparisonReport.class);
+    private static final PropertiesFile allureDesc = new PropertiesFile("csv-comparator-allure.properties");
     private static final Property<Boolean> includeSource = Property.ofBoolean("ngoanh2n.csv.includeSource", true);
     private static final Property<Boolean> includeSettings = Property.ofBoolean("ngoanh2n.csv.includeSettings", true);
 
@@ -69,10 +71,10 @@ public class CsvComparisonReport implements CsvComparisonVisitor {
         lifecycle = Allure.getLifecycle();
 
         List<Parameter> parameters = new ArrayList<>();
-        parameters.add(ResultsUtils.createParameter("exp", Commons.getRelative(exp)));
-        parameters.add(ResultsUtils.createParameter("act", Commons.getRelative(act)));
+        parameters.add(ResultsUtils.createParameter(allureDesc.getProperty("expFile"), Commons.getRelative(exp)));
+        parameters.add(ResultsUtils.createParameter(allureDesc.getProperty("actFile"), Commons.getRelative(act)));
 
-        StepResult result = new StepResult().setName("CSV Comparison").setParameters(parameters);
+        StepResult result = new StepResult().setName(allureDesc.getProperty("subject")).setParameters(parameters);
         lifecycle.startStep(uuid, result);
 
         attachSource(options, exp, act);
@@ -96,8 +98,8 @@ public class CsvComparisonReport implements CsvComparisonVisitor {
 
     private void attachSource(CsvComparisonOptions options, File exp, File act) {
         if (includeSource.getValue()) {
-            attachSource(options, exp, "Exp CSV");
-            attachSource(options, act, "Act CSV");
+            attachSource(options, exp, allureDesc.getProperty("expCsv"));
+            attachSource(options, act, allureDesc.getProperty("actCsv"));
         }
     }
 
@@ -139,7 +141,7 @@ public class CsvComparisonReport implements CsvComparisonVisitor {
         if (includeSettings.getValue()) {
             Charset charset = CsvSource.getCharset(options, exp);
             byte[] bytes = options.parserSettings().toString().getBytes(charset);
-            lifecycle.addAttachment("Parser Settings", "text/plain", "", bytes);
+            lifecycle.addAttachment(allureDesc.getProperty("settings"), "text/plain", "", bytes);
         }
     }
 }
