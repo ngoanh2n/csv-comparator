@@ -33,30 +33,47 @@ implementation("com.github.ngoanh2n:csv-comparator:1.6.0")
 Add dependency to `pom.xml`.
 ```xml
 <dependency>
-    <groupId>com.github.ngoanh2n</groupId>
-    <artifactId>csv-comparator</artifactId>
-    <version>1.6.0</version>
+  <groupId>com.github.ngoanh2n</groupId>
+  <artifactId>csv-comparator</artifactId>
+  <version>1.6.0</version>
 </dependency>
 ```
 
 # Usage
 ## Comparison
 Example: CSV is formatted columns `[id,email,firstname,lastname,age,note]`.
-```java
-File expFile = new File("data/expected/file.csv");
-File actFile = new File("data/actual/file.csv");
-CsvComparisonOptions options = CsvComparisonOptions
-        .builder()
-        .selectColumns("email", "firstname", "lastname")
-        .selectColumnId("email")
-        //.selectColumns(1, 2, 3)
-        //.selectColumnId(1)
-        .build();
-CsvComparisonResult result = CsvComparator.compare(expFile, actFile, options);
-```
+
+1. Compare 2 CSV file
+    ```java
+    File expectedCsvFile = new File("data/expected/file.csv");
+    File actualCsvFile = new File("data/actual/file.csv");
+    
+    CsvComparisonOptions options = CsvComparisonOptions
+            .builder()
+            .selectColumns("email", "firstname", "lastname")
+            .selectColumnId("email")
+            //.selectColumns(1, 2, 3)
+            //.selectColumnId(1)
+            .build();
+    CsvComparisonResult result = CsvComparator.compare(expectedCsvFile, actualCsvFile, options);
+    ```
+2. Compare 2 CSV directory
+    ```java
+    Path expectedCsvDir = Paths.get("data/expected");
+    Path actualCsvDir = Paths.get("data/actual");
+    
+    CsvComparisonOptions options = CsvComparisonOptions
+            .builder()
+            .selectColumns("email", "firstname", "lastname")
+            .selectColumnId("email")
+            //.selectColumns(1, 2, 3)
+            //.selectColumnId(1)
+            .build();
+    CsvBulkComparisonResult result = CsvComparator.compare(expectedCsvDir, actualCsvDir, options);
+    ```
 
 ## Result
-`CsvComparisonResult` is the result of `CsvComparator`.
+`CsvComparisonResult` is the result of `CsvComparator.compare(expectedCsvFile, actualCsvFile, options)`.
 ```java
 boolean hasDiff = CsvComparisonResult.hasDiff();
 boolean hasDeletion = CsvComparisonResult.hasDeletion();
@@ -66,6 +83,13 @@ List<String[]> keptRows = CsvComparisonResult.getKeptRows();
 List<String[]> deletedRows = CsvComparisonResult.getDeletedRows();
 List<String[]> insertedRows = CsvComparisonResult.getInsertedRows();
 List<String[]> modifiedRows = CsvComparisonResult.getModifiedRows();
+```
+
+`CsvBulkComparisonResult` is the result of `CsvComparator.compare(expectedCsvDir, actualCsvDir, options)`.
+```java
+boolean hasDiff = CsvBulkComparisonResult.hasDiff();
+int diffTotal = CsvBulkComparisonResult.getDiffTotal();
+List<CsvComparisonResult> diffResults = CsvBulkComparisonResult.getDiffResults();
 ```
 
 ## Visitor
