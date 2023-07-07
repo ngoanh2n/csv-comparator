@@ -1,9 +1,10 @@
 package com.github.ngoanh2n.csv;
 
+import java.io.File;
 import java.util.List;
 
 /**
- * The result of {@link CsvComparator}.<br><br>
+ * The result of {@link CsvComparator#compare(File, File, CsvComparisonOptions) CsvComparator.compare(expectedCsvFile, actualCsvFile, options)}.<br><br>
  *
  * <em>Repository:</em>
  * <ul>
