@@ -67,8 +67,11 @@ class CsvResult implements CsvComparisonResult {
 
     @Override
     public String toString() {
-        return String.format("diff=[deleted:%s, inserted:%s, modified:%s]",
-                getDeletedRows().size(), getInsertedRows().size(), getModifiedRows().size());
+        return new HashMap<String, Integer>() {{
+            put("deletion", getDeletedRows().size());
+            put("insertion", getInsertedRows().size());
+            put("modification", getModifiedRows().size());
+        }}.toString();
     }
 
     //===============================================================================//
