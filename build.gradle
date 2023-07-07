@@ -19,6 +19,10 @@ subprojects {
     apply plugin: "java-library"
     apply plugin: "maven-publish"
 
+    tasks.withType(Test).configureEach {
+        System.setProperty("user.dir", projectDir.toString())
+    }
+
     apply from: rootProject.file("gradle/test.gradle")
     apply from: rootProject.file("gradle/compilation.gradle")
     apply from: rootProject.file("gradle/publication.gradle")
@@ -33,9 +37,5 @@ subprojects {
         dependsOn.removeIf { task -> (task == "check") }
         assemble.dependsOn("clean")
         dependsOn("publishToMavenLocal")
-    }
-
-    tasks.withType(Test).configureEach {
-        System.setProperty("user.dir", projectDir.toString())
     }
 }
