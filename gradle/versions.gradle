@@ -4,7 +4,7 @@
 ext {
     versionCommons                  =   "1.2.3"
     versionUnivocityParsers         =   "2.9.1"
-    versionAllure                   =   "2.22.2"
+    versionAllure                   =   "2.23.0"
     versionSlf4j                    =   "2.0.7"
     versionJunitJupiter             =   "5.9.3"
 }
