@@ -13,10 +13,12 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.File;
-import java.util.List;
-import java.util.Map;
-import java.util.ServiceLoader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Compare 2 CSV files.<br><br>
@@ -132,9 +134,29 @@ public class CsvComparator {
         return new CsvComparator(exp, act, options).compare();
     }
 
+    public static CsvBulkComparisonResult compare(Path exp, Path act) {
+        return compare(exp, act, CsvComparisonOptions.defaults());
+    }
+
+    public static CsvBulkComparisonResult compare(Path exp, Path act, CsvComparisonOptions options) {
+        log.debug("//-----Bulk CSV Comparison-----//");
+        log.debug("Exp CSV directory: {}", Commons.getRelative(exp));
+        log.debug("Act CSV directory: {}", Commons.getRelative(act));
+
+        CsvBulkResult result = new CsvBulkResult();
+        List<Map.Entry<Path, Path>> sources = getSources(exp, act);
+
+        for (Map.Entry<Path, Path> source : sources) {
+            File actCSV = source.getKey().toFile();
+            File expCSV = source.getValue().toFile();
+            result.put(compare(expCSV, actCSV, options));
+        }
+        return result;
+    }
+
     //-------------------------------------------------------------------------------//
 
-    private static CsvResult.Collector doComparison(CsvComparisonOptions options, File exp, File act, List<CsvComparisonVisitor> visitors) {
+    private static CsvResult.Collector doComparison(File exp, File act, CsvComparisonOptions options, List<CsvComparisonVisitor> visitors) {
         CsvParserSettings settings = getSettings(options);
         CsvSource source = CsvSource.parse(options, exp);
         CsvResult.Collector collector = new CsvResult.Collector();
@@ -156,7 +178,42 @@ public class CsvComparator {
 
     private static CsvParserSettings getSettings(CsvComparisonOptions options) {
         Commons.createDir(options.resultOptions().location());
-        return options.parserSettings();
+        return options.parserSettings().clone();
+    }
+
+    private static List<Map.Entry<Path, Path>> getSources(Path exp, Path act) {
+        try {
+            List<Path> expFiles = getCSVFiles(exp);
+            List<Path> actFiles = getCSVFiles(act);
+
+            log.debug("Exp CSV files: {}", expFiles.size());
+            log.debug("Act CSV files: {}", actFiles.size());
+            List<Map.Entry<Path, Path>> sources = new ArrayList<>(actFiles.size());
+
+            for (Path actFile : actFiles) {
+                String actTarget = String.valueOf(act.relativize(actFile));
+
+                for (Path expFile : expFiles) {
+                    String expTarget = String.valueOf(exp.relativize(expFile));
+
+                    if (actTarget.equals(expTarget)) {
+                        sources.add(new AbstractMap.SimpleEntry<>(actFile, expFile));
+                        break;
+                    }
+                }
+            }
+            return sources;
+        } catch (IOException ex) {
+            String msg = "Error occurred while reading CSV files in directory";
+            log.error(msg);
+            throw new RuntimeError(msg, ex);
+        }
+    }
+
+    private static List<Path> getCSVFiles(Path path) throws IOException {
+        try (Stream<Path> stream = Files.walk(path)) {
+            return stream.filter(Files::isRegularFile).collect(Collectors.toList());
+        }
     }
 
     //-------------------------------------------------------------------------------//
@@ -168,7 +225,7 @@ public class CsvComparator {
 
         try {
             visitors.forEach(visitor -> visitor.comparisonStarted(options, exp, act));
-            CsvResult.Collector collector = doComparison(options, exp, act, visitors);
+            CsvResult.Collector collector = doComparison(exp, act, options, visitors);
             result = new CsvResult(collector);
             visitors.forEach(visitor -> visitor.comparisonFinished(options, exp, act, result));
             log.debug("CSV comparison result: {}", result);
@@ -179,7 +236,7 @@ public class CsvComparator {
         } finally {
             long ending = System.currentTimeMillis();
             String format = "[HH 'hours', mm 'minutes', ss 'seconds', SS 'milliseconds']";
-            log.info("CSV comparison finished in {}", DurationFormatUtils.formatDuration(ending - starting, format, true));
+            log.info("CSV comparison finished in {}\n", DurationFormatUtils.formatDuration(ending - starting, format, true));
         }
         return result;
     }
