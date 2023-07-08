@@ -9,6 +9,7 @@
 * [Declaration](#declaration)
   * [Gradle](#gradle)
   * [Maven](#maven)
+* [Description](#description)
 * [System Property](#system-property)
 <!-- TOC -->
 When using Allure as a report framework, `csv-comparator-allure` should be used.
@@ -30,6 +31,18 @@ Add to `pom.xml`.
     <artifactId>csv-comparator-allure</artifactId>
     <version>1.6.0</version>
 </dependency>
+```
+
+# Description
+You can change comparison description on Allure by creating file `csv-comparator-allure.properties` in folder `resources`.<br>
+Default description as below.
+```properties
+subject=CSV Comparison
+expFile=exp
+actFile=act
+expCsv=Expected CSV
+actCsv=Actual CSV
+settings=Parser Settings
 ```
 
 # System Property
