@@ -276,7 +276,7 @@ public class CsvComparator {
             visitors.forEach(visitor -> visitor.comparisonFinished(options, exp, act, result));
             log.debug("CSV comparison result: {}", result);
         } catch (Exception ex) {
-            String msg = "Error occurred while comparing";
+            String msg = "Error occurred while comparing: " + ex.getMessage();
             log.error(msg);
             throw new RuntimeError(msg, ex);
         } finally {
