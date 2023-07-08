@@ -43,7 +43,7 @@ Add dependency to `pom.xml`.
 ## Comparison
 Example: CSV is formatted columns `[id,email,firstname,lastname,age,note]`.
 
-1. Compare 2 CSV file
+1. Compare 2 CSV files
     ```java
     File expectedCsvFile = new File("data/expected/file.csv");
     File actualCsvFile = new File("data/actual/file.csv");
@@ -57,7 +57,7 @@ Example: CSV is formatted columns `[id,email,firstname,lastname,age,note]`.
             .build();
     CsvComparisonResult result = CsvComparator.compare(expectedCsvFile, actualCsvFile, options);
     ```
-2. Compare 2 CSV directory
+2. Compare 2 CSV directories
     ```java
     Path expectedCsvDir = Paths.get("data/expected");
     Path actualCsvDir = Paths.get("data/actual");
