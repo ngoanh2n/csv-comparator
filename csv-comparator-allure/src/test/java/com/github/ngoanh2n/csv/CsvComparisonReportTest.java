@@ -10,11 +10,11 @@ import java.io.File;
 /**
  * @author ngoanh2n
  */
-@Epic("CSV Comparator: Has Differences")
-@Feature("CSV Comparator: Demo Test")
+@Epic("CSV Comparison: Has Diff")
 public class CsvComparisonReportTest {
     @Test
-    void test() {
+    @Feature("CSV Comparison: Has Diff")
+    void hasDiff() {
         File exp = Resources.getFile("com/github/ngoanh2n/csv/exp/combination2.csv");
         File act = Resources.getFile("com/github/ngoanh2n/csv/act/combination2.csv");
 
