@@ -27,7 +27,7 @@ import java.util.stream.Stream;
  * Example: CSV is formatted columns {@code [id,email,firstname,lastname,age,note]}.
  *
  * <ol>
- *     <li>Compare 2 CSV file
+ *     <li>Compare 2 CSV files
  *          <pre>{@code
  *              File expectedCsvFile = new File("data/expected/file.csv");
  *              File actualCsvFile = new File("data/actual/file.csv");
@@ -42,7 +42,7 @@ import java.util.stream.Stream;
  *              CsvComparisonResult result = CsvComparator.compare(expectedCsvFile, actualCsvFile, options);
  *          }</pre>
  *     </li>
- *     <li>Compare 2 CSV directory
+ *     <li>Compare 2 CSV directories
  *          <pre>{@code
  *              Path expectedCsvDir = Paths.get("data/expected");
  *              Path actualCsvDir = Paths.get("data/actual");
