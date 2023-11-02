@@ -6,4 +6,10 @@ ext {
             dir   : { -> return rootDir.toPath() },
             gradle: { -> return csvc.dir().resolve("gradle") },
     ]
+    gradle = [
+            config: { -> return csvc.gradle().resolve("config") },
+    ]
+    config = [
+            test: { -> return gradle.config().resolve("test.gradle") },
+    ]
 }
