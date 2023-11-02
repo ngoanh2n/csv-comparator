@@ -26,9 +26,9 @@ subprojects {
         plugin("maven-publish")
 
         from(config.test)
+        from(config.compilation)
     }
 
-    apply from: rootProject.file("gradle/compilation.gradle")
     apply from: rootProject.file("gradle/publication.gradle")
     apply from: rootProject.file("gradle/dependencies.gradle")
 
