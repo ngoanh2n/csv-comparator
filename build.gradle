@@ -9,7 +9,7 @@ allprojects {
         mavenCentral()
         maven { url("https://plugins.gradle.org/m2/") }
     }
-    apply from: rootProject.file("gradle/versions.gradle")
+    apply from: rootProject.file("gradle/global.gradle")
 }
 
 subprojects {

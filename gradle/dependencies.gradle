@@ -2,9 +2,9 @@
  * Author: ngoanh2n
  */
 dependencies {
-    implementation("com.github.ngoanh2n:commons:$versionCommons")
-    implementation("com.univocity:univocity-parsers:$versionUnivocityParsers")
-    testImplementation("org.slf4j:slf4j-log4j12:$versionSlf4j")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$versionJunitJupiter")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$versionJunitJupiter")
+    implementation("com.github.ngoanh2n:commons:$versions.commons")
+    implementation("com.univocity:univocity-parsers:$versions.univocityParsers")
+    testImplementation("org.slf4j:slf4j-log4j12:$versions.slf4j")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$versions.jupiter")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$versions.jupiter")
 }

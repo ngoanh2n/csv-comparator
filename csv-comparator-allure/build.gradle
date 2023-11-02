@@ -2,20 +2,20 @@
  * Author: ngoanh2n
  */
 plugins {
-    id("io.qameta.allure") version "2.11.2"
+    id("io.qameta.allure") version("2.11.2")
 }
 
 dependencies {
     api(project(":csv-comparator"))
-    implementation("io.qameta.allure:allure-java-commons:$versionAllure")
-    testImplementation("io.qameta.allure:allure-junit5:$versionAllure")
+    implementation("io.qameta.allure:allure-java-commons:$versions.allure")
+    testImplementation("io.qameta.allure:allure-junit5:$versions.allure")
 }
 
 allure {
-    version = "$versionAllure"
+    version = "${versions.allure}"
     adapter {
         aspectjWeaver = true
-        aspectjVersion = "1.9.5"
+        aspectjVersion = "${versions.aspectj}"
         autoconfigureListeners = true
 
         frameworks {
