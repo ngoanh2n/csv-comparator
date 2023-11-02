@@ -4,20 +4,9 @@
  * @see <a href="https://docs.gradle.org/current/userguide/java_testing.html">Testing in Java & JVM projects</a>
  */
 reporting {
-    /*
-    * build/reports/
-    * */
-    baseDir = "$buildDir/reports"
+    baseDir = getLayout().getBuildDirectory().getLocationOnly().get().file("reports")
 }
-/*
-* build/reports/
-* */
 testResultsDirName = reporting.baseDir
-
-/*
-* layout.buildDirectory   <=> project.layout.buildDirectory     => build/
-* reporting.baseDirectory <=> project.reporting.baseDirectory   => build/reports/
-* */
 
 test {
     ignoreFailures = true
