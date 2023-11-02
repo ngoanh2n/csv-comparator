@@ -1,0 +1,9 @@
+/**
+ * Author: ngoanh2n
+ */
+ext {
+    csvc = [
+            dir   : { -> return rootDir.toPath() },
+            gradle: { -> return csvc.dir().resolve("gradle") },
+    ]
+}

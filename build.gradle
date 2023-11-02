@@ -2,6 +2,11 @@
  * Author: ngoanh2n
  */
 allprojects {
+    apply {
+        from(rootProject.file("gradle/global.gradle"))
+        from(rootProject.file("gradle/helpers.gradle"))
+    }
+
     group("com.github.ngoanh2n")
     version("1.7.0")
 
@@ -9,7 +14,6 @@ allprojects {
         mavenCentral()
         maven { url("https://plugins.gradle.org/m2/") }
     }
-    apply from: rootProject.file("gradle/global.gradle")
 }
 
 subprojects {
@@ -18,10 +22,6 @@ subprojects {
     apply plugin: "signing"
     apply plugin: "java-library"
     apply plugin: "maven-publish"
-
-    tasks.withType(Test).configureEach {
-        System.setProperty("user.dir", projectDir.toString())
-    }
 
     apply from: rootProject.file("gradle/test.gradle")
     apply from: rootProject.file("gradle/compilation.gradle")
