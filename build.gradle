@@ -28,7 +28,7 @@ subprojects {
     apply from: rootProject.file("gradle/publication.gradle")
     apply from: rootProject.file("gradle/dependencies.gradle")
 
-    clean.doFirst {
+    tasks.clean.doFirst {
         delete project.file("out")
         delete rootProject.files("build")
     }
