@@ -9,26 +9,25 @@ reporting {
 testResultsDirName = reporting.baseDir
 
 test {
-    ignoreFailures = true
-    outputs.upToDateWhen { false }
+    useJUnitPlatform()
+    setIgnoreFailures(true)
+    getOutputs().upToDateWhen { false }
 
     reports {
-        junitXml {
-            mergeReruns = true
-            outputPerTestCase = true
+        getJunitXml().configure {
+            mergeReruns = false
+            outputPerTestCase = false
         }
     }
-    useJUnitPlatform {
-        includeEngines("junit-jupiter")
-    }
+
     testLogging {
-        showStandardStreams = true
+        setShowStandardStreams(true)
         events("passed", "skipped", "failed")
     }
 
     systemProperty("file.encoding", "UTF-8")
     systemProperty("junit.jupiter.extensions.autodetection.enabled", "true")
 
-    systemProperties.putAll(System.getProperties() as Map<?, ?>)
-    systemProperties.put("user.dir", projectDir.getAbsolutePath())
+    getSystemProperties().putAll(System.getProperties() as Map<?, ?>)
+    getSystemProperties().put("user.dir", projectDir.getAbsolutePath())
 }
