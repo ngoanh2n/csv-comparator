@@ -28,9 +28,8 @@ subprojects {
         from(config.test)
         from(config.compilation)
         from(config.publication)
+        from(config.dependencies)
     }
-
-    apply from: rootProject.file("gradle/dependencies.gradle")
 
     tasks.clean.doFirst {
         delete project.file("out")
