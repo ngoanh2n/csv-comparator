@@ -17,13 +17,14 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: "idea"
-    apply plugin: "java"
-    apply plugin: "signing"
-    apply plugin: "java-library"
-    apply plugin: "maven-publish"
-
     apply {
+        plugin("java")
+        plugin("base")
+        plugin("idea")
+        plugin("signing")
+        plugin("java-library")
+        plugin("maven-publish")
+
         from(config.test)
     }
 
