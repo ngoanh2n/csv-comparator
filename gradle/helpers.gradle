@@ -12,5 +12,6 @@ ext {
     config = [
             test       : { -> return gradle.config().resolve("test.gradle") },
             compilation: { -> return gradle.config().resolve("compilation.gradle") },
+            publication: { -> return gradle.config().resolve("publication.gradle") },
     ]
 }
