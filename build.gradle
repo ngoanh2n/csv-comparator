@@ -24,6 +24,7 @@ subprojects {
         plugin("signing")
         plugin("java-library")
         plugin("maven-publish")
+        plugin("test-report-aggregation")
 
         from(config.test)
         from(config.compilation)
