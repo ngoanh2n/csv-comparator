@@ -1,45 +1,37 @@
 //file:noinspection GroovyAssignabilityCheck
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 /**
  * Author: ngoanh2n
  * @see <a href="https://docs.gradle.org/current/userguide/java_testing.html">Testing in Java & JVM projects</a>
+ * @see <a href="https://docs.gradle.org/current/dsl/org.gradle.api.reporting.ReportingExtension.html">ReportingExtension</a>
  */
 reporting {
-    /*
-    * build/reports/
-    * */
-    baseDir = "$buildDir/reports"
+    DirectoryProperty buildProperty = getLayout().getBuildDirectory()
+    baseDir = buildProperty.getLocationOnly().get().file("reports").getAsFile()
+    testResultsDirName = reporting.baseDir
 }
-/*
-* build/reports/
-* */
-testResultsDirName = reporting.baseDir
-
-/*
-* layout.buildDirectory   <=> project.layout.buildDirectory     => build/
-* reporting.baseDirectory <=> project.reporting.baseDirectory   => build/reports/
-* */
 
 test {
-    ignoreFailures = true
-    outputs.upToDateWhen { false }
+    useJUnitPlatform()
+    setIgnoreFailures(true)
+    getOutputs().upToDateWhen { false }
 
     reports {
-        junitXml {
-            mergeReruns = true
-            outputPerTestCase = true
+        getJunitXml().configure {
+            mergeReruns = false
+            outputPerTestCase = false
         }
     }
-    useJUnitPlatform {
-        includeEngines("junit-jupiter")
-    }
+
     testLogging {
-        showStandardStreams = true
-        events("passed", "skipped", "failed")
+        setShowStandardStreams(false)
+        events(TestLogEvent.PASSED, TestLogEvent.FAILED)
     }
 
     systemProperty("file.encoding", "UTF-8")
     systemProperty("junit.jupiter.extensions.autodetection.enabled", "true")
 
-    systemProperties.putAll(System.getProperties() as Map<?, ?>)
-    systemProperties.put("user.dir", projectDir.getAbsolutePath())
+    getSystemProperties().putAll(System.getProperties() as Map<?, ?>)
+    getSystemProperties().put("user.dir", projectDir.getAbsolutePath())
 }

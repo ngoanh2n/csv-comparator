@@ -1,4 +1,4 @@
-rootProject.setName("csvc")
+getRootProject().setName("csvc")
 
 include("csv-comparator")
 include("csv-comparator-allure")

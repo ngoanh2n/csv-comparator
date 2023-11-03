@@ -1,18 +1,20 @@
 /**
  * Author: ngoanh2n
  */
-allprojects {
+buildscript {
     apply {
-        from(rootProject.file("gradle/global.gradle"))
-        from(rootProject.file("gradle/helpers.gradle"))
+        from(file("gradle/global.gradle"))
+        from(file("gradle/helpers.gradle"))
     }
+}
 
-    group("com.github.ngoanh2n")
-    version("1.8.0")
+allprojects {
+    setGroup("com.github.ngoanh2n")
+    setVersion("1.8.0")
 
     repositories {
         mavenCentral()
-        maven { url("https://plugins.gradle.org/m2/") }
+        maven { setUrl("https://plugins.gradle.org/m2/") }
     }
 }
 
@@ -31,13 +33,13 @@ subprojects {
         from(config.dependencies)
     }
 
-    tasks.clean.doFirst {
-        delete project.file("out")
-        delete rootProject.files("build")
+    getTasks().clean.doFirst {
+        delete(getProject().file("out"))
+        delete(getRootProject().files("build"))
     }
 
-    tasks.build.configure {
-        dependsOn.removeIf { task -> (task == "check") }
+    getTasks().build.configure {
+        getDependsOn().removeIf { task -> (task == "check") }
         assemble.dependsOn("clean")
         dependsOn("publishToMavenLocal")
     }
