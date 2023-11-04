@@ -6,8 +6,8 @@ ext {
             commons  : { -> return "1.3.0" },
             csvParser: { -> return "2.9.1" },
             allure   : { -> return "2.24.0" },
-            aspectj  : { -> return "1.9.5" },
             slf4j    : { -> return "2.0.7" },
             jupiter  : { -> return "5.9.3" },
+            aspectj  : { -> return "1.9.20.1" },
     ]
 }
