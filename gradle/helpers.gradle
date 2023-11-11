@@ -1,9 +1,10 @@
+//file:noinspection GroovyAssignabilityCheck
 /**
  * Author: ngoanh2n
  */
 ext {
     csvc = [
-            dir   : { -> return rootDir.toPath() },
+            dir   : { -> return getRootDir().toPath() },
             gradle: { -> return csvc.dir().resolve("gradle") },
     ]
     gradle = [

@@ -1,4 +1,4 @@
-getSettings().getRootProject().setName("csvc")
+getRootProject().setName("csvc")
 
-getSettings().include("csv-comparator")
-getSettings().include("csv-comparator-allure")
+include("csv-comparator")
+include("csv-comparator-allure")

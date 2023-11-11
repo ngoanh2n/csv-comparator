@@ -7,12 +7,12 @@ java {
 }
 
 compileJava {
-    options.debug = true
-    options.encoding = "UTF-8"
-    options.incremental = true
+    getOptions().setDebug(true)
+    getOptions().setIncremental(true)
+    getOptions().setEncoding("UTF-8")
 }
 
 compileTestJava {
-    options.debug = true
-    options.encoding = "UTF-8"
+    getOptions().setDebug(true)
+    getOptions().setEncoding("UTF-8")
 }
