@@ -1,24 +1,30 @@
 ###
-### author: ngoanh2n
+### Author: ngoanh2n
+### https://circleci.com/docs
 ###
 version: 2.1
 
 executors:
   executor_macos:
+    # https://circleci.com/docs/using-macos
     macos:
-      xcode: 13.4.1
+      xcode: 15.0.0
+      resource_class: macos.x86.medium.gen2
     shell: /bin/bash
-    resource_class: medium
   executor_linux:
+    # https://circleci.com/docs/using-linuxvm
+    # https://circleci.com/developer/machine/image/ubuntu-2004
     machine:
-      image: ubuntu-2004:2022.07.1
+      image: ubuntu-2004:current
+      resource_class: medium
     shell: /bin/bash
-    resource_class: medium
   executor_windows:
+    # https://circleci.com/docs/using-windows
+    # https://circleci.com/developer/machine/image/windows-server-2022-gui
     machine:
       image: windows-server-2022-gui:current
+      resource_class: windows.medium
     shell: bash.exe
-    resource_class: windows.medium
 
 commands:
   env_prepare:
@@ -27,6 +33,7 @@ commands:
       - run:
           name: Prepare environment
           command: |
+            java --version
             chmod +x gradlew
   test_execute:
     steps:
