@@ -8,6 +8,6 @@ ext {
             allure   : { -> return "2.25.0" },
             slf4j    : { -> return "2.0.10" },
             jupiter  : { -> return "5.10.1" },
-            aspectj  : { -> return "1.9.20.1" },
+            aspectj  : { -> return "1.9.21" },
     ]
 }
