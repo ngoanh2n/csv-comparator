@@ -2,8 +2,8 @@
  * Author: ngoanh2n
  */
 dependencies {
-    implementation("com.github.ngoanh2n:commons:$versions.commons")
     implementation("com.univocity:univocity-parsers:$versions.csvParser")
+    implementation("com.github.ngoanh2n:commons:$versions.commons")
 
     testImplementation("org.slf4j:slf4j-log4j12:$versions.slf4j")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$versions.jupiter")
