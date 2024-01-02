@@ -100,7 +100,7 @@ public interface CsvComparisonOptions {
          * @return The current {@link Builder}.
          * @see java.nio.charset.StandardCharsets
          */
-        public Builder setCharset(@Nullable Charset charset) {
+        public Builder charset(@Nullable Charset charset) {
             this.charset = charset;
             return this;
         }
@@ -111,7 +111,7 @@ public interface CsvComparisonOptions {
          * @param lineSeparator The sequence of 1 to 2 characters that identifies the end of a line.
          * @return The current {@link Builder}.
          */
-        public Builder setLineSeparator(@Nonnull String lineSeparator) {
+        public Builder lineSeparator(@Nonnull String lineSeparator) {
             checkNotNull(lineSeparator, "`lineSeparator` cannot not be null");
             this.parserSettings.getFormat().setLineSeparator(lineSeparator);
             return this;
@@ -186,7 +186,7 @@ public interface CsvComparisonOptions {
          * @param options to adjust output.
          * @return The current {@link Builder}.
          */
-        public Builder setResultOptions(@Nonnull CsvComparisonResultOptions options) {
+        public Builder resultOptions(@Nonnull CsvComparisonResultOptions options) {
             this.resultOptions = options;
             return this;
         }

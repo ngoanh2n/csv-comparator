@@ -83,7 +83,7 @@ public interface CsvComparisonResultOptions {
          * @param path The path to location.
          * @return The current {@link CsvComparisonResultOptions.Builder}.
          */
-        public Builder setLocation(@Nonnull Path path) {
+        public Builder location(@Nonnull Path path) {
             this.location = checkNotNull(path, "path cannot not be null");
             return this;
         }
