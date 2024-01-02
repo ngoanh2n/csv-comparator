@@ -212,7 +212,7 @@ public class CsvComparator {
         settings.setProcessor(new CsvProcessor(options, visitors, collector, expMap, source));
         new CsvParser(settings).parse(act, CsvSource.getCharset(options, act));
 
-        if (expMap.size() > 0) {
+        if (!expMap.isEmpty()) {
             for (Map.Entry<String, String[]> left : expMap.entrySet()) {
                 String[] row = left.getValue();
                 collector.rowDeleted(options, source.getHeaders(), row);

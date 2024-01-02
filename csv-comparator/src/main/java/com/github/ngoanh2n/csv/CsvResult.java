@@ -17,8 +17,6 @@ import java.util.List;
 class CsvResult implements CsvComparisonResult {
     private final Collector collector;
 
-    //-------------------------------------------------------------------------------//
-
     CsvResult(Collector collector) {
         this.collector = collector;
     }

@@ -72,7 +72,7 @@ class CsvProcessor implements RowProcessor {
             String actCell = actRow[index] == null ? "NULL" : actRow[index];
 
             if (!expCell.equals(actCell)) {
-                diffs.add(new HashMap<String, String>() {{
+                diffs.add(new HashMap<>() {{
                     put("column", header);
                     put("expCell", expCell);
                     put("actCell", actCell);

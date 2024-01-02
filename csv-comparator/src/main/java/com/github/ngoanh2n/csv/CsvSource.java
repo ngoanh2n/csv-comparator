@@ -36,8 +36,6 @@ class CsvSource {
     private final String[] headers;
     private final List<String[]> rows;
 
-    //-------------------------------------------------------------------------------//
-
     private CsvSource(CsvComparisonOptions options, File file, boolean includeHeaders) {
         String[] tmpHeaders = new String[]{};
         CsvParserSettings settings = options.parserSettings();
@@ -50,7 +48,7 @@ class CsvSource {
         } else {
             settings.setHeaderExtractionEnabled(false);
             rows = parser.parseAll(file, getCharset(options, file));
-            if (rows.size() > 0) {
+            if (!rows.isEmpty()) {
                 tmpHeaders = rows.remove(0);
             }
             settings.setHeaderExtractionEnabled(true);
@@ -115,7 +113,7 @@ class CsvSource {
             } else {
                 List<Integer> indexes = new ArrayList<>();
 
-                if (rows.size() > 0) {
+                if (!rows.isEmpty()) {
                     int columns = rows.get(0).length;
                     indexes = IntStream.range(0, columns).boxed().collect(toList());
                 }
