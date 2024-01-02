@@ -10,7 +10,7 @@ buildscript {
 
 allprojects {
     setGroup("com.github.ngoanh2n")
-    setVersion("1.8.0")
+    setVersion("1.9.0")
 
     repositories {
         mavenCentral()
