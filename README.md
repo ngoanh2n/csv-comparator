@@ -110,11 +110,11 @@ An implementation of `CsvComparisonVisitor`.
   CsvComparisonResultOptions resultOptions = CsvComparisonResultOptions
          .builder()
          .writeOutputs(false)                       // Default to true
-         //.setLocation(Paths.get("build/custom"))  // Default to build/ngoanh2n/csv
+         //.location(Paths.get("build/custom"))     // Default to build/ngoanh2n/csv
          .build();
   CsvComparisonOptions options = CsvComparisonOptions
           .builder()
-          .setResultOptions(resultOptions)          // Default to CsvComparisonResultOptions.defaults()
+          .resultOptions(resultOptions)             // Default to CsvComparisonResultOptions.defaults()
           .build();
   ```
 
