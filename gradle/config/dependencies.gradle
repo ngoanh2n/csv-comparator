@@ -2,11 +2,11 @@
  * Author: ngoanh2n
  */
 dependencies {
-    implementation("com.univocity:univocity-parsers:$versions.csvParser")
-    implementation("com.github.ngoanh2n:commons:$versions.commons")
+    implementation(libs.univocity.parsers)
+    implementation(libs.commons)
 
-    testImplementation("org.slf4j:slf4j-log4j12:$versions.slf4j")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$versions.jupiter")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$versions.jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation(libs.slf4j.log4j12)
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.platform.launcher)
 }

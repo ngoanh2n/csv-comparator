@@ -3,21 +3,21 @@
  * @see <a href="https://github.com/allure-framework/allure-gradle">Allure plugin for Gradle</a>
  */
 plugins {
-    id("io.qameta.allure") version("2.11.2")
+    alias(libs.plugins.allure)
 }
 
 dependencies {
     api(project(":csv-comparator"))
-    implementation("io.qameta.allure:allure-java-commons:$versions.allure")
+    implementation(libs.allure.java.commons)
 
-    testImplementation("io.qameta.allure:allure-junit5:$versions.allure")
+    testImplementation(libs.allure.junit5)
 }
 
 allure {
-    version = "${versions.allure}"
+    version = libs.versions.allure.java
     adapter {
-        aspectjVersion = "${versions.aspectj}"
-        allureJavaVersion = "${versions.allure}"
+        aspectjVersion = libs.versions.aspectj
+        allureJavaVersion = libs.versions.allure.java
 
         aspectjWeaver = true
         autoconfigureListeners = true
