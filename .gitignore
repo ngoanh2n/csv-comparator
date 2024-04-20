@@ -6,3 +6,5 @@
 bin/
 out/
 build/
+
+.DS_Store
