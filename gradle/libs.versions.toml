@@ -4,7 +4,7 @@
 [versions]
 univocity-parsers = "2.9.1"
 allure-java       = "2.25.0"
-commons           = "1.4.0"
+commons           = "1.5.1"
 slf4j             = "2.0.10"
 junit-jupiter     = "5.10.1"
 junit-platform    = "1.10.2"
