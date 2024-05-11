@@ -1,3 +1,7 @@
+###
+### Author: ngoanh2n
+### https://docs.github.com/en/code-security/getting-started/dependabot-quickstart-guide
+###
 version: 2
 updates:
   - package-ecosystem: gradle
