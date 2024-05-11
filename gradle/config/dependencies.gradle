@@ -2,8 +2,8 @@
  * Author: ngoanh2n
  */
 dependencies {
-    implementation(libs.univocity.parsers)
     implementation(libs.commons)
+    implementation(libs.univocity.parsers)
 
     testImplementation(libs.slf4j.log4j12)
     testImplementation(libs.junit.jupiter.api)
