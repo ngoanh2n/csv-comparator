@@ -8,5 +8,5 @@ updates:
       timezone: Asia/Ho_Chi_Minh
     assignees:
       - ngoanh2n
-    target-branch: master
+    target-branch: develop
     rebase-strategy: disabled
