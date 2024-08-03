@@ -9,7 +9,7 @@ aspectj           = "1.9.21"
 slf4j             = "2.0.13"
 junit-jupiter     = "5.10.3"
 junit-platform    = "1.10.3"
-allure-plugin     = "2.11.2"
+allure-plugin     = "2.12.0"
 
 [libraries]
 commons                 = { group = "com.github.ngoanh2n", name = "commons",                 version.ref = "commons"           }
