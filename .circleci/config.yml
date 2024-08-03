@@ -8,8 +8,8 @@ executors:
   executor_macos:
     # https://circleci.com/docs/using-macos
     macos:
-      xcode: 15.0.0
-      resource_class: macos.x86.medium.gen2
+      xcode: 15.4.0
+      resource_class: macos.m1.medium.gen1
     shell: /bin/bash
   executor_linux:
     # https://circleci.com/docs/using-linuxvm
