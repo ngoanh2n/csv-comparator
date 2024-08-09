@@ -18,17 +18,14 @@ jobs:
         shell: bash
     name: Build
     runs-on: ubuntu-latest
-
     steps:
       - name: "[Prepare] Checkout"
         uses: actions/checkout@v4
-
       - name: "[Prepare] Setup JDK"
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
-
       - name: "[Build] Execute"
         run: ./gradlew clean build
 
@@ -44,20 +41,16 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       MATRIX_JOB_NAME: ${{ matrix.os }}_java${{ matrix.java_version }}
-
     steps:
       - name: "[Prepare] Checkout"
         uses: actions/checkout@v4
-
       - name: "[Prepare] Setup JDK"
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: ${{ matrix.java_version }}
-
       - name: "[Test] Execute"
         run: ./gradlew clean test
-
       - if: success() || failure()
         name: "[Report] JUnit report"
         uses: mikepenz/action-junit-report@v4
@@ -74,7 +67,6 @@ jobs:
     permissions:
       pull-requests: write
       contents: write
-
     steps:
       - name: Merge PR from Dependabot
         uses: fastify/github-action-merge-dependabot@v3.10.1
