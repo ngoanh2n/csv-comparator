@@ -1,0 +1,27 @@
+###
+### Author: ngoanh2n
+### https://docs.github.com/en/actions
+### https://github.com/marketplace?type=actions
+###
+name: Dependabot PRs Merge
+on:
+  workflow_run:
+    workflows: ["Build"]
+    branches: [develop]
+    types:
+      - completed
+jobs:
+  automerge-dependabot:
+    name: Merge dependabot PR
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - uses: fastify/github-action-merge-dependabot@v3.10.1
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          target: minor
+          merge-method: rebase

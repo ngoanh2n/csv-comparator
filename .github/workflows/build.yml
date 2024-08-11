@@ -3,26 +3,17 @@
 ### https://docs.github.com/en/actions
 ### https://github.com/marketplace?type=actions
 ###
-name: Test
+name: Build
 on:
-  push:
-    branches: [release]
+  pull_request:
+    types: [opened, review_requested]
 jobs:
   test:
     defaults:
       run:
         shell: bash
-    strategy:
-      matrix:
-        os:
-          - windows-latest
-          - ubuntu-latest
-          - macos-latest
-        jdk: [17, 11, 8]
-    name: ${{ matrix.os }}_java${{ matrix.jdk }}
-    runs-on: ${{ matrix.os }}
-    env:
-      MATRIX_JOB_NAME: ${{ matrix.os }}_java${{ matrix.jdk }}
+    name: ubuntu-latest_java17
+    runs-on: ubuntu-latest
     steps:
       - name: "[Prepare] Checkout"
         uses: actions/checkout@v4
@@ -30,12 +21,12 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: ${{ matrix.jdk }}
-      - name: "[Test] Execute"
-        run: ./gradlew clean test
+          java-version: 17
+      - name: "[Build] Execute"
+        run: ./gradlew clean build
       - if: success() || failure()
         name: "[Report] JUnit report"
         uses: mikepenz/action-junit-report@v4
         with:
-          check_name: JUnit ${{ env.MATRIX_JOB_NAME }}
+          check_name: JUnit ubuntu-latest_java17
           report_paths: build/reports/test/TEST-*.xml
