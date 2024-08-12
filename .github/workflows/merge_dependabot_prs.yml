@@ -7,11 +7,10 @@ name: Dependabot PRs Merge
 on:
   workflow_run:
     workflows: [ Build ]
-    branches: [ develop ]
     types: [ completed ]
 jobs:
   merge_pr:
-    if: ${{ github.actor == 'dependabot[bot]' }}
+    if: ${{ github.actor == 'dependabot[bot]' }} && ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Merge dependabot PR
     runs-on: ubuntu-latest
     timeout-minutes: 10
