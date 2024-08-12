@@ -6,36 +6,34 @@
 name: Test
 on:
   push:
-    branches: [release]
+    branches: [ release ]
 jobs:
   test:
+    name: ${{ matrix.os }}-jdk${{ matrix.jdk }}
+    runs-on: ${{ matrix.os }}-latest
     defaults:
       run:
         shell: bash
     strategy:
+      fail-fast: false
       matrix:
-        os:
-          - windows-latest
-          - ubuntu-latest
-          - macos-latest
-        jdk: [17, 11, 8]
-    name: ${{ matrix.os }}_java${{ matrix.jdk }}
-    runs-on: ${{ matrix.os }}
+        os: [ ubuntu, macos, windows ]
+        jdk: [ 17 ]
     env:
-      MATRIX_JOB_NAME: ${{ matrix.os }}_java${{ matrix.jdk }}
+      JUNIT_REPORT_NAME: report-${{ matrix.os }}-jdk${{ matrix.jdk }}
     steps:
-      - name: "[Prepare] Checkout"
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: "[Prepare] Setup JDK"
+      - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: ${{ matrix.jdk }}
-      - name: "[Test] Execute"
+      - name: Execute the test
         run: ./gradlew clean test
       - if: success() || failure()
-        name: "[Report] JUnit report"
+        name: Summarize JUnit report
         uses: mikepenz/action-junit-report@v4
         with:
-          check_name: JUnit ${{ env.MATRIX_JOB_NAME }}
+          check_name: ${{ env.JUNIT_REPORT_NAME }}
           report_paths: build/reports/test/TEST-*.xml
