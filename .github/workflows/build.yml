@@ -7,9 +7,10 @@ name: Build
 on:
   pull_request:
     types: [ opened, review_requested ]
+  workflow_dispatch:
 jobs:
   test:
-    name: ubuntu-jdk17
+    name: ubuntu
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -17,18 +18,18 @@ jobs:
     permissions:
       checks: write
     steps:
-      - name: "[Prepare] Checkout"
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: "[Prepare] Setup JDK"
+      - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
-      - name: "[Build] Execute"
+      - name: Build
         run: ./gradlew clean build
-      - if: success() || failure()
-        name: "[Report] JUnit report"
+      - name: Summarize JUnit report
+        if: success() || failure()
         uses: mikepenz/action-junit-report@v4
         with:
-          check_name: report-ubuntu-jdk17
+          check_name: report_ubuntu
           report_paths: build/reports/test/TEST-*.xml

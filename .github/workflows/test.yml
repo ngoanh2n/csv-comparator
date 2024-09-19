@@ -7,9 +7,10 @@ name: Test
 on:
   push:
     branches: [ release ]
+  workflow_dispatch:
 jobs:
   test:
-    name: ${{ matrix.os }}-jdk${{ matrix.jdk }}
+    name: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}-latest
     defaults:
       run:
@@ -20,7 +21,7 @@ jobs:
         os: [ ubuntu, macos, windows ]
         jdk: [ 17 ]
     env:
-      JUNIT_REPORT_NAME: report-${{ matrix.os }}-jdk${{ matrix.jdk }}
+      JUNIT_REPORT_NAME: report_${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,8 +32,8 @@ jobs:
           java-version: ${{ matrix.jdk }}
       - name: Execute the test
         run: ./gradlew clean test
-      - if: success() || failure()
-        name: Summarize JUnit report
+      - name: Summarize JUnit report
+        if: success() || failure()
         uses: mikepenz/action-junit-report@v4
         with:
           check_name: ${{ env.JUNIT_REPORT_NAME }}

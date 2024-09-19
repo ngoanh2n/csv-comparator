@@ -3,23 +3,23 @@
 ### https://docs.github.com/en/actions
 ### https://github.com/marketplace?type=actions
 ###
-name: Dependabot PRs Merge
+name: Dependabot PR Merge
 on:
   workflow_run:
     workflows: [ Build ]
     types: [ completed ]
 jobs:
-  merge_pr:
-    if: ${{ github.actor == 'dependabot[bot]' }} && ${{ github.event.workflow_run.conclusion == 'success' }}
+  dependabot_merge:
     name: Merge dependabot PR
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     permissions:
-      pull-requests: write
       contents: write
+      pull-requests: write
+    timeout-minutes: 10
+    if: ${{ github.actor == 'dependabot[bot]' }}
     steps:
       - uses: fastify/github-action-merge-dependabot@v3
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           target: minor
           merge-method: rebase
