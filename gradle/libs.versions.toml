@@ -2,7 +2,7 @@
 # Author: ngoanh2n
 #
 [versions]
-commons           = "1.6.0"
+commons           = "1.7.0"
 univocity-parsers = "2.9.1"
 allure-java       = "2.29.0"
 aspectj           = "1.9.21"
