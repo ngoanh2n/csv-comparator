@@ -1,7 +1,8 @@
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.ngoanh2n/csv-comparator-allure/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.ngoanh2n/csv-comparator-allure)
-[![javadoc](https://javadoc.io/badge2/com.github.ngoanh2n/csv-comparator-allure/javadoc.svg)](https://javadoc.io/doc/com.github.ngoanh2n/csv-comparator-allure)
-[![badge-jdk](https://img.shields.io/badge/jdk-8-blue.svg)](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blueviolet.svg)](https://opensource.org/licenses/MIT)
+[![Java](https://img.shields.io/badge/Java-17-orange)](https://adoptium.net)
+[![Maven](https://img.shields.io/maven-central/v/com.github.ngoanh2n/csv-comparator-allure?label=Maven)](https://mvnrepository.com/artifact/com.github.ngoanh2n/csv-comparator-allure)
+[![GitHub Actions](https://img.shields.io/github/actions/workflow/status/ngoanh2n/csv-comparator/test.yml?logo=github&label=GitHub%20Actions)](https://github.com/ngoanh2n/csv-comparator/actions/workflows/test.yml)
+[![CircleCI](https://img.shields.io/circleci/build/github/ngoanh2n/csv-comparator?token=CCIPRJ_V9AVYTzVyEF9A9GMsVD9oF_2ce0fb3410ce42dfee9d8d854bae69d56f206df6&logo=circleci&label=CircleCI)
+](https://dl.circleci.com/status-badge/redirect/gh/ngoanh2n/csv-comparator/tree/master)
 
 # CSV Comparator for Allure
 **Table of Contents**
