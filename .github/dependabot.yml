@@ -4,14 +4,14 @@
 ###
 version: 2
 updates:
-  - package-ecosystem: "gradle"
-    directory: "/"
+  - package-ecosystem: gradle
+    directory: /
     schedule:
-      interval: "weekly"
-      day: "tuesday"
-      time: "03:00"
-      timezone: "Asia/Ho_Chi_Minh"
-    assignees: [ "ngoanh2n" ]
-    target-branch: "develop"
-    rebase-strategy: "disabled"
+      interval: weekly
+      day: tuesday
+      time: 03:00
+      timezone: Asia/Ho_Chi_Minh
+    assignees: [ ngoanh2n ]
+    target-branch: develop
+    rebase-strategy: disabled
     open-pull-requests-limit: 15

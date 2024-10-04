@@ -3,13 +3,13 @@
 ### https://docs.github.com/en/actions
 ### https://github.com/marketplace?type=actions
 ###
-name: Workflow Runs Deletion
+name: Workflow Run Deletions
 on:
   schedule:
-    - cron: 0 23 * * 2
+    - cron: "0 23 * * 2"
   workflow_dispatch:
 jobs:
-  del_runs:
+  delete_workflow_runs:
     runs-on: ubuntu-latest
     permissions:
       actions: write

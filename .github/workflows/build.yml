@@ -6,11 +6,10 @@
 name: Build
 on:
   pull_request:
-    types: [ opened, review_requested ]
   workflow_dispatch:
 jobs:
-  test:
-    name: ubuntu
+  build:
+    name: Build on Ubuntu
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -27,9 +26,18 @@ jobs:
           java-version: 17
       - name: Build
         run: ./gradlew clean build
-      - name: Summarize JUnit report
-        if: success() || failure()
-        uses: mikepenz/action-junit-report@v4
+  dependabot_merge:
+    name: Merge dependabot PR
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [ build ]
+    permissions:
+      contents: write
+      pull-requests: write
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    steps:
+      - uses: fastify/github-action-merge-dependabot@v3
         with:
-          check_name: report_ubuntu
-          report_paths: build/reports/test/TEST-*.xml
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          target: minor
+          merge-method: rebase
